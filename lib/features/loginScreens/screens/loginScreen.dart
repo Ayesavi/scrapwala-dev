@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
         const SizedBox(height: 10),
         Form(
           key: _formKey,
-          child: PhoneNumberTextField(),
+          child: const PhoneNumberTextField(),
         )
       ],
     ));

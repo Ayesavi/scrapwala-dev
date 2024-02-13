@@ -13,85 +13,101 @@ class PhoneNumberTextField extends StatefulWidget {
 }
 
 class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
-  TextEditingController _controller = TextEditingController();
   bool _isButtonEnabled = false;
   String? phoneNumber;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    _controller.text = "+91";
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 25, right: 25),
+      margin: const EdgeInsets.only(left: 25, right: 25),
       alignment: Alignment.center,
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: 55,
-              decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: Colors.deepOrange),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 10,
+            Stack(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 20,
                   ),
-                  SizedBox(
-                    width: 40,
-                    child: TextField(
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        hintText: "+91",
-                        hintStyle: GoogleFonts.roboto(
-                            fontSize: 18, color: Colors.grey[800]),
-                        border: InputBorder.none,
+                  height: 60,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: Colors.deepOrange),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        width: 10,
                       ),
+                      SizedBox(
+                        width: 40,
+                        child: TextField(
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            hintText: "+91",
+                            hintStyle: GoogleFonts.roboto(
+                                fontSize: 18, color: Colors.grey[800]),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      Container(
+                          padding: const EdgeInsets.only(left: 2),
+                          height: 30,
+                          width: 5,
+                          child: CustomPaint(
+                            foregroundPainter: LinePainter(),
+                          )),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: TextField(
+                        style: GoogleFonts.roboto(
+                            color: Colors.black, fontSize: 18),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(10),
+                        ],
+                        maxLength: 10,
+                        onChanged: (value) {
+                          setState(() {
+                            _isButtonEnabled = value.length == 10;
+                            phoneNumber = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            counterText: "",
+                            border: InputBorder.none,
+                            hintText: "10 digit mobile number",
+                            hintStyle: GoogleFonts.roboto(
+                                fontSize: 18, color: Colors.grey[800])),
+                      ))
+                    ],
+                  ),
+                ),
+                Positioned(
+                  left: 20,
+                  top: 8,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    color: Colors.white,
+                    child: Text(
+                      'Mobile Number',
+                      style: GoogleFonts.montserrat(
+                          color: Colors.deepOrange,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
-                  Container(
-                      padding: EdgeInsets.only(left: 2),
-                      height: 30,
-                      width: 5,
-                      child: CustomPaint(
-                        foregroundPainter: LinePainter(),
-                      )),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                      child: TextField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(10),
-                    ],
-                    maxLength: 10,
-                    onChanged: (value) {
-                      setState(() {
-                        _isButtonEnabled = value.length == 10;
-                        phoneNumber = value;
-                      });
-                    },
-                    decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        counterText: "",
-                        border: InputBorder.none,
-                        hintText: "10 digit mobile number",
-                        hintStyle: GoogleFonts.roboto(
-                            fontSize: 18, color: Colors.grey[800])),
-                  ))
-                ],
-              ),
+                ),
+              ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             SizedBox(
@@ -123,7 +139,7 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                         color: Colors.white),
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             RichText(
@@ -131,22 +147,22 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                     style: GoogleFonts.montserrat(
                         fontSize: 15, color: Colors.black),
                     children: [
-                  TextSpan(text: "By clicking, I accept the "),
+                  const TextSpan(text: "By clicking, I accept the "),
                   TextSpan(
                     text: 'terms of service',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline,
                     ),
                     recognizer: TapGestureRecognizer()..onTap = () {},
                   ),
-                  TextSpan(
+                  const TextSpan(
                     text: ' and ',
                   ),
                   TextSpan(
                     text: 'privacy policy',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline,
