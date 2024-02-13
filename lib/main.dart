@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scrapwala_dev/features/loginScreens/screens/homeScreen.dart';
+import 'package:scrapwala_dev/features/login_screens/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

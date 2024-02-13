@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scrapwala_dev/features/loginScreens/screens/loginScreen.dart';
+import 'package:scrapwala_dev/features/login_screens/screens/login_screen.dart';
+import 'package:scrapwala_dev/features/login_screens/widgets/title_medium.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,16 +24,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()));
+                  MaterialPageRoute(builder: (context) => LoginScreen()));
             },
-            child: Text(
-              "Get Started",
-              style: GoogleFonts.montserrat(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600),
+            child: const TitleMedium(
+              text: HomeScreenConstants.getStarted,
             )),
       ),
     );
   }
+}
+
+class HomeScreenConstants {
+  static const getStarted = "Get Started";
 }

@@ -2,8 +2,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scrapwala_dev/features/loginScreens/screens/verifyScreen.dart';
-import 'package:scrapwala_dev/features/loginScreens/widgets/linePainter.dart';
+import 'package:scrapwala_dev/features/login_screens/screens/verify_screen.dart';
+import 'package:scrapwala_dev/features/login_screens/widgets/Label_text.dart';
+import 'package:scrapwala_dev/features/login_screens/widgets/line_painter.dart';
+import 'package:scrapwala_dev/features/login_screens/widgets/title_large.dart';
+import 'package:scrapwala_dev/features/login_screens/widgets/title_medium.dart';
 
 class PhoneNumberTextField extends StatefulWidget {
   const PhoneNumberTextField({super.key});
@@ -46,7 +49,7 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                         child: TextField(
                           readOnly: true,
                           decoration: InputDecoration(
-                            hintText: "+91",
+                            hintText: PhoneNumberTextFieldConstants.countryCode,
                             hintStyle: GoogleFonts.roboto(
                                 fontSize: 18, color: Colors.grey[800]),
                             border: InputBorder.none,
@@ -83,7 +86,8 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                             fillColor: Colors.white,
                             counterText: "",
                             border: InputBorder.none,
-                            hintText: "10 digit mobile number",
+                            hintText:
+                                PhoneNumberTextFieldConstants.mobileNumber,
                             hintStyle: GoogleFonts.roboto(
                                 fontSize: 18, color: Colors.grey[800])),
                       ))
@@ -96,12 +100,11 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                   child: Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     color: Colors.white,
-                    child: Text(
-                      'Mobile Number',
+                    child: LabelLarge(
+                      text: PhoneNumberTextFieldConstants.labelText,
                       style: GoogleFonts.montserrat(
-                          color: Colors.deepOrange,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600),
+                        color: Colors.deepOrange,
+                      ),
                     ),
                   ),
                 ),
@@ -111,9 +114,9 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
               height: 30,
             ),
             SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: TextButton(
+                width: double.infinity,
+                height: 60,
+                child: TextButton(
                   style: ElevatedButton.styleFrom(
                       disabledBackgroundColor: Colors.deepOrange.shade300,
                       shape: RoundedRectangleBorder(
@@ -131,14 +134,10 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                                       )));
                         }
                       : null,
-                  child: Text(
-                    "Get OTP",
-                    style: GoogleFonts.roboto(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white),
-                  )),
-            ),
+                  child: const TitleMedium(
+                    text: PhoneNumberTextFieldConstants.getOtp,
+                  ),
+                )),
             const SizedBox(
               height: 20,
             ),
@@ -147,9 +146,9 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                     style: GoogleFonts.montserrat(
                         fontSize: 15, color: Colors.black),
                     children: [
-                  const TextSpan(text: "By clicking, I accept the "),
+                  const TextSpan(text: PhoneNumberTextFieldConstants.accept),
                   TextSpan(
-                    text: 'terms of service',
+                    text: PhoneNumberTextFieldConstants.termsOfService,
                     style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -158,10 +157,10 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                     recognizer: TapGestureRecognizer()..onTap = () {},
                   ),
                   const TextSpan(
-                    text: ' and ',
+                    text: PhoneNumberTextFieldConstants.and,
                   ),
                   TextSpan(
-                    text: 'privacy policy',
+                    text: PhoneNumberTextFieldConstants.privacyPolicy,
                     style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -175,4 +174,15 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
       ),
     );
   }
+}
+
+class PhoneNumberTextFieldConstants {
+  static const countryCode = "+91";
+  static const mobileNumber = "10 digit mobile number";
+  static const getOtp = "Get OTP";
+  static const labelText = "Mobile Number";
+  static const accept = "By clicking, I accept the ";
+  static const termsOfService = "terms of service";
+  static const and = " and ";
+  static const privacyPolicy = "privacy policy";
 }
