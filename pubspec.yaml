@@ -47,7 +47,7 @@ dependencies:
   google_fonts: ^6.1.0
   intl: ^0.18.1
   google_sign_in: ^6.2.1
-  flutter_svg: ^2.0.9
+  flutter_svg: ^2.0.10+1
   country_code_picker: ^3.0.0
   palette_generator: ^0.3.3+3
   permission_handler: ^11.2.0
