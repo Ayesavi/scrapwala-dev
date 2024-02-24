@@ -58,7 +58,7 @@ dependencies:
   lottie: ^3.0.0
   image_picker: ^1.0.7
   app_settings: ^5.1.1
-  cloud_firestore: ^4.14.0
+  cloud_firestore: ^4.15.5
   firebase_storage: ^11.6.0
   firebase_auth: ^4.16.0
   google_maps_place_picker_mb: ^3.1.2
