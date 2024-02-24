@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
-import 'package:scrapwala_dev/features/login_screens/models/verify_screen_model.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/headline_large.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/title_medium.dart';
+import 'package:scrapwala_dev/features/auth/models/verify_screen_model.dart';
+import 'package:scrapwala_dev/features/auth/widgets/headline_large.dart';
+import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
 
 class VerifyScreen extends StatelessWidget {
   final String? phoneNum;
@@ -35,10 +34,9 @@ class _VerifyScreenContent extends StatelessWidget {
             AppBar(
               leading: const BackButton(color: Colors.black),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: HeadlineLarge(
-                  text: "${VerifyScreensConstants.verifyOtp}" + "${phoneNum}"),
+            const Padding(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: HeadlineLarge(text: VerifyScreensConstants.verifyOtp),
             ),
             const SizedBox(height: 20),
             Padding(

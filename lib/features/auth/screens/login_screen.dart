@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/headline_large.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/phone_number_textfield.dart';
+import 'package:scrapwala_dev/features/auth/widgets/headline_large.dart';
+import 'package:scrapwala_dev/features/auth/widgets/phone_number_textfield.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);

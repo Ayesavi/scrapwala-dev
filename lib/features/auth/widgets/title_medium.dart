@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/text_theme.dart';
+import 'package:scrapwala_dev/features/auth/widgets/text_theme.dart';
 
-class HeadlineLarge extends StatelessWidget {
+class TitleMedium extends StatelessWidget {
   final String text;
   final TextOverflow overflow;
   final Color? color;
   final TextStyle? style;
   final FontWeight? weight;
 
-  const HeadlineLarge(
+  const TitleMedium(
       {super.key,
       this.color,
       this.weight,
@@ -21,8 +21,8 @@ class HeadlineLarge extends StatelessWidget {
     return Text(
       text,
       style: style ??
-          TextThemes.textThemes.headlineLarge
-              ?.copyWith(color: color, fontWeight: weight),
+          TextThemes.textThemes.titleMedium
+              ?.copyWith(color: color ?? Colors.white, fontWeight: weight),
     );
   }
 }

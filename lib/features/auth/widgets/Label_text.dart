@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/text_theme.dart';
+import 'package:scrapwala_dev/features/auth/widgets/text_theme.dart';
 
 class LabelLarge extends StatelessWidget {
   final String text;

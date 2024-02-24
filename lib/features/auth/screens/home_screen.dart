@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:scrapwala_dev/features/login_screens/screens/login_screen.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/title_medium.dart';
+import 'package:scrapwala_dev/features/auth/screens/login_screen.dart';
+import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

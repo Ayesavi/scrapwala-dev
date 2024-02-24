@@ -2,11 +2,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scrapwala_dev/features/login_screens/screens/verify_screen.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/Label_text.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/line_painter.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/title_large.dart';
-import 'package:scrapwala_dev/features/login_screens/widgets/title_medium.dart';
+import 'package:scrapwala_dev/features/auth/screens/verify_screen.dart';
+import 'package:scrapwala_dev/features/auth/widgets/Label_text.dart';
+import 'package:scrapwala_dev/features/auth/widgets/line_painter.dart';
+import 'package:scrapwala_dev/features/auth/widgets/title_large.dart';
+import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
 
 class PhoneNumberTextField extends StatefulWidget {
   const PhoneNumberTextField({super.key});
