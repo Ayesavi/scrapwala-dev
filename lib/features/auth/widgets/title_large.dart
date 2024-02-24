@@ -4,6 +4,7 @@ import 'package:scrapwala_dev/features/auth/widgets/text_theme.dart';
 class TitleLarge extends StatelessWidget {
   final String text;
   final TextOverflow overflow;
+
   final Color? color;
   final TextStyle? style;
   final FontWeight? weight;
