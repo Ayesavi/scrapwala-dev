@@ -5,17 +5,22 @@ class ChipWidget extends StatelessWidget {
   final String label;
   final bool isSelected;
   final IconData icon;
+  final VoidCallback? onTap;
 
   const ChipWidget({
     super.key,
     required this.label,
+    this.onTap,
     required this.isSelected,
     required this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Chip(
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: onTap,
+      child: Chip(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         label: LabelLarge(
           text: label,
@@ -23,18 +28,20 @@ class ChipWidget extends StatelessWidget {
               isSelected ? Theme.of(context).colorScheme.primary : Colors.black,
         ),
         side: BorderSide(
-            color: isSelected
-                ? Theme.of(context).colorScheme.primary
-                : Colors.white30,
-            width: 1.2),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary
+              : Colors.white30,
+          width: 1.2,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         avatar: Icon(
           icon,
           color:
               isSelected ? Theme.of(context).colorScheme.primary : Colors.black,
         ),
-        backgroundColor: isSelected
-            ? Theme.of(context).colorScheme.primary.withOpacity(.2)
-            : Colors.grey[100]);
+      ),
+    );
   }
 }

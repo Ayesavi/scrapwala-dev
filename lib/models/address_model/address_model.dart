@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'address_model.freezed.dart';
@@ -30,4 +31,20 @@ extension GetBool on AddressCategory {
   bool get isFriend => this == AddressCategory.friend;
   bool get isHouse => this == AddressCategory.house;
   bool get isOffice => this == AddressCategory.office;
+
+  String get toName {
+    return switch (this) {
+      AddressCategory.friend => 'Friends and Family',
+      AddressCategory.house => 'Home',
+      AddressCategory.office => 'Work',
+    };
+  }
+
+  IconData get toIcon {
+    return switch (this) {
+      AddressCategory.friend => (Icons.person_outline),
+      AddressCategory.house => (Icons.home_outlined),
+      AddressCategory.office => (Icons.work_outline),
+    };
+  }
 }
