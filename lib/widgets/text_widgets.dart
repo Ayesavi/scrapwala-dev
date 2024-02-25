@@ -51,10 +51,11 @@ class LabelMedium extends StatelessWidget {
   final TextOverflow overflow;
   final Color? color;
   final FontWeight? weight;
-
+  final int? maxLines;
   const LabelMedium(
       {super.key,
       this.weight,
+      this.maxLines,
       this.color,
       required this.text,
       this.overflow = TextOverflow.ellipsis});
@@ -63,11 +64,12 @@ class LabelMedium extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      maxLines: maxLines,
       overflow: overflow,
-      style: Theme.of(context)
-          .textTheme
-          .labelMedium
-          ?.copyWith(color: color, fontWeight: weight),
+      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+          color: color ??
+              Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+          fontWeight: weight),
     );
   }
 }
@@ -106,11 +108,12 @@ class TitleMedium extends StatelessWidget {
   final FontWeight? weight;
   final TextOverflow overflow;
   final TextStyle? style;
-
+  final int? maxLines;
   const TitleMedium(
       {super.key,
       this.style,
       this.color,
+      this.maxLines,
       this.weight,
       required this.text,
       this.overflow = TextOverflow.ellipsis});
@@ -119,6 +122,7 @@ class TitleMedium extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      maxLines: maxLines,
       overflow: overflow,
       style: style ??
           Theme.of(context)
@@ -132,16 +136,20 @@ class TitleMedium extends StatelessWidget {
 class BodyLarge extends StatelessWidget {
   final String text;
   final TextOverflow overflow;
+  final Color? color;
 
   const BodyLarge(
-      {super.key, required this.text, this.overflow = TextOverflow.ellipsis});
+      {super.key,
+      required this.text,
+      this.color,
+      this.overflow = TextOverflow.ellipsis});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       overflow: overflow,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: color),
     );
   }
 }
@@ -149,16 +157,25 @@ class BodyLarge extends StatelessWidget {
 class TitleLarge extends StatelessWidget {
   final String text;
   final TextOverflow overflow;
+  final FontWeight? weight;
+  final Color? color;
 
   const TitleLarge(
-      {super.key, required this.text, this.overflow = TextOverflow.ellipsis});
+      {super.key,
+      required this.text,
+      this.weight,
+      this.color,
+      this.overflow = TextOverflow.ellipsis});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       overflow: overflow,
-      style: Theme.of(context).textTheme.titleLarge,
+      style: Theme.of(context)
+          .textTheme
+          .titleLarge
+          ?.copyWith(color: color, fontWeight: weight),
     );
   }
 }

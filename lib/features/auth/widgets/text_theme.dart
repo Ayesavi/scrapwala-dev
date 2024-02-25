@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextThemes {
-  static const TextTheme textThemes = TextTheme(
+  static const TextTheme textTheme = TextTheme(
     labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
     labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
     labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),

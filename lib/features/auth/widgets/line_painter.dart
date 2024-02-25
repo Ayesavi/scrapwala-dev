@@ -7,10 +7,10 @@ class LinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color(0xFFAFAFAF)
+      ..color = const Color(0xFFAFAFAF)
       ..strokeWidth = width != null ? width! : 2;
-    canvas.drawLine(
-        Offset(3, 1), Offset(3, height != null ? height! + 1 : 29), paint);
+    canvas.drawLine(const Offset(3, 1),
+        Offset(3, height != null ? height! + 1 : 29), paint);
   }
 
   @override

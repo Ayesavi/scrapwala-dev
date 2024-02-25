@@ -21,7 +21,7 @@ class LabelLarge extends StatelessWidget {
     return Text(
       text,
       style: style ??
-          TextThemes.textThemes.labelLarge
+          TextThemes.textTheme.labelLarge
               ?.copyWith(color: color, fontWeight: weight),
     );
   }

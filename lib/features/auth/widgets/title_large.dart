@@ -22,7 +22,7 @@ class TitleLarge extends StatelessWidget {
     return Text(
       text,
       style: style ??
-          TextThemes.textThemes.headlineLarge
+          TextThemes.textTheme.headlineLarge
               ?.copyWith(color: color, fontWeight: weight),
     );
   }

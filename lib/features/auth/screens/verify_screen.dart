@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
+
 import 'package:scrapwala_dev/features/auth/models/verify_screen_model.dart';
 import 'package:scrapwala_dev/features/auth/widgets/headline_large.dart';
 import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
@@ -22,7 +24,10 @@ class VerifyScreen extends StatelessWidget {
 class _VerifyScreenContent extends StatelessWidget {
   final String? phoneNum;
 
-  const _VerifyScreenContent({Key? key, this.phoneNum}) : super(key: key);
+  const _VerifyScreenContent({
+    Key? key,
+    this.phoneNum,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

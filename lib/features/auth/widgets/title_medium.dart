@@ -21,7 +21,7 @@ class TitleMedium extends StatelessWidget {
     return Text(
       text,
       style: style ??
-          TextThemes.textThemes.titleMedium
+          TextThemes.textTheme.titleMedium
               ?.copyWith(color: color ?? Colors.white, fontWeight: weight),
     );
   }
