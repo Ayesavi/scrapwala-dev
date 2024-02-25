@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
-import 'package:scrapwala_dev/widgets/address_category_chip.dart';
+import 'package:scrapwala_dev/widgets/address_tile.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
 void showBottomLocationSheet(
@@ -43,106 +43,99 @@ class _LocationBottomSheetContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      heightFactor: 0.9, // Cover 90% of the screen height
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const ListTile(
-                title: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.location_on_outlined),
-                    SizedBox(width: 10),
-                    TitleLarge(
-                      text: "Devpuri",
+    return Container(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12.0),
+          topRight: Radius.circular(12.0),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            tileColor: Theme.of(context).colorScheme.tertiaryContainer,
+            subtitle: const LabelMedium(
+              text: LocationBottomSheetConstants.locationOfDesc,
+              maxLines: 3,
+            ),
+            title: const Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 4.0,
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.location_searching_outlined),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: TitleMedium(
+                      overflow: TextOverflow.ellipsis,
+                      text: LocationBottomSheetConstants.locationOffText,
                       weight: FontWeight.bold,
                     ),
-                  ],
-                ),
-                subtitle: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: LabelMedium(
-                    text: "Devpuri Chattisgarh,  4920125, INDIA",
                   ),
-                ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .tertiary
-                            .withOpacity(0.2),
+            ),
+            trailing: !isLocationPermissionGranted
+                ? ElevatedButton(
+                    onPressed: onTapLocationPermissionGrant as void Function()?,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Enter house number',
-                        border: InputBorder.none,
-                        suffixIcon: Icon(Icons.home),
-                      ),
-                    ),
-                    const Divider(),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Enter apartment/road/area',
-                        border: InputBorder.none,
-                        suffixIcon: Icon(Icons.location_city),
-                      ),
-                    ),
-                    const Divider(),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Directions to reach (max 100 chars)',
-                        border: InputBorder.none,
-                      ),
-                      maxLines: 5,
-                      maxLength: 100,
-                    ),
-                    const Text('Save As'),
-                    const Wrap(
-                      children: [
-                        ChipWidget(
-                          label: 'Home',
-                          isSelected: true,
-                          icon: Icons.home,
-                        ),
-                        ChipWidget(
-                          label: 'Work',
-                          isSelected: false,
-                          icon: Icons.work,
-                        ),
-                        ChipWidget(
-                          label: 'Friend & Family',
-                          isSelected: false,
-                          icon: Icons.person,
-                        ),
-                        ChipWidget(
-                          label: 'Others',
-                          isSelected: false,
-                          icon: Icons.category,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                    child: const Text('Grant'),
+                  )
+                : null,
           ),
-        ),
+          ListTile(
+            title: const TitleLarge(
+              text: LocationBottomSheetConstants.selectDeliveryAddress,
+              weight: FontWeight.bold,
+            ),
+            trailing: TextButton(
+                onPressed: () {},
+                child: BodyLarge(
+                    color: Theme.of(context).colorScheme.primary,
+                    text: 'View All')),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(),
+          ),
+          if (addresses.isNotEmpty)
+            Column(
+              children: addresses
+                  .map((address) => AddressTile(
+                        model: address,
+                        isSelected: false,
+                        onTap: () {},
+                      ))
+                  .toList(),
+            ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(),
+          ),
+          ListTile(
+            title: Row(
+              children: [
+                Icon(
+                  Icons.search,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const Text('Enter Address Manually')
+              ],
+            ),
+            onTap: onTapEnterLocationManually as void Function()?,
+          ),
+        ],
       ),
     );
   }
