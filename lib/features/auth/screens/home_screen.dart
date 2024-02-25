@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
-import 'package:scrapwala_dev/widgets/address_category_chip.dart';
-import 'package:scrapwala_dev/widgets/location_bottomsheet.dart';
+import 'package:scrapwala_dev/widgets/location_form_bottomsheet.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,15 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ChipWidget(label: "Home", isSelected: true, icon: Icons.home)
-        ],
-      ),
       bottomNavigationBar: BottomAppBar(
-        surfaceTintColor: Colors.white,
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -31,10 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.deepOrange,
             ),
             onPressed: () {
-              showBottomLocationSheet(context,
-                  isDismissable: false,
-                  isLocationPermissionGranted: false,
-                  addresses: _buildRandomAddressModels());
+              // showBottomLocationSheet(context,
+              //     isDismissable: false,
+              //     isLocationPermissionGranted: false,
+              //     addresses: _buildRandomAddressModels());
+              showLocationFormBottomSheet(context);
               // Navigator.push(context,
               //     MaterialPageRoute(builder: (context) => LoginScreen()));
             },
