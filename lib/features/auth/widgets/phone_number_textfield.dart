@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scrapwala_dev/features/auth/widgets/Label_text.dart';
 import 'package:scrapwala_dev/features/auth/widgets/line_painter.dart';
-import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
+import 'package:scrapwala_dev/widgets/app_filled_button.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class PhoneNumberTextField extends StatefulWidget {
   const PhoneNumberTextField(
@@ -20,6 +21,25 @@ class PhoneNumberTextField extends StatefulWidget {
 class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
   bool _isButtonEnabled = false;
   String? phoneNumber;
+  final textController = TextEditingController();
+  final smsFill = SmsAutoFill();
+
+  getPhoneNumber() async {
+    textController.text = (await smsFill.hint)?.substring(3) ?? '';
+    if (textController.text.length == 10) {
+      setState(() {
+        _isButtonEnabled = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 200), () {
+      getPhoneNumber();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +58,9 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                   ),
                   height: 60,
                   decoration: BoxDecoration(
-                      border: Border.all(width: 2, color: Colors.deepOrange),
+                      border: Border.all(
+                          width: 2,
+                          color: Theme.of(context).colorScheme.primary),
                       borderRadius: BorderRadius.circular(10)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -53,7 +75,8 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                           decoration: InputDecoration(
                             hintText: PhoneNumberTextFieldConstants.countryCode,
                             hintStyle: GoogleFonts.roboto(
-                                fontSize: 18, color: Colors.grey[800]),
+                                fontSize: 18,
+                                color: Theme.of(context).colorScheme.outline),
                             border: InputBorder.none,
                           ),
                         ),
@@ -70,6 +93,7 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                       ),
                       Expanded(
                           child: TextField(
+                        controller: textController,
                         style: GoogleFonts.roboto(
                             color: Colors.black, fontSize: 18),
                         keyboardType: TextInputType.number,
@@ -81,7 +105,6 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                         onChanged: (value) {
                           setState(() {
                             _isButtonEnabled = value.length == 10;
-                            phoneNumber = value;
                           });
                         },
                         decoration: InputDecoration(
@@ -105,7 +128,7 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                     child: LabelLarge(
                       text: PhoneNumberTextFieldConstants.labelText,
                       style: GoogleFonts.montserrat(
-                        color: Colors.deepOrange,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ),
@@ -115,24 +138,14 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
             const SizedBox(
               height: 30,
             ),
-            SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: TextButton(
-                  style: ElevatedButton.styleFrom(
-                      disabledBackgroundColor: Colors.deepOrange.shade300,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      backgroundColor: _isButtonEnabled
-                          ? Colors.deepOrange
-                          : Colors.deepOrange.shade300),
-                  onPressed: _isButtonEnabled
-                      ? () => widget.onGetOtp('91$phoneNumber')
-                      : null,
-                  child: const TitleMedium(
-                    text: PhoneNumberTextFieldConstants.getOtp,
-                  ),
-                )),
+            AppFilledButton(
+                bgColor: _isButtonEnabled
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.secondary,
+                label: PhoneNumberTextFieldConstants.getOtp,
+                onTap: _isButtonEnabled
+                    ? () => widget.onGetOtp('91${textController.text}')
+                    : null),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0),
               child: Row(
@@ -146,33 +159,26 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                 ],
               ),
             ),
-            SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: TextButton(
-                  style: ElevatedButton.styleFrom(
-                      disabledBackgroundColor: Colors.deepOrange.shade300,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      backgroundColor: Colors.deepOrange),
-                  onPressed: widget.onLoginWithGoogle,
-                  child: const TitleMedium(
-                    text: PhoneNumberTextFieldConstants.loginWithGoogle,
-                  ),
-                )),
+            AppFilledButton(
+                bgColor: Theme.of(context).colorScheme.primary,
+                label: PhoneNumberTextFieldConstants.loginWithGoogle,
+                onTap: widget.onLoginWithGoogle),
             const SizedBox(
               height: 20,
             ),
             RichText(
                 text: TextSpan(
-                    style: GoogleFonts.montserrat(
-                        fontSize: 15, color: Colors.black),
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(.6)),
                     children: [
                   const TextSpan(text: PhoneNumberTextFieldConstants.accept),
                   TextSpan(
                     text: PhoneNumberTextFieldConstants.termsOfService,
-                    style: const TextStyle(
-                      color: Colors.black,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline,
                     ),
@@ -183,8 +189,8 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                   ),
                   TextSpan(
                     text: PhoneNumberTextFieldConstants.privacyPolicy,
-                    style: const TextStyle(
-                      color: Colors.black,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline,
                     ),

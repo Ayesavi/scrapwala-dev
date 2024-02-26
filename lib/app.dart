@@ -16,16 +16,16 @@ class ScrapWalaApp extends ConsumerWidget {
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(TextThemes.textTheme),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepOrange,
-          primary: Colors.deepOrange,
+          seedColor: Colors.green,
+          primary: Colors.green,
         ),
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(TextThemes.textTheme),
         colorScheme: ColorScheme.fromSeed(
-            primary: Colors.deepOrange,
-            seedColor: Colors.deepOrange,
+            primary: Colors.green,
+            seedColor: Colors.green,
             brightness: Brightness.dark),
         useMaterial3: true,
       ),
