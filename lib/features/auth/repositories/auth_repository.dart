@@ -1,0 +1,91 @@
+import 'dart:io';
+
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+abstract class AuthRepository {
+  GoogleSignIn get _googleSignIn;
+
+  // Singleton instance
+  static final AuthRepository _instance = _AuthRepositoryImpl();
+
+  factory AuthRepository() => _instance;
+
+  // Abstract methods
+  Future<void> signInWithOtp(String phone);
+  Future<void> signOut();
+  Future<User?> signInWithGoogle();
+  Future<User?> verifyOtp(String t,String phoneNumber);
+  Future<User?> getUser();
+}
+
+class UnAuthenticatedUserException implements Exception {
+  @override
+  String toString() {
+    return 'User is not authenticated';
+  }
+}
+
+class _AuthRepositoryImpl implements AuthRepository {
+  final _supabase = Supabase.instance.client;
+
+  /// Sends Otp to a phonenumber against which you are
+  /// doing verification.
+  @override
+  Future<void> signInWithOtp(String phone) async {
+    await _supabase.auth.signInWithOtp(phone: phone);
+  }
+
+  /// Signs out from the localdevice
+  @override
+  Future<void> signOut() async {
+    await _supabase.auth.signOut();
+  }
+
+  @override
+  Future<User?> signInWithGoogle() async {
+    if (Platform.isAndroid) {
+      const str = String.fromEnvironment("GOOGLE_CLIENT_ID");
+      final googleUser = await _googleSignIn.signIn();
+      final googleAuth = await googleUser?.authentication;
+      final accessToken = googleAuth?.accessToken;
+      final idToken = googleAuth?.idToken;
+      if (accessToken != null && idToken != null) {
+        final response = await _supabase.auth.signInWithIdToken(
+          provider: OAuthProvider.google,
+          idToken: idToken,
+          accessToken: accessToken,
+        );
+        if (response.user != null) {
+          return (response.user!);
+        }
+        throw UnAuthenticatedUserException();
+      }
+    }
+    throw UnAuthenticatedUserException();
+  }
+
+  @override
+  Future<User?> verifyOtp(String token, String phoneNumber) async {
+    final response = (await _supabase.auth
+            .verifyOTP(token: token, type: OtpType.sms, phone: phoneNumber))
+        .user;
+    if (response != null) {
+      return (response);
+    }
+    throw UnAuthenticatedUserException();
+  }
+
+  @override
+  Future<User?> getUser() async {
+    if (_supabase.auth.currentUser != null) {
+      return ((_supabase.auth.currentUser!));
+    }
+    return null;
+  }
+
+  @override
+  GoogleSignIn get _googleSignIn => GoogleSignIn(
+      serverClientId: const String.fromEnvironment("GOOGLE_CLIENT_ID"),
+      scopes: ['email', "openid"]);
+}

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:scrapwala_dev/features/auth/screens/login_screen.dart';
+import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class GetStartedPage extends StatefulWidget {
+  const GetStartedPage({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<GetStartedPage> createState() => _GetStartedPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _GetStartedPageState extends State<GetStartedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,15 +26,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(builder: (context) => LoginScreen()));
             },
             child: const TitleMedium(
-              text: HomeScreenConstants.getStarted,
+              text: GetStartedPageConstants.getStartedPage,
             )),
       ),
     );
   }
 }
 
-class HomeScreenConstants {
-  static const getStarted = "Get Started";
+class GetStartedPageConstants {
+  static const getStartedPage = "Get Started";
 }
 
 List<AddressModel> _buildRandomAddressModels() {

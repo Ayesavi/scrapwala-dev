@@ -2,14 +2,16 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scrapwala_dev/features/auth/screens/verify_screen.dart';
 import 'package:scrapwala_dev/features/auth/widgets/Label_text.dart';
 import 'package:scrapwala_dev/features/auth/widgets/line_painter.dart';
-import 'package:scrapwala_dev/features/auth/widgets/title_large.dart';
 import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
 
 class PhoneNumberTextField extends StatefulWidget {
-  const PhoneNumberTextField({super.key});
+  const PhoneNumberTextField(
+      {super.key, required this.onGetOtp, this.onLoginWithGoogle});
+
+  final Function(String? phone) onGetOtp;
+  final VoidCallback? onLoginWithGoogle;
 
   @override
   State<PhoneNumberTextField> createState() => _PhoneNumberTextFieldState();
@@ -125,17 +127,37 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                           ? Colors.deepOrange
                           : Colors.deepOrange.shade300),
                   onPressed: _isButtonEnabled
-                      ? () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VerifyScreen(
-                                        phoneNum: phoneNumber,
-                                      )));
-                        }
+                      ? () => widget.onGetOtp('91$phoneNumber')
                       : null,
                   child: const TitleMedium(
                     text: PhoneNumberTextFieldConstants.getOtp,
+                  ),
+                )),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              child: Row(
+                children: [
+                  Expanded(child: Divider()),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Text('Or'),
+                  ),
+                  Expanded(child: Divider()),
+                ],
+              ),
+            ),
+            SizedBox(
+                width: double.infinity,
+                height: 60,
+                child: TextButton(
+                  style: ElevatedButton.styleFrom(
+                      disabledBackgroundColor: Colors.deepOrange.shade300,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      backgroundColor: Colors.deepOrange),
+                  onPressed: widget.onLoginWithGoogle,
+                  child: const TitleMedium(
+                    text: PhoneNumberTextFieldConstants.loginWithGoogle,
                   ),
                 )),
             const SizedBox(
@@ -177,6 +199,7 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
 }
 
 class PhoneNumberTextFieldConstants {
+  static const loginWithGoogle = "Continue with Google";
   static const countryCode = "+91";
   static const mobileNumber = "10 digit mobile number";
   static const getOtp = "Get OTP";
