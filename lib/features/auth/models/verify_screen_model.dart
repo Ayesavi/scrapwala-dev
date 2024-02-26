@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class VerifyScreenModel extends ChangeNotifier {
+class OtpVerifyPageModel extends ChangeNotifier {
   String _otp = '';
 
   String get otp => _otp;
