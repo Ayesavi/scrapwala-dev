@@ -71,7 +71,7 @@ class _LocationFormBottomSheetContent extends ConsumerWidget {
                     decoration: InputDecoration(
                       hintText: 'Enter house number',
                       border: InputBorder.none,
-                      suffixIcon: Icon(Icons.home),
+                      suffixIcon: Icon(Icons.home_outlined),
                     ),
                   ),
                   const Divider(),
@@ -79,7 +79,7 @@ class _LocationFormBottomSheetContent extends ConsumerWidget {
                     decoration: InputDecoration(
                       hintText: 'Enter apartment/road/area',
                       border: InputBorder.none,
-                      suffixIcon: Icon(Icons.location_city),
+                      suffixIcon: Icon(Icons.location_city_outlined),
                     ),
                   ),
                   const Divider(),

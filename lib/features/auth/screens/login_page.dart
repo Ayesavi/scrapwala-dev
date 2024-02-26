@@ -10,6 +10,8 @@ import 'package:scrapwala_dev/shared/show_snackbar.dart';
 
 final showProgress = StateProvider((ref) => false);
 
+
+
 class LoginScreen extends ConsumerWidget {
   LoginScreen({super.key});
 

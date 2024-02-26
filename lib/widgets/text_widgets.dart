@@ -137,11 +137,13 @@ class BodyLarge extends StatelessWidget {
   final String text;
   final TextOverflow overflow;
   final Color? color;
+  final FontWeight? weight;
 
   const BodyLarge(
       {super.key,
       required this.text,
       this.color,
+      this.weight,
       this.overflow = TextOverflow.ellipsis});
 
   @override
@@ -149,7 +151,10 @@ class BodyLarge extends StatelessWidget {
     return Text(
       text,
       overflow: overflow,
-      style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: color),
+      style: Theme.of(context)
+          .textTheme
+          .bodyLarge
+          ?.copyWith(color: color, fontWeight: weight),
     );
   }
 }
