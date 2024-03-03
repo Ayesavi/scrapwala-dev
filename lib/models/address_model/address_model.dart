@@ -40,6 +40,24 @@ extension GetBool on AddressCategory {
     };
   }
 
+  Icon icon(BuildContext context,{ Color? color}) {
+    return switch (this) {
+      AddressCategory.friend => Icon(
+          Icons.group_outlined,
+          color: color ??
+              Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+        ),
+      AddressCategory.house => Icon(
+          Icons.home_outlined,
+          color:color?? Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+        ),
+      AddressCategory.office => Icon(
+          Icons.maps_home_work_outlined,
+          color: color??Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+        ),
+    };
+  }
+
   IconData get toIcon {
     return switch (this) {
       AddressCategory.friend => (Icons.person_outline),

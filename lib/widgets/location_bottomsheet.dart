@@ -34,6 +34,7 @@ class _LocationBottomSheetContent extends StatelessWidget {
   final List<AddressModel> addresses;
 
   const _LocationBottomSheetContent({
+    // ignore: unused_element
     super.key,
     required this.isLocationPermissionGranted,
     required this.onTapLocationPermissionGrant,

@@ -33,7 +33,7 @@ class HomeRoute extends GoRouteData {
   const HomeRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const HomePage();
+  Widget build(BuildContext context, GoRouterState state) => HomePage();
 }
 
 class LoginRoute extends GoRouteData {
