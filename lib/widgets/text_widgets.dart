@@ -23,12 +23,16 @@ class LabelLarge extends StatelessWidget {
   final Color? color;
   final TextStyle? style;
   final FontWeight? weight;
+  final int? maxLines;
+  final double? spacing;
 
   const LabelLarge(
       {super.key,
       this.color,
       this.weight,
+      this.spacing,
       this.style,
+      this.maxLines,
       required this.text,
       this.overflow = TextOverflow.ellipsis});
 
@@ -37,11 +41,10 @@ class LabelLarge extends StatelessWidget {
     return Text(
       text,
       overflow: overflow,
+      maxLines: maxLines,
       style: style ??
-          Theme.of(context)
-              .textTheme
-              .labelLarge
-              ?.copyWith(color: color, fontWeight: weight),
+          Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: color, fontWeight: weight, letterSpacing: spacing),
     );
   }
 }

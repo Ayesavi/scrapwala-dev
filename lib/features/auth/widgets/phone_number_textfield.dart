@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scrapwala_dev/features/auth/widgets/Label_text.dart';
+import 'package:scrapwala_dev/features/auth/widgets/label_text.dart';
 import 'package:scrapwala_dev/features/auth/widgets/line_painter.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:sms_autofill/sms_autofill.dart';
