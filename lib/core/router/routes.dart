@@ -4,6 +4,7 @@ import 'package:scrapwala_dev/features/auth/screens/get_started_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/verify_page.dart';
 import 'package:scrapwala_dev/features/home/screens/home_page.dart';
+import 'package:scrapwala_dev/features/search/screens/search_page.dart';
 import 'package:scrapwala_dev/features/splash/screens/splash_screen.dart';
 
 import './route_constants.dart';
@@ -52,4 +53,11 @@ class OtpPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       OtpVerifyPage(phoneNum: phone);
+}
+
+class SearchPageRoute extends GoRouteData {
+  const SearchPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => SearchPage();
 }

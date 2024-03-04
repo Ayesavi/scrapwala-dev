@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/models/scrap_category/scrap_category_model.dart';
@@ -76,13 +77,18 @@ class HomePage extends ConsumerWidget {
           SingleChildScrollView(
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SearchTextField(),
-                      SizedBox(
+                      SearchTextField(
+                        readOnly: true,
+                        onPressed: () {
+                          const SearchPageRoute().go(context);
+                        },
+                      ),
+                      const SizedBox(
                         height: 16,
                       ),
                     ],
