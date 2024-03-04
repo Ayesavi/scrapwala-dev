@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/extensions/string_extension.dart';
+import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/auth/widgets/label_text.dart';
 
 /// This widget will be shown at the bottom of the screen
@@ -31,7 +32,7 @@ class AddedItemCartWidget extends ConsumerWidget {
                 ),
                 trailing: TextButton(
                   onPressed: () {
-                    // Your logic here
+                    const CartPageRoute().go(context);
                   },
                   child: const Text(
                     AddedItemWidgetConstants.viewCartText,
@@ -49,5 +50,5 @@ class AddedItemCartWidget extends ConsumerWidget {
 
 class AddedItemWidgetConstants {
   static const itemAddedText = '{} item\'s added';
-  static const viewCartText = 'View Cart >';
+  static const viewCartText = 'View Request >';
 }

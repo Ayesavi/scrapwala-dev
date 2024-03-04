@@ -12,7 +12,13 @@ class SearchTextField extends StatefulWidget {
   final void Function(String key)? onSearch;
   const SearchTextField({
     super.key,
-    this.hintTexts = const ['\'Laptop\'', '\'Stabliser\''],
+    this.hintTexts = const [
+      'Laptop',
+      'Stabliser',
+      'Computer',
+      'Iron',
+      'Weight Blocks'
+    ],
     this.readOnly = false,
     this.onPressed,
     this.onSearch,
@@ -80,7 +86,7 @@ class _SearchTextFieldState extends State<SearchTextField>
               readOnly: widget.readOnly,
               onTap: widget.onPressed,
               decoration: InputDecoration(
-                hintText: "Try search for ${widget.hintTexts[_hintIndex]}",
+                hintText: "Try search for '${widget.hintTexts[_hintIndex]}'",
                 hintStyle: const TextStyle(
                   fontWeight: FontWeight.w100,
                 ),

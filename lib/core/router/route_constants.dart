@@ -8,6 +8,8 @@ class RouteConstants {
   static const homeRoute =
       TypedGoRoute<HomeRoute>(path: '/home', name: 'home', routes: [
           TypedGoRoute<SearchPageRoute>(path: 'search', name: "search"),
+          TypedGoRoute<CartPageRoute>(path: 'cartPage', name: "cartPage"),
+
       ]);
 
   static const authRoute =

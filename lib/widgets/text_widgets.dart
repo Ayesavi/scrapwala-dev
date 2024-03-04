@@ -228,16 +228,16 @@ class HeadlineSmall extends StatelessWidget {
 class TitleSmall extends StatelessWidget {
   final String text;
   final TextOverflow overflow;
-
+  final TextStyle? style;
   const TitleSmall(
-      {super.key, required this.text, this.overflow = TextOverflow.ellipsis});
+      {super.key, required this.text,this.style, this.overflow = TextOverflow.ellipsis});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       overflow: overflow,
-      style: Theme.of(context).textTheme.titleSmall,
+      style: style?? Theme.of(context).textTheme.titleSmall,
     );
   }
 }

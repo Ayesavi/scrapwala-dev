@@ -116,6 +116,11 @@ RouteBase get $homeRoute => GoRouteData.$route(
           name: 'search',
           factory: $SearchPageRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'cartPage',
+          name: 'cartPage',
+          factory: $CartPageRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -142,6 +147,23 @@ extension $SearchPageRouteExtension on SearchPageRoute {
 
   String get location => GoRouteData.$location(
         '/home/search',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CartPageRouteExtension on CartPageRoute {
+  static CartPageRoute _fromState(GoRouterState state) => const CartPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/cartPage',
       );
 
   void go(BuildContext context) => context.go(location);

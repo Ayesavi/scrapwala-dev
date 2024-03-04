@@ -6,7 +6,7 @@ part of 'scrap_search.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$scrapSearchHash() => r'a37a6c032e6d93a6cc4fa7085aeabc76008b1fab';
+String _$scrapSearchHash() => r'208a774275b2f6eee8b64f98b6a5da63de6603d0';
 
 /// See also [ScrapSearch].
 @ProviderFor(ScrapSearch)
