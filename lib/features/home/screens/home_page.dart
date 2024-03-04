@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/models/scrap_category/scrap_category_model.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
+import 'package:scrapwala_dev/widgets/added_item_widget.dart';
 import 'package:scrapwala_dev/widgets/location_bottomsheet.dart';
 import 'package:scrapwala_dev/widgets/location_tile_open_bottomsheet.dart';
 import 'package:scrapwala_dev/widgets/scrap_category_widget.dart';
@@ -70,98 +72,113 @@ class HomePage extends ConsumerWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SearchTextField(),
-                  SizedBox(
-                    height: 16,
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
               children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: LabelLarge(
-                        text: "What's on your mind?".toUpperCase(),
-                        spacing: 3,
-                        weight: FontWeight.w100,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: ShaderMask(
-                        shaderCallback: (Rect bounds) {
-                          return LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Theme.of(context).colorScheme.outline,
-                              Colors.transparent
-                            ],
-                          ).createShader(bounds);
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SearchTextField(
+                        readOnly: true,
+                        onPressed: () {
+                          const SearchPageRoute().go(context);
                         },
-                        child: Divider(
-                          thickness: 1,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .outline, // Set the color to transparent
-                        ),
                       ),
-                    )
+                      const SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: LabelLarge(
+                            text: "What's on your mind?".toUpperCase(),
+                            spacing: 3,
+                            weight: FontWeight.w100,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: ShaderMask(
+                            shaderCallback: (Rect bounds) {
+                              return LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  Theme.of(context).colorScheme.outline,
+                                  Colors.transparent
+                                ],
+                              ).createShader(bounds);
+                            },
+                            child: Divider(
+                              thickness: 1,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .outline, // Set the color to transparent
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      height: 240,
+                      child: GridView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:
+                                2, // You can change this value according to your requirement
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          itemCount: categoryData.length,
+                          itemBuilder: (context, index) => CategoryWidget(
+                                model: ScrapCategoryModel.fromJson(
+                                    categoryData[index]),
+                              )),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  height: 240,
-                  child: GridView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount:
-                            2, // You can change this value according to your requirement
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemCount: categoryData.length,
-                      itemBuilder: (context, index) => CategoryWidget(
-                            model: ScrapCategoryModel.fromJson(
-                                categoryData[index]),
-                          )),
-                ),
+                ScrapTile(
+                    added: true,
+                    onTap: () {},
+                    model: const ScrapModel(
+                        description:
+                            "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
+                        price: 23,
+                        photoUrl: 'https://picsum.photos/100/100?random=9',
+                        name: "Glossy Papers")),
+                ScrapTile(
+                    onTap: () {},
+                    model: const ScrapModel(
+                        description:
+                            "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
+                        price: 23,
+                        photoUrl: "https://picsum.photos/80/80?random=10",
+                        name: "Glossy Papers"))
               ],
             ),
-            ScrapTile(
-                onTap: () {},
-                model: const ScrapModel(
-                    description:
-                        "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
-                    price: 23,
-                    photoUrl: 'https://picsum.photos/100/100?random=9',
-                    name: "Glossy Papers")),
-            ScrapTile(
-                onTap: () {},
-                model: const ScrapModel(
-                    description:
-                        "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
-                    price: 23,
-                    photoUrl: "https://picsum.photos/80/80?random=10",
-                    name: "Glossy Papers"))
-          ],
-        ),
+          ),
+          const Positioned(
+              bottom: 0,
+              child: AddedItemCartWidget(
+                itemAdded: 2,
+              ))
+        ],
       ),
     );
   }
