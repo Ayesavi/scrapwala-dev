@@ -7,8 +7,13 @@ import 'package:scrapwala_dev/widgets/scrap_tile_image_widget.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
 class ScrapTile extends ConsumerWidget {
-  const ScrapTile({super.key, required this.model, required this.onTap});
+  const ScrapTile(
+      {super.key,
+      required this.model,
+      required this.onTap,
+      this.added = false});
   final ScrapModel model;
+  final bool added;
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,7 +48,7 @@ class ScrapTile extends ConsumerWidget {
         ),
       ),
       trailing: ScrapTileImageWidget(
-        callback: () {},
+        callback: added ? null : () {},
         imageUrl: model.photoUrl,
       ),
     );

@@ -18,7 +18,7 @@ void showLocationFormBottomSheet(
 }
 
 class _LocationFormBottomSheetContent extends ConsumerWidget {
-  const _LocationFormBottomSheetContent({super.key});
+  const _LocationFormBottomSheetContent();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
