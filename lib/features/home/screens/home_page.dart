@@ -38,6 +38,9 @@ class HomePage extends ConsumerWidget {
     // final controller = ref.watch(authControllerProvider);
 
     return Scaffold(
+      bottomNavigationBar: const AddedItemCartWidget(
+        itemAdded: 2,
+      ),
       appBar: AppBar(
         title: LocationTileOpenBottomsheet(
           model: AddressModel(
@@ -173,11 +176,6 @@ class HomePage extends ConsumerWidget {
               ],
             ),
           ),
-          const Positioned(
-              bottom: 0,
-              child: AddedItemCartWidget(
-                itemAdded: 2,
-              ))
         ],
       ),
     );
