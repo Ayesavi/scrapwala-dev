@@ -81,7 +81,7 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   build_runner: ^2.4.8
   json_serializable: ^6.7.1
-  custom_lint: ^0.5.8
+  custom_lint: ^0.6.2
   riverpod_lint: ^2.3.7
   flutter_gen_runner: ^5.4.0
   go_router_builder: ^2.4.1
