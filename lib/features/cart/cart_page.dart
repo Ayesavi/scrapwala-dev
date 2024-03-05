@@ -43,6 +43,9 @@ class CartPage extends ConsumerWidget {
         child: SliderButton(
           alignLabel: Alignment.center,
           width: buttonWidth,
+          buttonSize: 60,
+          baseColor: Theme.of(context).colorScheme.onPrimary,
+          highlightedColor: Theme.of(context).colorScheme.outlineVariant,
           backgroundColor: Theme.of(context).colorScheme.primary,
           action: () async {
             ///Do something here OnSlide
@@ -52,16 +55,13 @@ class CartPage extends ConsumerWidget {
             "Slide to Request Pickup",
             style: TextStyle(
                 color: Theme.of(context).colorScheme.onPrimary,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.bold,
                 fontSize: 17),
           ),
-          icon: const Text(
-            "x",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w400,
-              fontSize: 44,
-            ),
+          icon: Icon(
+            Icons.chevron_right,
+            size: 50,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),
@@ -131,8 +131,6 @@ class CartPage extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.onInverseSurface),
                 child: Column(
                   children: [
-                    // CounterCumTextFieldWidget()
-
                     ...List.generate(scrapModels.length,
                         (index) => CartItemTile(model: scrapModels[index])),
                     const Divider(),
