@@ -12,6 +12,9 @@ _$ScrapModelImpl _$$ScrapModelImplFromJson(Map<String, dynamic> json) =>
       photoUrl: json['photoUrl'] as String?,
       description: json['description'] as String,
       price: (json['price'] as num).toDouble(),
+      measure:
+          $enumDecodeNullable(_$ScrapMeasurementEnumMap, json['measure']) ??
+              ScrapMeasurement.kg,
       isNegotiable: json['isNegotiable'] as bool? ?? false,
     );
 
@@ -21,5 +24,14 @@ Map<String, dynamic> _$$ScrapModelImplToJson(_$ScrapModelImpl instance) =>
       'photoUrl': instance.photoUrl,
       'description': instance.description,
       'price': instance.price,
+      'measure': _$ScrapMeasurementEnumMap[instance.measure]!,
       'isNegotiable': instance.isNegotiable,
     };
+
+const _$ScrapMeasurementEnumMap = {
+  ScrapMeasurement.unit: 'unit',
+  ScrapMeasurement.kg: 'kg',
+  ScrapMeasurement.gm: 'gm',
+  ScrapMeasurement.ltr: 'ltr',
+  ScrapMeasurement.qntl: 'qntl',
+};

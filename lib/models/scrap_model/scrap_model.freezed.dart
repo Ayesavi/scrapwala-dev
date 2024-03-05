@@ -24,6 +24,7 @@ mixin _$ScrapModel {
   String? get photoUrl => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
+  ScrapMeasurement get measure => throw _privateConstructorUsedError;
   bool get isNegotiable => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,6 +44,7 @@ abstract class $ScrapModelCopyWith<$Res> {
       String? photoUrl,
       String description,
       double price,
+      ScrapMeasurement measure,
       bool isNegotiable});
 }
 
@@ -63,6 +65,7 @@ class _$ScrapModelCopyWithImpl<$Res, $Val extends ScrapModel>
     Object? photoUrl = freezed,
     Object? description = null,
     Object? price = null,
+    Object? measure = null,
     Object? isNegotiable = null,
   }) {
     return _then(_value.copyWith(
@@ -82,6 +85,10 @@ class _$ScrapModelCopyWithImpl<$Res, $Val extends ScrapModel>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      measure: null == measure
+          ? _value.measure
+          : measure // ignore: cast_nullable_to_non_nullable
+              as ScrapMeasurement,
       isNegotiable: null == isNegotiable
           ? _value.isNegotiable
           : isNegotiable // ignore: cast_nullable_to_non_nullable
@@ -103,6 +110,7 @@ abstract class _$$ScrapModelImplCopyWith<$Res>
       String? photoUrl,
       String description,
       double price,
+      ScrapMeasurement measure,
       bool isNegotiable});
 }
 
@@ -121,6 +129,7 @@ class __$$ScrapModelImplCopyWithImpl<$Res>
     Object? photoUrl = freezed,
     Object? description = null,
     Object? price = null,
+    Object? measure = null,
     Object? isNegotiable = null,
   }) {
     return _then(_$ScrapModelImpl(
@@ -140,6 +149,10 @@ class __$$ScrapModelImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      measure: null == measure
+          ? _value.measure
+          : measure // ignore: cast_nullable_to_non_nullable
+              as ScrapMeasurement,
       isNegotiable: null == isNegotiable
           ? _value.isNegotiable
           : isNegotiable // ignore: cast_nullable_to_non_nullable
@@ -156,6 +169,7 @@ class _$ScrapModelImpl implements _ScrapModel {
       this.photoUrl,
       required this.description,
       required this.price,
+      this.measure = ScrapMeasurement.kg,
       this.isNegotiable = false});
 
   factory _$ScrapModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -171,11 +185,14 @@ class _$ScrapModelImpl implements _ScrapModel {
   final double price;
   @override
   @JsonKey()
+  final ScrapMeasurement measure;
+  @override
+  @JsonKey()
   final bool isNegotiable;
 
   @override
   String toString() {
-    return 'ScrapModel(name: $name, photoUrl: $photoUrl, description: $description, price: $price, isNegotiable: $isNegotiable)';
+    return 'ScrapModel(name: $name, photoUrl: $photoUrl, description: $description, price: $price, measure: $measure, isNegotiable: $isNegotiable)';
   }
 
   @override
@@ -189,6 +206,7 @@ class _$ScrapModelImpl implements _ScrapModel {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.price, price) || other.price == price) &&
+            (identical(other.measure, measure) || other.measure == measure) &&
             (identical(other.isNegotiable, isNegotiable) ||
                 other.isNegotiable == isNegotiable));
   }
@@ -196,7 +214,7 @@ class _$ScrapModelImpl implements _ScrapModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, name, photoUrl, description, price, isNegotiable);
+      runtimeType, name, photoUrl, description, price, measure, isNegotiable);
 
   @JsonKey(ignore: true)
   @override
@@ -218,6 +236,7 @@ abstract class _ScrapModel implements ScrapModel {
       final String? photoUrl,
       required final String description,
       required final double price,
+      final ScrapMeasurement measure,
       final bool isNegotiable}) = _$ScrapModelImpl;
 
   factory _ScrapModel.fromJson(Map<String, dynamic> json) =
@@ -231,6 +250,8 @@ abstract class _ScrapModel implements ScrapModel {
   String get description;
   @override
   double get price;
+  @override
+  ScrapMeasurement get measure;
   @override
   bool get isNegotiable;
   @override

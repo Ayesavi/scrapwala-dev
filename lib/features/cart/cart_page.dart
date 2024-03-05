@@ -72,58 +72,91 @@ class CartPage extends ConsumerWidget {
       )),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: const EdgeInsets.all(12),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).colorScheme.onInverseSurface),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  addrModel.category.icon(context,
-                      color: Theme.of(context).colorScheme.primary),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  TitleMedium(
-                    text: addrModel.label,
-                    weight: FontWeight.bold,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const TitleMedium(text: '|'),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(addrModel.address),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Transform.rotate(
-                    angle: (90 * (22 / 7)) / 180,
-                    child: Icon(
-                      Icons.chevron_right_rounded,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onBackground
-                          .withOpacity(.6),
-                    ),
-                  )
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 10,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
+              Container(
+                padding: const EdgeInsets.all(12),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Theme.of(context).colorScheme.onInverseSurface),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    addrModel.category.icon(context,
+                        color: Theme.of(context).colorScheme.primary),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    TitleMedium(
+                      text: addrModel.label,
+                      weight: FontWeight.bold,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const TitleMedium(text: '|'),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(addrModel.address),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Transform.rotate(
+                      angle: (90 * (22 / 7)) / 180,
+                      child: Icon(
+                        Icons.chevron_right_rounded,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onBackground
+                            .withOpacity(.6),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Theme.of(context).colorScheme.onInverseSurface),
+                  child: Column(
+                    children: [
+                      ...List.generate(scrapModels.length,
+                          (index) => CartItemTile(model: scrapModels[index])),
+                      const Divider(),
+                      ListTile(
+                        title: const TitleSmall(
+                          text: "Add more items",
+                        ),
+                        trailing: IconButton(
+                            onPressed: () {},
+                            icon:
+                                const Icon(Icons.add_circle_outline_outlined)),
+                      )
+                    ],
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              const TitleMedium(
+                text: '  Bill Details',
+                weight: FontWeight.bold,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
                 padding: const EdgeInsets.all(0),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -131,68 +164,39 @@ class CartPage extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.onInverseSurface),
                 child: Column(
                   children: [
-                    ...List.generate(scrapModels.length,
-                        (index) => CartItemTile(model: scrapModels[index])),
-                    const Divider(),
-                    ListTile(
-                      title: const TitleSmall(
-                        text: "Add more items",
+                    const ListTile(
+                      contentPadding: EdgeInsets.only(left: 16, right: 16),
+                      title: TitleSmall(
+                        text: 'Item Total',
                       ),
-                      trailing: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.add_circle_outline_outlined)),
-                    )
+                      trailing: TitleMedium(text: "$kRupeeSymbol${99}"),
+                    ),
+                    ListTile(
+                      contentPadding:
+                          const EdgeInsets.only(left: 16, right: 16),
+                      title: Text(
+                        'Delivery Fee',
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            decoration: TextDecoration.underline,
+                            decorationStyle: TextDecorationStyle.dashed),
+                      ),
+                      subtitle: const Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: LabelMedium(
+                            maxLines: 2,
+                            text:
+                                'Your request will be travelling long enough to get your order.'),
+                      ),
+                      trailing: const TitleMedium(text: "$kRupeeSymbol${99}"),
+                    ),
                   ],
-                )),
-            const SizedBox(
-              height: 20,
-            ),
-            const TitleMedium(
-              text: '  Bill Details',
-              weight: FontWeight.bold,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: const EdgeInsets.all(0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).colorScheme.onInverseSurface),
-              child: Column(
-                children: [
-                  const ListTile(
-                    contentPadding: EdgeInsets.only(left: 16, right: 16),
-                    title: TitleSmall(
-                      text: 'Item Total',
-                    ),
-                    trailing: TitleMedium(text: "$kRupeeSymbol${99}"),
-                  ),
-                  ListTile(
-                    contentPadding: const EdgeInsets.only(left: 16, right: 16),
-                    title: Text(
-                      'Delivery Fee',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          decoration: TextDecoration.underline,
-                          decorationStyle: TextDecorationStyle.dashed),
-                    ),
-                    subtitle: const Padding(
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: LabelMedium(
-                          maxLines: 2,
-                          text:
-                              'Your request will be travelling long enough to get your order.'),
-                    ),
-                    trailing: const TitleMedium(text: "$kRupeeSymbol${99}"),
-                  ),
-                ],
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );
