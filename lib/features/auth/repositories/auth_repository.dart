@@ -4,7 +4,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AuthRepository {
-  GoogleSignIn get _googleSignIn;
 
   // Singleton instance
   static final AuthRepository _instance = _AuthRepositoryImpl();
@@ -45,7 +44,6 @@ class _AuthRepositoryImpl implements AuthRepository {
   @override
   Future<User?> signInWithGoogle() async {
     if (Platform.isAndroid) {
-      const str = String.fromEnvironment("GOOGLE_CLIENT_ID");
       final googleUser = await _googleSignIn.signIn();
       final googleAuth = await googleUser?.authentication;
       final accessToken = googleAuth?.accessToken;
@@ -84,7 +82,7 @@ class _AuthRepositoryImpl implements AuthRepository {
     return null;
   }
 
-  @override
+  
   GoogleSignIn get _googleSignIn => GoogleSignIn(
       serverClientId: const String.fromEnvironment("GOOGLE_CLIENT_ID"),
       scopes: ['email', "openid"]);

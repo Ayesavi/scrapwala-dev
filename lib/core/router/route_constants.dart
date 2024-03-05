@@ -6,7 +6,11 @@ class RouteConstants {
       TypedGoRoute<SplashRoute>(path: '/', name: 'splash');
 
   static const homeRoute =
-      TypedGoRoute<HomeRoute>(path: '/home', name: 'home', routes: []);
+      TypedGoRoute<HomeRoute>(path: '/home', name: 'home', routes: [
+          TypedGoRoute<SearchPageRoute>(path: 'search', name: "search"),
+          TypedGoRoute<CartPageRoute>(path: 'cartPage', name: "cartPage"),
+
+      ]);
 
   static const authRoute =
       TypedGoRoute<AuthRoute>(path: '/auth', name: 'auth', routes: [

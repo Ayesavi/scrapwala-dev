@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinput/pinput.dart';
+// ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart' as p;
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';

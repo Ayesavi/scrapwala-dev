@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scrapwala_dev/features/auth/widgets/text_theme.dart';
 
+@Deprecated(
+    'Use [TitleMedium] from text_widgets and will be released in majoor release')
 class TitleMedium extends StatelessWidget {
   final String text;
   final TextOverflow overflow;
