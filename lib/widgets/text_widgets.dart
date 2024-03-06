@@ -168,11 +168,13 @@ class TitleLarge extends StatelessWidget {
   final int? maxLines;
   final FontWeight? weight;
   final Color? color;
+  final double? spacing;
 
   const TitleLarge(
       {super.key,
       required this.text,
       this.weight,
+      this.spacing,
       this.maxLines,
       this.color,
       this.overflow = TextOverflow.ellipsis});
@@ -185,6 +187,7 @@ class TitleLarge extends StatelessWidget {
       maxLines: maxLines,
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color: color,
+            letterSpacing: spacing,
             fontWeight: weight,
           ),
     );

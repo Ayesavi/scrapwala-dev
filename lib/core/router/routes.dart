@@ -6,7 +6,9 @@ import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/verify_page.dart';
 import 'package:scrapwala_dev/features/cart/cart_page.dart';
 import 'package:scrapwala_dev/features/home/screens/home_page.dart';
-import 'package:scrapwala_dev/features/profile/screens/profile_screen.dart';
+import 'package:scrapwala_dev/features/profile/screens/edit_profile.dart';
+import 'package:scrapwala_dev/features/profile/screens/profile_page.dart';
+import 'package:scrapwala_dev/features/profile/screens/request_info_page.dart';
 import 'package:scrapwala_dev/features/search/screens/search_page.dart';
 import 'package:scrapwala_dev/features/splash/screens/splash_screen.dart';
 
@@ -65,7 +67,6 @@ class SearchPageRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => SearchPage();
 }
 
-
 class CartPageRoute extends GoRouteData {
   const CartPageRoute();
 
@@ -73,19 +74,34 @@ class CartPageRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => const CartPage();
 }
 
-
-
 class SelectAddressPageRoute extends GoRouteData {
   const SelectAddressPageRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const SelectAddressPage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const SelectAddressPage();
 }
-
 
 class ProfilePageRoute extends GoRouteData {
   const ProfilePageRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const ProfilePage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const ProfilePage();
+}
+
+class RequestInfoPageRoute extends GoRouteData {
+  const RequestInfoPageRoute(this.requestId);
+  final String requestId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      RequestInfoPage(requestId: requestId);
+}
+
+class EditProfileRoute extends GoRouteData {
+  const EditProfileRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => EditProfilePage();
 }

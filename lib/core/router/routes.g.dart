@@ -125,11 +125,23 @@ RouteBase get $homeRoute => GoRouteData.$route(
           path: 'profilePage',
           name: 'profilePage',
           factory: $ProfilePageRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'editProfilePage',
+              name: 'editProfilePage',
+              factory: $EditProfileRouteExtension._fromState,
+            ),
+          ],
         ),
         GoRouteData.$route(
           path: 'selectAddressPage',
           name: 'selectAddressPage',
           factory: $SelectAddressPageRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'requestInfoPage/:requestId',
+          name: 'requestInfoPage',
+          factory: $RequestInfoPageRouteExtension._fromState,
         ),
       ],
     );
@@ -204,12 +216,50 @@ extension $ProfilePageRouteExtension on ProfilePageRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+extension $EditProfileRouteExtension on EditProfileRoute {
+  static EditProfileRoute _fromState(GoRouterState state) =>
+      const EditProfileRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/profilePage/editProfilePage',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
 extension $SelectAddressPageRouteExtension on SelectAddressPageRoute {
   static SelectAddressPageRoute _fromState(GoRouterState state) =>
       const SelectAddressPageRoute();
 
   String get location => GoRouteData.$location(
         '/home/selectAddressPage',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $RequestInfoPageRouteExtension on RequestInfoPageRoute {
+  static RequestInfoPageRoute _fromState(GoRouterState state) =>
+      RequestInfoPageRoute(
+        state.pathParameters['requestId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/home/requestInfoPage/${Uri.encodeComponent(requestId)}',
       );
 
   void go(BuildContext context) => context.go(location);

@@ -65,7 +65,7 @@ class HomePage extends ConsumerWidget {
                   Theme.of(context).colorScheme.outline.withOpacity(.3),
               child: IconButton(
                   onPressed: () async {
-                    const SelectAddressPageRoute().go(context);
+                    const ProfilePageRoute().go(context);
                     // await ref.read(authControllerProvider).signOut();
                   },
                   icon: Icon(
