@@ -121,6 +121,11 @@ RouteBase get $homeRoute => GoRouteData.$route(
           name: 'cartPage',
           factory: $CartPageRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'selectAddressPage',
+          name: 'selectAddressPage',
+          factory: $SelectAddressPageRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -164,6 +169,24 @@ extension $CartPageRouteExtension on CartPageRoute {
 
   String get location => GoRouteData.$location(
         '/home/cartPage',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SelectAddressPageRouteExtension on SelectAddressPageRoute {
+  static SelectAddressPageRoute _fromState(GoRouterState state) =>
+      const SelectAddressPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/selectAddressPage',
       );
 
   void go(BuildContext context) => context.go(location);
