@@ -49,4 +49,5 @@ const _$AddressCategoryEnumMap = {
   AddressCategory.friend: 'friend',
   AddressCategory.house: 'house',
   AddressCategory.office: 'office',
+  AddressCategory.others: 'others',
 };

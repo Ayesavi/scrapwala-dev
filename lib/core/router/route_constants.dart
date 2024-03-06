@@ -9,6 +9,7 @@ class RouteConstants {
       TypedGoRoute<HomeRoute>(path: '/home', name: 'home', routes: [
           TypedGoRoute<SearchPageRoute>(path: 'search', name: "search"),
           TypedGoRoute<CartPageRoute>(path: 'cartPage', name: "cartPage"),
+          TypedGoRoute<SelectAddressPageRoute>(path: 'selectAddressPage', name: "selectAddressPage"),
 
       ]);
 

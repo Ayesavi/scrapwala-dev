@@ -24,8 +24,9 @@ class ChipWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         label: LabelLarge(
           text: label,
-          color:
-              isSelected ? Theme.of(context).colorScheme.primary : Colors.black,
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.onSurface,
         ),
         side: BorderSide(
           color: isSelected
@@ -38,8 +39,9 @@ class ChipWidget extends StatelessWidget {
         ),
         avatar: Icon(
           icon,
-          color:
-              isSelected ? Theme.of(context).colorScheme.primary : Colors.black,
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.onSurface,
         ),
       ),
     );

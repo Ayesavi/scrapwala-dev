@@ -53,12 +53,13 @@ dependencies:
   permission_handler: ^11.2.0
   riverpod_annotation: ^2.3.3
   flutter_dotenv: ^5.1.0
-  firebase_core: ^2.24.2
+  firebase_core: ^2.26.0
   shimmer: ^3.0.0
   lottie: ^3.1.0
   image_picker: ^1.0.7
   app_settings: ^5.1.1
   cloud_firestore: ^4.15.6
+
   firebase_storage: ^11.6.0
   firebase_auth: ^4.17.7
   google_maps_place_picker_mb: ^3.1.2
@@ -67,6 +68,7 @@ dependencies:
   sms_autofill: ^2.3.1
   rich_readmore: ^1.1.1
   slider_button: ^2.1.0
+  google_maps_flutter: ^2.5.3
 
 dev_dependencies:
 
@@ -85,7 +87,7 @@ dev_dependencies:
   riverpod_lint: ^2.3.7
   flutter_gen_runner: ^5.4.0
   go_router_builder: ^2.4.1
-  riverpod_generator: ^2.3.9
+  riverpod_generator: ^2.3.11
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
