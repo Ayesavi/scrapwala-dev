@@ -6,6 +6,7 @@ import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/verify_page.dart';
 import 'package:scrapwala_dev/features/cart/cart_page.dart';
 import 'package:scrapwala_dev/features/home/screens/home_page.dart';
+import 'package:scrapwala_dev/features/profile/screens/profile_screen.dart';
 import 'package:scrapwala_dev/features/search/screens/search_page.dart';
 import 'package:scrapwala_dev/features/splash/screens/splash_screen.dart';
 
@@ -79,4 +80,12 @@ class SelectAddressPageRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const SelectAddressPage();
+}
+
+
+class ProfilePageRoute extends GoRouteData {
+  const ProfilePageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const ProfilePage();
 }
