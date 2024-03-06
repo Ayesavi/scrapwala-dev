@@ -12,7 +12,10 @@ class ProfilePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
-          title: const TitleMedium(text: 'Profile Page'),
+          title: const TitleMedium(
+            text: 'Profile Page',
+            weight: FontWeight.bold,
+          ),
           actions: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
