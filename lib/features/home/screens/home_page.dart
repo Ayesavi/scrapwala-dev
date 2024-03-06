@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
-import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/models/scrap_category/scrap_category_model.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
@@ -42,6 +41,7 @@ class HomePage extends ConsumerWidget {
         itemAdded: 2,
       ),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: LocationTileOpenBottomsheet(
           model: AddressModel(
               address: "Devpuri, House number 44 Wallfort Paradise",
@@ -65,7 +65,8 @@ class HomePage extends ConsumerWidget {
                   Theme.of(context).colorScheme.outline.withOpacity(.3),
               child: IconButton(
                   onPressed: () async {
-                    await ref.read(authControllerProvider).signOut();
+                    const SelectAddressPageRoute().go(context);
+                    // await ref.read(authControllerProvider).signOut();
                   },
                   icon: Icon(
                     Icons.person,

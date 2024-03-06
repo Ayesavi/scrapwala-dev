@@ -165,6 +165,7 @@ class BodyLarge extends StatelessWidget {
 class TitleLarge extends StatelessWidget {
   final String text;
   final TextOverflow overflow;
+  final int? maxLines;
   final FontWeight? weight;
   final Color? color;
 
@@ -172,6 +173,7 @@ class TitleLarge extends StatelessWidget {
       {super.key,
       required this.text,
       this.weight,
+      this.maxLines,
       this.color,
       this.overflow = TextOverflow.ellipsis});
 
@@ -180,10 +182,11 @@ class TitleLarge extends StatelessWidget {
     return Text(
       text,
       overflow: overflow,
-      style: Theme.of(context)
-          .textTheme
-          .titleLarge
-          ?.copyWith(color: color, fontWeight: weight),
+      maxLines: maxLines,
+      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            color: color,
+            fontWeight: weight,
+          ),
     );
   }
 }
@@ -230,14 +233,17 @@ class TitleSmall extends StatelessWidget {
   final TextOverflow overflow;
   final TextStyle? style;
   const TitleSmall(
-      {super.key, required this.text,this.style, this.overflow = TextOverflow.ellipsis});
+      {super.key,
+      required this.text,
+      this.style,
+      this.overflow = TextOverflow.ellipsis});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       overflow: overflow,
-      style: style?? Theme.of(context).textTheme.titleSmall,
+      style: style ?? Theme.of(context).textTheme.titleSmall,
     );
   }
 }

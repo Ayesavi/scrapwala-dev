@@ -38,6 +38,10 @@ class AddressTile extends ConsumerWidget {
             Icons.maps_home_work_outlined,
             color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
           ),
+        AddressCategory.others => Icon(
+            Icons.category,
+            color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+          ),
       },
 
       // Other relevant details or actions related to the address can be added here

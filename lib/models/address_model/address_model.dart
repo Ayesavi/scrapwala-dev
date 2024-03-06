@@ -21,11 +21,7 @@ class AddressModel with _$AddressModel {
       _$AddressModelFromJson(json);
 }
 
-enum AddressCategory {
-  friend,
-  house,
-  office,
-}
+enum AddressCategory { friend, house, office, others }
 
 extension GetBool on AddressCategory {
   bool get isFriend => this == AddressCategory.friend;
@@ -37,10 +33,11 @@ extension GetBool on AddressCategory {
       AddressCategory.friend => 'Friends and Family',
       AddressCategory.house => 'Home',
       AddressCategory.office => 'Work',
+      AddressCategory.others => 'Others'
     };
   }
 
-  Icon icon(BuildContext context,{ Color? color}) {
+  Icon icon(BuildContext context, {Color? color}) {
     return switch (this) {
       AddressCategory.friend => Icon(
           Icons.group_outlined,
@@ -49,11 +46,18 @@ extension GetBool on AddressCategory {
         ),
       AddressCategory.house => Icon(
           Icons.home_outlined,
-          color:color?? Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+          color: color ??
+              Theme.of(context).colorScheme.onBackground.withOpacity(.6),
         ),
       AddressCategory.office => Icon(
           Icons.maps_home_work_outlined,
-          color: color??Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+          color: color ??
+              Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+        ),
+      AddressCategory.others => Icon(
+          Icons.category,
+          color: color ??
+              Theme.of(context).colorScheme.onBackground.withOpacity(.6),
         ),
     };
   }
@@ -63,6 +67,7 @@ extension GetBool on AddressCategory {
       AddressCategory.friend => (Icons.person_outline),
       AddressCategory.house => (Icons.home_outlined),
       AddressCategory.office => (Icons.work_outline),
+      AddressCategory.others => (Icons.category),
     };
   }
 }
