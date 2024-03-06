@@ -4,7 +4,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AuthRepository {
-
   // Singleton instance
   static final AuthRepository _instance = _AuthRepositoryImpl();
 
@@ -14,8 +13,9 @@ abstract class AuthRepository {
   Future<void> signInWithOtp(String phone);
   Future<void> signOut();
   Future<User?> signInWithGoogle();
-  Future<User?> verifyOtp(String t,String phoneNumber);
+  Future<User?> verifyOtp(String t, String phoneNumber);
   Future<User?> getUser();
+  Future<void> sendOtp();
 }
 
 class UnAuthenticatedUserException implements Exception {
@@ -82,8 +82,12 @@ class _AuthRepositoryImpl implements AuthRepository {
     return null;
   }
 
-  
   GoogleSignIn get _googleSignIn => GoogleSignIn(
       serverClientId: const String.fromEnvironment("GOOGLE_CLIENT_ID"),
       scopes: ['email', "openid"]);
+
+  @override
+  Future<void> sendOtp() async {
+    // _supabase.auth.updateUser(attributes)
+  }
 }
