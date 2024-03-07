@@ -22,11 +22,11 @@ class RouteConstants {
     TypedGoRoute<OtpPageRoute>(path: 'otp/:phone', name: 'otp')
   ]);
 
-  static const profileRoute = TypedGoRoute<ProfilePageRoute>(
-      path: 'profilePage',
-      name: "profilePage",
-      routes: [
-        TypedGoRoute<EditProfileRoute>(
-            path: 'editProfilePage', name: "editProfilePage"),
-      ]);
+  static const profileRoute =
+      TypedGoRoute<ProfilePageRoute>(path: 'profile', name: "profile", routes: [
+    TypedGoRoute<EditProfileRoute>(
+        path: 'editProfilePage', name: "editProfilePage"),
+    TypedGoRoute<AddressPageRoute>(
+        path: 'addressesPage', name: "addressesPage"),
+  ]);
 }

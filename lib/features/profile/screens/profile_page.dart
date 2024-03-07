@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
+import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.dart';
 import 'package:scrapwala_dev/widgets/past_pickup_request_tile.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
@@ -63,7 +64,9 @@ class ProfilePage extends ConsumerWidget {
                 ),
               ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  const AddressPageRoute().push(context);
+                },
                 title: const TitleMedium(text: 'Addresses'),
                 subtitle: const Padding(
                   padding: EdgeInsets.all(2.0),
@@ -83,6 +86,18 @@ class ProfilePage extends ConsumerWidget {
                   child: LabelMedium(text: "Payments and Transactions"),
                 ),
                 trailing: const Icon(Icons.chevron_right),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Divider(),
+              ),
+              ListTile(
+                leading: const Icon(Icons.exit_to_app),
+                title: const TitleMedium(text: 'Logout'),
+                onTap: () {
+                  ref.read(authControllerProvider).signOut();
+                  // Call the onPressed callback when the ListTile is tapped
+                },
               ),
               Container(
                 width: double.infinity,

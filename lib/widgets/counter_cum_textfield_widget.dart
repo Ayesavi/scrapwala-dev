@@ -9,6 +9,7 @@ class CounterCumTextFieldWidget extends ConsumerStatefulWidget {
   final void Function(int qty) onCounterChange;
 
   @override
+  // ignore: library_private_types_in_public_api
   _CounterCumTextFieldWidgetState createState() =>
       _CounterCumTextFieldWidgetState();
 }
