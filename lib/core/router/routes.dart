@@ -6,6 +6,7 @@ import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/verify_page.dart';
 import 'package:scrapwala_dev/features/cart/cart_page.dart';
 import 'package:scrapwala_dev/features/home/screens/home_page.dart';
+import 'package:scrapwala_dev/features/profile/screens/addresses_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/edit_profile.dart';
 import 'package:scrapwala_dev/features/profile/screens/profile_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/request_info_page.dart';
@@ -103,5 +104,14 @@ class EditProfileRoute extends GoRouteData {
   const EditProfileRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => EditProfilePage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const EditProfilePage();
+}
+
+class AddressPageRoute extends GoRouteData {
+  const AddressPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const AddressesPage();
 }

@@ -116,7 +116,7 @@ class GetStartedPageConstants {
 List<AddressModel> _buildRandomAddressModels() {
   return [
     AddressModel(
-      address: '123 Main Street',
+      address: '123 Main Street', 
       landmark: 'Central Park',
       latlng: (lat: 51.5074, lng: 0.1278),
       ownerId: 'user123',
