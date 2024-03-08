@@ -21,7 +21,8 @@ AddressModel _$AddressModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AddressModel {
   String get address => throw _privateConstructorUsedError;
-  String? get landmark => throw _privateConstructorUsedError;
+  String get houseStreetNo => throw _privateConstructorUsedError;
+  String? get apartmentRoadAreadLandmark => throw _privateConstructorUsedError;
   ({double lat, double lng}) get latlng => throw _privateConstructorUsedError;
   String? get ownerId => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -43,7 +44,8 @@ abstract class $AddressModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String address,
-      String? landmark,
+      String houseStreetNo,
+      String? apartmentRoadAreadLandmark,
       ({double lat, double lng}) latlng,
       String? ownerId,
       DateTime createdAt,
@@ -66,7 +68,8 @@ class _$AddressModelCopyWithImpl<$Res, $Val extends AddressModel>
   @override
   $Res call({
     Object? address = null,
-    Object? landmark = freezed,
+    Object? houseStreetNo = null,
+    Object? apartmentRoadAreadLandmark = freezed,
     Object? latlng = null,
     Object? ownerId = freezed,
     Object? createdAt = null,
@@ -79,9 +82,13 @@ class _$AddressModelCopyWithImpl<$Res, $Val extends AddressModel>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      landmark: freezed == landmark
-          ? _value.landmark
-          : landmark // ignore: cast_nullable_to_non_nullable
+      houseStreetNo: null == houseStreetNo
+          ? _value.houseStreetNo
+          : houseStreetNo // ignore: cast_nullable_to_non_nullable
+              as String,
+      apartmentRoadAreadLandmark: freezed == apartmentRoadAreadLandmark
+          ? _value.apartmentRoadAreadLandmark
+          : apartmentRoadAreadLandmark // ignore: cast_nullable_to_non_nullable
               as String?,
       latlng: null == latlng
           ? _value.latlng
@@ -121,7 +128,8 @@ abstract class _$$AddressModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String address,
-      String? landmark,
+      String houseStreetNo,
+      String? apartmentRoadAreadLandmark,
       ({double lat, double lng}) latlng,
       String? ownerId,
       DateTime createdAt,
@@ -142,7 +150,8 @@ class __$$AddressModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? address = null,
-    Object? landmark = freezed,
+    Object? houseStreetNo = null,
+    Object? apartmentRoadAreadLandmark = freezed,
     Object? latlng = null,
     Object? ownerId = freezed,
     Object? createdAt = null,
@@ -155,9 +164,13 @@ class __$$AddressModelImplCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      landmark: freezed == landmark
-          ? _value.landmark
-          : landmark // ignore: cast_nullable_to_non_nullable
+      houseStreetNo: null == houseStreetNo
+          ? _value.houseStreetNo
+          : houseStreetNo // ignore: cast_nullable_to_non_nullable
+              as String,
+      apartmentRoadAreadLandmark: freezed == apartmentRoadAreadLandmark
+          ? _value.apartmentRoadAreadLandmark
+          : apartmentRoadAreadLandmark // ignore: cast_nullable_to_non_nullable
               as String?,
       latlng: null == latlng
           ? _value.latlng
@@ -192,7 +205,8 @@ class __$$AddressModelImplCopyWithImpl<$Res>
 class _$AddressModelImpl implements _AddressModel {
   _$AddressModelImpl(
       {required this.address,
-      this.landmark,
+      required this.houseStreetNo,
+      this.apartmentRoadAreadLandmark,
       required this.latlng,
       this.ownerId,
       required this.createdAt,
@@ -206,7 +220,9 @@ class _$AddressModelImpl implements _AddressModel {
   @override
   final String address;
   @override
-  final String? landmark;
+  final String houseStreetNo;
+  @override
+  final String? apartmentRoadAreadLandmark;
   @override
   final ({double lat, double lng}) latlng;
   @override
@@ -222,7 +238,7 @@ class _$AddressModelImpl implements _AddressModel {
 
   @override
   String toString() {
-    return 'AddressModel(address: $address, landmark: $landmark, latlng: $latlng, ownerId: $ownerId, createdAt: $createdAt, id: $id, category: $category, label: $label)';
+    return 'AddressModel(address: $address, houseStreetNo: $houseStreetNo, apartmentRoadAreadLandmark: $apartmentRoadAreadLandmark, latlng: $latlng, ownerId: $ownerId, createdAt: $createdAt, id: $id, category: $category, label: $label)';
   }
 
   @override
@@ -231,8 +247,12 @@ class _$AddressModelImpl implements _AddressModel {
         (other.runtimeType == runtimeType &&
             other is _$AddressModelImpl &&
             (identical(other.address, address) || other.address == address) &&
-            (identical(other.landmark, landmark) ||
-                other.landmark == landmark) &&
+            (identical(other.houseStreetNo, houseStreetNo) ||
+                other.houseStreetNo == houseStreetNo) &&
+            (identical(other.apartmentRoadAreadLandmark,
+                    apartmentRoadAreadLandmark) ||
+                other.apartmentRoadAreadLandmark ==
+                    apartmentRoadAreadLandmark) &&
             (identical(other.latlng, latlng) || other.latlng == latlng) &&
             (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
             (identical(other.createdAt, createdAt) ||
@@ -245,8 +265,17 @@ class _$AddressModelImpl implements _AddressModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, address, landmark, latlng,
-      ownerId, createdAt, id, category, label);
+  int get hashCode => Object.hash(
+      runtimeType,
+      address,
+      houseStreetNo,
+      apartmentRoadAreadLandmark,
+      latlng,
+      ownerId,
+      createdAt,
+      id,
+      category,
+      label);
 
   @JsonKey(ignore: true)
   @override
@@ -265,7 +294,8 @@ class _$AddressModelImpl implements _AddressModel {
 abstract class _AddressModel implements AddressModel {
   factory _AddressModel(
       {required final String address,
-      final String? landmark,
+      required final String houseStreetNo,
+      final String? apartmentRoadAreadLandmark,
       required final ({double lat, double lng}) latlng,
       final String? ownerId,
       required final DateTime createdAt,
@@ -279,7 +309,9 @@ abstract class _AddressModel implements AddressModel {
   @override
   String get address;
   @override
-  String? get landmark;
+  String get houseStreetNo;
+  @override
+  String? get apartmentRoadAreadLandmark;
   @override
   ({double lat, double lng}) get latlng;
   @override

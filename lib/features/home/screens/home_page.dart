@@ -44,6 +44,7 @@ class HomePage extends ConsumerWidget {
         automaticallyImplyLeading: false,
         title: LocationTileOpenBottomsheet(
           model: AddressModel(
+              houseStreetNo: '57',
               address: "Devpuri, House number 44 Wallfort Paradise",
               latlng: (lat: 2432432.42342, lng: 213421423),
               createdAt: DateTime.now(),

@@ -36,7 +36,7 @@ class RequestInfoPage extends ConsumerWidget {
           AddressTile(
             model: AddressModel(
               address: '123 Main Street',
-              landmark: 'Central Park',
+              houseStreetNo: '57',
               latlng: (lat: 51.5074, lng: 0.1278),
               ownerId: 'user123',
               createdAt: DateTime.now(),

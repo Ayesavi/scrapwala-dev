@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:scrapwala_dev/features/address/screens/select_address_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/get_started_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/verify_page.dart';
@@ -73,14 +72,6 @@ class CartPageRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const CartPage();
-}
-
-class SelectAddressPageRoute extends GoRouteData {
-  const SelectAddressPageRoute();
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const SelectAddressPage();
 }
 
 class ProfilePageRoute extends GoRouteData {
