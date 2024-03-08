@@ -8,7 +8,8 @@ part 'address_model.g.dart';
 class AddressModel with _$AddressModel {
   factory AddressModel({
     required String address,
-    String? landmark,
+    required String houseStreetNo,
+    String? apartmentRoadAreadLandmark,
     required ({double lat, double lng}) latlng,
     String? ownerId,
     required DateTime createdAt,

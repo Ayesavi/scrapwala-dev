@@ -116,20 +116,21 @@ class GetStartedPageConstants {
 List<AddressModel> _buildRandomAddressModels() {
   return [
     AddressModel(
-      address: '123 Main Street', 
-      landmark: 'Central Park',
+      address: '123 Main Street',
       latlng: (lat: 51.5074, lng: 0.1278),
       ownerId: 'user123',
       createdAt: DateTime.now(),
       id: '1',
       category: AddressCategory.friend,
       label: 'Home',
+      houseStreetNo: '57',
     ),
     AddressModel(
       address: '456 Elm Street',
       latlng: (lat: 51.5074, lng: 0.1278),
       createdAt: DateTime.now(),
       id: '2',
+      houseStreetNo: '57',
       category: AddressCategory.office,
       label: 'Work',
     ),
@@ -138,6 +139,7 @@ List<AddressModel> _buildRandomAddressModels() {
       latlng: (lat: 51.5074, lng: 0.1278),
       createdAt: DateTime.now(),
       id: '3',
+      houseStreetNo: '57',
       category: AddressCategory.house,
       label: 'Vacation Home',
     ),

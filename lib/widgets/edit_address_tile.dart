@@ -6,13 +6,22 @@ import 'package:scrapwala_dev/widgets/text_widgets.dart';
 class EditAddressTile extends ConsumerWidget {
   final AddressModel model;
   final VoidCallback? onTap;
-  const EditAddressTile({super.key, required this.model, this.onTap});
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
+
+  const EditAddressTile({
+    Key? key,
+    required this.model,
+    this.onTap,
+    this.onEdit,
+    this.onDelete,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12), // Set the border radius here
+        borderRadius: BorderRadius.circular(12),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,53 +50,56 @@ class EditAddressTile extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  onPressed: () {},
-                  child: const Text("Edit")),
+                ),
+                onPressed: onEdit,
+                child: const Text("Edit"),
+              ),
               const SizedBox(
                 width: 10,
               ),
               ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  onPressed: () {},
-                  child: const Text("Delete"))
+                ),
+                onPressed: onDelete,
+                child: const Text("Delete"),
+              )
             ],
           )
         ],
       ),
-
-      leading: switch (model.category) {
-        AddressCategory.friend => Icon(
-            Icons.group_outlined,
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
-          ),
-        AddressCategory.house => Icon(
-            Icons.home_outlined,
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
-          ),
-        AddressCategory.office => Icon(
-            Icons.maps_home_work_outlined,
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
-          ),
-        AddressCategory.others => Icon(
-            Icons.category,
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
-          ),
-      },
-
-      // Other relevant details or actions related to the address can be added here
+      leading: _buildLeadingIcon(context),
     );
+  }
+
+  Widget _buildLeadingIcon(BuildContext context) {
+    return switch (model.category) {
+      AddressCategory.friend => Icon(
+          Icons.group_outlined,
+          color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+        ),
+      AddressCategory.house => Icon(
+          Icons.home_outlined,
+          color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+        ),
+      AddressCategory.office => Icon(
+          Icons.maps_home_work_outlined,
+          color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+        ),
+      AddressCategory.others => Icon(
+          Icons.category,
+          color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
+        ),
+    };
   }
 }

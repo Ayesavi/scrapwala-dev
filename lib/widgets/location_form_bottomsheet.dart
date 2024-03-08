@@ -8,6 +8,7 @@ import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
 void showLocationFormBottomSheet(BuildContext context,
     {required PickResult pickResult,
+    AddressModel? addressModel,
     Future<void> Function(AddressModel model)? onSaveAndProceed}) {
   showModalBottomSheet(
     context: context,
@@ -16,45 +17,74 @@ void showLocationFormBottomSheet(BuildContext context,
     builder: (BuildContext context) {
       return _LocationFormBottomSheetContent(
         pickResult: pickResult,
+        addressModel: addressModel,
         onSaveAndProceed: onSaveAndProceed,
       );
     },
   );
 }
 
-class _LocationFormBottomSheetContent extends ConsumerWidget {
+class _LocationFormBottomSheetContent extends ConsumerStatefulWidget {
   final Future<void> Function(AddressModel model)? onSaveAndProceed;
   final PickResult pickResult;
+  final AddressModel? addressModel;
 
-  _LocationFormBottomSheetContent(
-      {required this.pickResult, this.onSaveAndProceed});
+  const _LocationFormBottomSheetContent({
+    required this.pickResult,
+    this.addressModel,
+    this.onSaveAndProceed,
+  });
 
+  @override
+  _LocationFormBottomSheetContentState createState() =>
+      _LocationFormBottomSheetContentState();
+}
+
+class _LocationFormBottomSheetContentState
+    extends ConsumerState<_LocationFormBottomSheetContent> {
   final houseNumberController = TextEditingController();
   final apartmentController = TextEditingController();
   final directionsController = TextEditingController();
   final labelController = TextEditingController();
+  late final ValueNotifier<AddressCategory> saveAsNotifier;
 
-  final saveAsNotifier = ValueNotifier<AddressCategory>(AddressCategory.house);
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize text field controllers with addressModel.label if it exists
+    labelController.text = widget.addressModel?.label ?? "";
+    houseNumberController.text = widget.addressModel?.houseStreetNo ?? "";
+    apartmentController.text =
+        widget.addressModel?.apartmentRoadAreadLandmark ?? "";
+    saveAsNotifier = ValueNotifier<AddressCategory>(
+        widget.addressModel?.category ?? AddressCategory.house);
+  }
 
   AddressModel _formModel() {
     return AddressModel(
-        address:
-            '${houseNumberController.text}, ${apartmentController.text}, ${directionsController.text}',
-        latlng: (
-          lat: pickResult.geometry!.location.lat,
-          lng: pickResult.geometry!.location.lng
-        ),
-        createdAt: DateTime.now(),
-        id: "",
-        category: saveAsNotifier.value,
-        label: labelController.text);
+      houseStreetNo: houseNumberController.text,
+      apartmentRoadAreadLandmark: apartmentController.text,
+      address:
+          '${houseNumberController.text}, ${apartmentController.text}, ${directionsController.text}',
+      latlng: (
+        lat: widget.pickResult.geometry!.location.lat,
+        lng: widget.pickResult.geometry!.location.lng,
+      ),
+      createdAt: DateTime.now(),
+      id: widget.addressModel?.id ?? "",
+      category: saveAsNotifier.value,
+      label: labelController.text,
+    );
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom, top: 10),
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+        top: 10,
+      ),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -67,7 +97,7 @@ class _LocationFormBottomSheetContent extends ConsumerWidget {
                   const Icon(Icons.location_on_outlined),
                   const SizedBox(width: 10),
                   TitleLarge(
-                    text: pickResult.name ?? "",
+                    text: widget.pickResult.name ?? "",
                     weight: FontWeight.bold,
                   ),
                 ],
@@ -76,7 +106,7 @@ class _LocationFormBottomSheetContent extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: LabelMedium(
                   maxLines: 2,
-                  text: pickResult.formattedAddress ?? "",
+                  text: widget.pickResult.formattedAddress ?? "",
                 ),
               ),
             ),
@@ -99,7 +129,7 @@ class _LocationFormBottomSheetContent extends ConsumerWidget {
                         'A detailed address will help our delivery partner to reach you accurately.'),
                   ),
                   TextField(
-                    controller: apartmentController,
+                    controller: labelController,
                     decoration: const InputDecoration(
                       hintText: 'Enter Label',
                       border: InputBorder.none,
@@ -187,10 +217,12 @@ class _LocationFormBottomSheetContent extends ConsumerWidget {
                   AppFilledButton(
                     label: 'Save And Proceed',
                     asyncTap: () async {
-                      await onSaveAndProceed?.call(_formModel()).then((value) {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      }).catchError((e) {});
+                      await widget.onSaveAndProceed?.call(_formModel()).then(
+                        (value) {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                      ).catchError((e) {});
                     },
                   ),
                 ],
