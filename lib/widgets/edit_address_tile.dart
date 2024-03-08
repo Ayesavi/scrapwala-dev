@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scrapwala_dev/core/extensions/string_extension.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
@@ -10,12 +11,12 @@ class EditAddressTile extends ConsumerWidget {
   final VoidCallback? onDelete;
 
   const EditAddressTile({
-    Key? key,
+    super.key,
     required this.model,
     this.onTap,
     this.onEdit,
     this.onDelete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,12 +28,12 @@ class EditAddressTile extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TitleMedium(
-            text: model.label,
+            text: model.label.capitalize,
           ),
           const SizedBox(
-            height: 10,
+            height: 10,                  
           ),
-          LabelMedium(text: model.address),
+          LabelMedium(text: model.address.capitalize),
           const SizedBox(
             height: 10,
           ),
