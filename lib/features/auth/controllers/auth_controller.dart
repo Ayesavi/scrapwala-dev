@@ -49,8 +49,8 @@ class AuthController {
     return await _repo.signInWithGoogle();
   }
 
-  Future<User?> verifyOtp(String token,String phone) async {
-    return await _repo.verifyOtp(token,phone);
+  Future<User?> verifyOtp(String token,String phone,OtpType type) async {
+    return await _repo.verifyOtp(token,phone,type);
   }
 
   Future<User?> getUser() async {

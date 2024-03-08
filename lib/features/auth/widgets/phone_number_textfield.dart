@@ -95,7 +95,11 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                           child: TextField(
                         controller: textController,
                         style: GoogleFonts.roboto(
-                            color: Colors.black, fontSize: 18),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(.6),
+                            fontSize: 18),
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly,
@@ -124,7 +128,7 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
                   top: 8,
                   child: Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     child: LabelLarge(
                       text: PhoneNumberTextFieldConstants.labelText,
                       style: GoogleFonts.montserrat(
