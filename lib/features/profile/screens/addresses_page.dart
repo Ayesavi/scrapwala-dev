@@ -43,38 +43,53 @@ class AddressesPage extends ConsumerWidget {
                   child: CupertinoActivityIndicator(),
                 ),
             data: (models) {
-              return Column(children: [
-                Flexible(
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      controller.fetchAddresses();
-                    },
-                    child: ListView.builder(
-                      itemCount: models.length,
-                      itemBuilder: (context, index) {
-                        return EditAddressTile(
-                            onDelete: () {
-                              controller.deleteAddress(
-                                  context, models[index].id);
-                            },
-                            onEdit: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return SelectAddressPage(
-                                      model: models[index],
-                                      onAddressSelected: (model) async {
-                                        controller.updateAddress(
-                                            context, model);
-                                      });
+              return Stack(
+                children: [
+                  Column(children: [
+                    Flexible(
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          controller.fetchAddresses();
+                        },
+                        child: ListView.builder(
+                          itemCount: models.length,
+                          itemBuilder: (context, index) {
+                            return EditAddressTile(
+                                onDelete: () {
+                                  controller.deleteAddress(
+                                      context, models[index].id);
                                 },
-                              ));
-                            },
-                            model: models[index]);
-                      },
+                                onEdit: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return SelectAddressPage(
+                                          model: models[index],
+                                          onAddressSelected: (model) async {
+                                            controller.updateAddress(
+                                                context, model);
+                                          });
+                                    },
+                                  ));
+                                },
+                                model: models[index]);
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ]);
+                  ]),
+                  if (models.isEmpty) ...[
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                          child: Text(
+                        "You have no saved addresses yet. To add a new address, simply tap on the \"Add Address\" button below.",
+                        // maxLines: 3,
+                        textAlign: TextAlign.center,
+                      )),
+                    )
+                  ]
+                ],
+              );
             },
             error: (error) => const SizedBox()));
   }

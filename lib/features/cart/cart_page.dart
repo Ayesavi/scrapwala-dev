@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/constants/string_constants.dart';
+import 'package:scrapwala_dev/core/providers/location_provider/location_controller.dart';
+import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 import 'package:scrapwala_dev/widgets/cart_item_tile.dart';
+import 'package:scrapwala_dev/widgets/location_bottomsheet.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 import 'package:slider_button/slider_button.dart';
 
@@ -12,6 +15,9 @@ class CartPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locationState = ref.watch(locationControllerProvider);
+    final locationController = ref.read(locationControllerProvider.notifier);
+
     final scrapModels = [
       const ScrapModel(
           description:
@@ -26,16 +32,7 @@ class CartPage extends ConsumerWidget {
           photoUrl: 'https://picsum.photos/100/100?random=9',
           name: "Glossy Papers")
     ];
-    final addrModel = AddressModel(
-      address: '123 Main Street',
-      houseStreetNo: '57',
-      latlng: (lat: 51.5074, lng: 0.1278),
-      ownerId: 'user123',
-      createdAt: DateTime.now(),
-      id: '1',
-      category: AddressCategory.friend,
-      label: 'Home',
-    );
+
     final buttonWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       bottomNavigationBar: Padding(
@@ -48,7 +45,7 @@ class CartPage extends ConsumerWidget {
           highlightedColor: Theme.of(context).colorScheme.outlineVariant,
           backgroundColor: Theme.of(context).colorScheme.primary,
           action: () async {
-            ///Do something here OnSlide
+            /// Do something here OnSlide
             return false;
           },
           label: Text(
@@ -79,48 +76,110 @@ class CartPage extends ConsumerWidget {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                padding: const EdgeInsets.all(12),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
+              locationState.when(locationNotSet: () {
+                return const SizedBox();
+              }, empty: () {
+                return InkWell(
+                  customBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
-                    color: Theme.of(context).colorScheme.onInverseSurface),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    addrModel.category.icon(context,
-                        color: Theme.of(context).colorScheme.primary),
-                    const SizedBox(
-                      width: 10,
+                  ),
+                  onTap: () {
+                    const AddressPageRoute().push(context);
+                  },
+                  child: Container(
+                      padding: const EdgeInsets.all(12),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color:
+                              Theme.of(context).colorScheme.onInverseSurface),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const LabelLarge(
+                            text: "Add a address to continue",
+                            weight: FontWeight.bold,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Transform.rotate(
+                            angle: (90 * (22 / 7)) / 180,
+                            child: Icon(
+                              Icons.chevron_right_rounded,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onBackground
+                                  .withOpacity(.6),
+                            ),
+                          )
+                        ],
+                      )),
+                );
+              }, location: (model) {
+                return InkWell(
+                  onTap: () {
+                    showBottomLocationSheet(context, isDismissable: false,
+                        onTapAddress: (m) {
+                      locationController.setLocation(m);
+                      Navigator.pop(context);
+                    },
+                        isLocationPermissionGranted: false,
+                        addresses: locationController.address);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Theme.of(context).colorScheme.onInverseSurface),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        model.category.icon(context,
+                            color: Theme.of(context).colorScheme.primary),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        TitleMedium(
+                          text: model.label,
+                          weight: FontWeight.bold,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const TitleMedium(text: '|'),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Text(
+                            model.address,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Transform.rotate(
+                          angle: (90 * (22 / 7)) / 180,
+                          child: Icon(
+                            Icons.chevron_right_rounded,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onBackground
+                                .withOpacity(.6),
+                          ),
+                        )
+                      ],
                     ),
-                    TitleMedium(
-                      text: addrModel.label,
-                      weight: FontWeight.bold,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const TitleMedium(text: '|'),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(addrModel.address),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Transform.rotate(
-                      angle: (90 * (22 / 7)) / 180,
-                      child: Icon(
-                        Icons.chevron_right_rounded,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onBackground
-                            .withOpacity(.6),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+                  ),
+                );
+              }),
               const SizedBox(
                 height: 20,
               ),

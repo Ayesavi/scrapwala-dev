@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scrapwala_dev/core/providers/location_provider/location_controller.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
-import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/models/scrap_category/scrap_category_model.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 import 'package:scrapwala_dev/widgets/added_item_widget.dart';
@@ -34,28 +34,37 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final controller = ref.watch(authControllerProvider);
-
+    final state = ref.watch(locationControllerProvider);
+    final locationController = ref.read(locationControllerProvider.notifier);
     return Scaffold(
       bottomNavigationBar: const AddedItemCartWidget(
         itemAdded: 2,
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: LocationTileOpenBottomsheet(
-          model: AddressModel(
-              houseStreetNo: '57',
-              address: "Devpuri, House number 44 Wallfort Paradise",
-              latlng: (lat: 2432432.42342, lng: 213421423),
-              createdAt: DateTime.now(),
-              id: 'id',
-              category: AddressCategory.house,
-              label: "Wallfort Paradise"),
-          onTap: () {
-            showBottomLocationSheet(context,
-                isDismissable: false,
-                isLocationPermissionGranted: false,
-                addresses: []);
+        title: state.when(
+          locationNotSet: () {
+            return const LocationTileOpenBottomsheet(model: null);
+          },
+          empty: () {
+            return const TitleLarge(
+              text: "ScrapWala Dev",
+              weight: FontWeight.bold,
+            );
+          },
+          location: (model) {
+            return LocationTileOpenBottomsheet(
+              model: model,
+              onTap: () {
+                showBottomLocationSheet(context, isDismissable: false,
+                    onTapAddress: (m) {
+                  locationController.setLocation(m);
+                  Navigator.pop(context);
+                },
+                    isLocationPermissionGranted: false,
+                    addresses: locationController.address);
+              },
+            );
           },
         ),
         actions: [

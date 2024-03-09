@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/widgets/address_tile.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
@@ -8,6 +9,7 @@ void showBottomLocationSheet(
   required bool isDismissable,
   required bool isLocationPermissionGranted,
   required List<AddressModel> addresses,
+  required void Function(AddressModel model) onTapAddress,
 }) {
   showModalBottomSheet(
     context: context,
@@ -16,6 +18,7 @@ void showBottomLocationSheet(
       return _LocationBottomSheetContent(
         isLocationPermissionGranted: isLocationPermissionGranted,
         addresses: addresses,
+        onTapAddress: onTapAddress,
         onTapLocationPermissionGrant: () {
           // Handle permission grant action here
         },
@@ -32,10 +35,12 @@ class _LocationBottomSheetContent extends StatelessWidget {
   final Function onTapLocationPermissionGrant;
   final Function onTapEnterLocationManually;
   final List<AddressModel> addresses;
+  final void Function(AddressModel model) onTapAddress;
 
   const _LocationBottomSheetContent({
     // ignore: unused_element
     super.key,
+    required this.onTapAddress,
     required this.isLocationPermissionGranted,
     required this.onTapLocationPermissionGrant,
     required this.onTapEnterLocationManually,
@@ -54,51 +59,53 @@ class _LocationBottomSheetContent extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ListTile(
-            tileColor: Theme.of(context).colorScheme.tertiaryContainer,
-            subtitle: const LabelMedium(
-              text: LocationBottomSheetConstants.locationOfDesc,
-              maxLines: 3,
-            ),
-            title: const Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 4.0,
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.location_searching_outlined),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: TitleMedium(
-                      overflow: TextOverflow.ellipsis,
-                      text: LocationBottomSheetConstants.locationOffText,
-                      weight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            trailing: !isLocationPermissionGranted
-                ? ElevatedButton(
-                    onPressed: onTapLocationPermissionGrant as void Function()?,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                    child: const Text('Grant'),
-                  )
-                : null,
-          ),
+          // ListTile(
+          //   tileColor: Theme.of(context).colorScheme.tertiaryContainer,
+          //   subtitle: const LabelMedium(
+          //     text: LocationBottomSheetConstants.locationOfDesc,
+          //     maxLines: 3,
+          //   ),
+          //   title: const Padding(
+          //     padding: EdgeInsets.symmetric(
+          //       vertical: 4.0,
+          //     ),
+          //     child: Row(
+          //       children: [
+          //         Icon(Icons.location_searching_outlined),
+          //         SizedBox(
+          //           width: 10,
+          //         ),
+          //         Expanded(
+          //           child: TitleMedium(
+          //             overflow: TextOverflow.ellipsis,
+          //             text: LocationBottomSheetConstants.locationOffText,
+          //             weight: FontWeight.bold,
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          //   trailing: !isLocationPermissionGranted
+          //       ? ElevatedButton(
+          //           onPressed: onTapLocationPermissionGrant as void Function()?,
+          //           style: ElevatedButton.styleFrom(
+          //             shape: RoundedRectangleBorder(
+          //               borderRadius: BorderRadius.circular(12.0),
+          //             ),
+          //           ),
+          //           child: const Text('Grant'),
+          //         )
+          //       : null,
+          // ),
           ListTile(
             title: const TitleLarge(
               text: LocationBottomSheetConstants.selectDeliveryAddress,
               weight: FontWeight.bold,
             ),
             trailing: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  const AddressPageRoute().push(context);
+                },
                 child: BodyLarge(
                     color: Theme.of(context).colorScheme.primary,
                     text: 'View All')),
@@ -113,29 +120,29 @@ class _LocationBottomSheetContent extends StatelessWidget {
                   .map((address) => AddressTile(
                         model: address,
                         isSelected: false,
-                        onTap: () {},
+                        onTap: () => onTapAddress(address),
                       ))
                   .toList(),
             ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Divider(),
+            // child: Divider(),
           ),
-          ListTile(
-            title: Row(
-              children: [
-                Icon(
-                  Icons.search,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                const Text('Enter Address Manually')
-              ],
-            ),
-            onTap: onTapEnterLocationManually as void Function()?,
-          ),
+          // ListTile(
+          //   title: Row(
+          //     children: [
+          //       Icon(
+          //         Icons.search,
+          //         color: Theme.of(context).colorScheme.primary,
+          //       ),
+          //       const SizedBox(
+          //         width: 10,
+          //       ),
+          //       const Text('Enter Address Manually')
+          //     ],
+          //   ),
+          //   onTap: onTapEnterLocationManually as void Function()?,
+          // ),
         ],
       ),
     );

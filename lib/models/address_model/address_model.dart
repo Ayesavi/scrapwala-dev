@@ -14,6 +14,7 @@ class AddressModel with _$AddressModel {
     String? ownerId,
     required DateTime createdAt,
     required String id,
+    String? phoneNumber,
     required AddressCategory category,
     required String label,
   }) = _AddressModel;
