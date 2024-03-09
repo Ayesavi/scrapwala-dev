@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scrapwala_dev/core/extensions/string_extension.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 import 'package:scrapwala_dev/features/profile/providers/profile_page_controller.dart';
 import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.dart';
+import 'package:scrapwala_dev/models/user_model/user_model.dart';
 import 'package:scrapwala_dev/shimmering_widgets/profile_tile.dart';
+import 'package:scrapwala_dev/widgets/logout_popup.dart';
 import 'package:scrapwala_dev/widgets/past_pickup_request_tile.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
+
+  getProfileSubtitle(UserModel model) {
+    if (model.phoneNumber.isNotNullAndNotEmpty &&
+        (model.email.mayBeNullOrEmpty)) {
+      return '+91${model.phoneNumber!.substring(2)}';
+    } else if (model.phoneNumber.mayBeNullOrEmpty &&
+        model.email.isNotNullAndNotEmpty) {
+      return '${model.email}';
+    } else {
+      return '+91-${model.phoneNumber} | ${model.email}';
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,8 +69,7 @@ class ProfilePage extends ConsumerWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 LabelMedium(
-                                    text:
-                                        '+91-${userModel.phoneNumber ?? ""} | ${userModel.email ?? ""}'),
+                                    text: getProfileSubtitle(userModel)),
                                 TextButton(
                                     style: ButtonStyle(
                                       padding:
@@ -111,7 +125,9 @@ class ProfilePage extends ConsumerWidget {
                     leading: const Icon(Icons.exit_to_app),
                     title: const TitleMedium(text: 'Logout'),
                     onTap: () {
-                      ref.read(authControllerProvider).signOut();
+                      showLogOutPopup(context, onConfirm: () {
+                        ref.read(authControllerProvider).signOut();
+                      });
                       // Call the onPressed callback when the ListTile is tapped
                     },
                   ),

@@ -19,9 +19,7 @@ class SupabaseProfileRepository implements ProfileRepository {
     if (sessionUser.user.isNotNull) {
       return UserModel(
           id: sessionUser.user!.id,
-          email: metadata?.containsKey("email") ?? false
-              ? metadata!['email']
-              : null,
+          email: sessionUser.user!.email,
           phoneNumber: sessionUser.user?.phone,
           name: metadata?.containsKey("full_name") ?? false
               ? metadata!['full_name']

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
+import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:scrapwala_dev/features/auth/screens/verify_page.dart';
 import 'package:scrapwala_dev/features/profile/providers/profile_page_controller.dart';
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
@@ -60,8 +61,10 @@ class EditProfilePage extends ConsumerWidget {
             return const SizedBox();
           }, data: (data) {
             final nameController = TextEditingController(text: data.name);
-            final phoneNumberController =
-                TextEditingController(text: data.phoneNumber?.substring(2));
+            final phoneNumberController = TextEditingController(
+                text: data.phoneNumber.isNotNull && data.phoneNumber!.isNotEmpty
+                    ? data.phoneNumber!.substring(2)
+                    : '');
             final emailAddressController =
                 TextEditingController(text: data.email);
             return SingleChildScrollView(
