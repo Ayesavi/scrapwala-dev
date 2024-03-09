@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scrapwala_dev/features/auth/screens/get_started_page.dart';
@@ -40,6 +42,11 @@ class HomeRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => HomePage();
+
+  @override
+  FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
+    return null;
+  }
 }
 
 class LoginRoute extends GoRouteData {
@@ -93,6 +100,15 @@ class RequestInfoPageRoute extends GoRouteData {
 
 class EditProfileRoute extends GoRouteData {
   const EditProfileRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const EditProfilePage();
+}
+
+@RouteConstants.editProfileRoute
+class EditProfileBaseRoute extends GoRouteData {
+  const EditProfileBaseRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>

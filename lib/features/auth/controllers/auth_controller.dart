@@ -11,6 +11,18 @@ AuthController authController(AuthControllerRef ref) {
     return const AuthController(AppAuthState.loading);
   }
   if (authStates.value?.session != null) {
+    final sessionUser = authStates.value!.session!.user;
+    final userMetadata = sessionUser.userMetadata;
+    final email = sessionUser.email;
+    final phone = sessionUser.phone;
+    final name = userMetadata?.containsKey("full_name") ?? false
+        ? userMetadata!['full_name']
+        : null;
+    if ([email, phone, name].contains(null) ||
+        [email, phone, name].contains('')) {
+      return const AuthController(AppAuthState.unfulfilledProfile);
+    }
+
     return const AuthController(AppAuthState.authenticated);
   } else {
     return const AuthController(AppAuthState.unauthenticated);
@@ -26,6 +38,10 @@ enum AppAuthState {
   authenticated,
   loading,
   unauthenticated,
+
+  /// When user is authenticated but profile details are not filled
+  /// which is required
+  unfulfilledProfile
 }
 
 class AuthController {
@@ -49,8 +65,8 @@ class AuthController {
     return await _repo.signInWithGoogle();
   }
 
-  Future<User?> verifyOtp(String token,String phone) async {
-    return await _repo.verifyOtp(token,phone);
+  Future<User?> verifyOtp(String token, String phone, OtpType type) async {
+    return await _repo.verifyOtp(token, phone, type);
   }
 
   Future<User?> getUser() async {
