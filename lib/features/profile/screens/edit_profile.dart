@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/core/extensions/object_extension.dart';
+import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 import 'package:scrapwala_dev/features/auth/screens/verify_page.dart';
 import 'package:scrapwala_dev/features/profile/providers/profile_page_controller.dart';
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
+import 'package:scrapwala_dev/shimmering_widgets/shimmer_edit_textfield.dart';
+import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/edit_textfield_widget.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -57,8 +60,28 @@ class EditProfilePage extends ConsumerWidget {
       ),
       body: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: state.when(loading: () {
-            return const SizedBox();
+          child: state.when(error: (e) {
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const TitleMedium(
+                      maxLines: 2,
+                      text: 'Looks like there is an error from our side'),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  AppFilledButton(
+                    label: "Logout",
+                    onTap: () {
+                      ref.read(authControllerProvider).signOut();
+                    },
+                  ),
+                ],
+              ),
+            );
+          }, loading: () {
+            return ShimmeringTextField();
           }, data: (data) {
             final nameController = TextEditingController(text: data.name);
             final phoneNumberController = TextEditingController(
@@ -122,7 +145,25 @@ class EditProfilePage extends ConsumerWidget {
                     onSave: (email) async {
                       try {
                         controller.upateProfile(email: email);
+
+                        if (context.mounted) {
+                          showSnackBar(context, "Otp Sent to $email");
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return OtpVerifyPage(
+                                email: email,
+                                otpType: OtpType.emailChange,
+                              );
+                            },
+                          ));
+                        }
                       } catch (e) {
+                        if (context.mounted) {
+                          showSnackBar(context, errorHandler(e).message);
+                        }
+                      }
+
+                      try {} catch (e) {
                         if (context.mounted) {
                           showSnackBar(context, errorHandler(e).message);
                         }
