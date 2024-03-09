@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
+import 'package:scrapwala_dev/core/providers/location_provider/location_controller.dart';
 import 'package:scrapwala_dev/features/address/repositories/address_repository.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
@@ -35,6 +36,7 @@ class AddressesPageController extends _$AddressesPageController {
       await _repo.deleteAddress(addressId);
       _addresses.removeWhere((address) => address.id == addressId);
       state = _Data(_addresses);
+      ref.invalidate(locationControllerProvider);
     } catch (e) {
       if (context.mounted) {
         showSnackBar(context, errorHandler(e).message);
@@ -51,6 +53,7 @@ class AddressesPageController extends _$AddressesPageController {
         _addresses[index] = updatedAddress;
         state = _Data(_addresses);
       }
+      ref.invalidate(locationControllerProvider);
     } catch (e) {
       if (context.mounted) {
         showSnackBar(context, errorHandler(e).message);
@@ -62,6 +65,7 @@ class AddressesPageController extends _$AddressesPageController {
     try {
       await _repo.addAddress(newAddress);
       state = _Data(_addresses);
+      ref.invalidate(locationControllerProvider);
     } catch (e) {
       if (context.mounted) {
         showSnackBar(context, errorHandler(e).message);

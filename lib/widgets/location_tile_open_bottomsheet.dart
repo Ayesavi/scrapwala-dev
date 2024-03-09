@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
+import 'package:scrapwala_dev/widgets/scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
 class LocationTileOpenBottomsheet extends ConsumerWidget {
@@ -10,17 +11,23 @@ class LocationTileOpenBottomsheet extends ConsumerWidget {
 
   final AddressModel? model;
   final VoidCallback? onTap;
+
+  Widget getIcon(context) {
+    if (model == null) {
+      return Icon(Icons.share_location_outlined,
+          color: Theme.of(context).colorScheme.primary);
+    } else {
+      return model!.category
+          .icon(context, color: Theme.of(context).colorScheme.primary);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
+    return CustomListTile(
       onTap: onTap,
       title: Row(children: [
-        if (!model.isNotNull)
-          Icon(Icons.share_location_outlined,
-              color: Theme.of(context).colorScheme.primary)
-        else
-          model!.category
-              .icon(context, color: Theme.of(context).colorScheme.primary),
+        getIcon(context),
         const SizedBox(
           width: 10,
         ),
@@ -44,7 +51,7 @@ class LocationTileOpenBottomsheet extends ConsumerWidget {
               text: model!.address,
               maxLines: 1,
             )
-          : null,
+          : const SizedBox.shrink(),
     );
   }
 }

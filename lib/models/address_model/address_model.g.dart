@@ -21,6 +21,7 @@ _$AddressModelImpl _$$AddressModelImplFromJson(Map<String, dynamic> json) =>
       ownerId: json['ownerId'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       id: json['id'] as String,
+      phoneNumber: json['phoneNumber'] as String?,
       category: $enumDecode(_$AddressCategoryEnumMap, json['category']),
       label: json['label'] as String,
     );
@@ -37,6 +38,7 @@ Map<String, dynamic> _$$AddressModelImplToJson(_$AddressModelImpl instance) =>
       'ownerId': instance.ownerId,
       'createdAt': instance.createdAt.toIso8601String(),
       'id': instance.id,
+      'phoneNumber': instance.phoneNumber,
       'category': _$AddressCategoryEnumMap[instance.category]!,
       'label': instance.label,
     };

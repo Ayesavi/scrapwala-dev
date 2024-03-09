@@ -107,7 +107,6 @@ flutter:
   #   - assets/svgs/google.svg
   #   - .env
   #   - assets/images/profile_image.png
-  #   - assets/lottie/service_not_exist.json
   #   - images/a_dot_ham.jpeg
   generate: true
   # An image asset can refer to one or more resolution-specific "variants", see

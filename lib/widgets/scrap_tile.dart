@@ -59,7 +59,7 @@ class CustomListTile extends StatelessWidget {
   final Widget? leading;
   final Widget title;
   final Widget subtitle;
-  final Widget trailing;
+  final Widget? trailing;
   final VoidCallback? onTap;
   final bool dense;
   final EdgeInsetsGeometry? contentPadding;
@@ -71,7 +71,7 @@ class CustomListTile extends StatelessWidget {
     this.leading,
     required this.title,
     this.subtitle = const SizedBox.shrink(),
-    this.trailing = const SizedBox.shrink(),
+    this.trailing,
     this.onTap,
     this.dense = false,
     this.contentPadding,
@@ -86,7 +86,7 @@ class CustomListTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(8),
-        child: Container(
+        child: Padding(
           padding: contentPadding ??
               const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Row(
@@ -107,11 +107,9 @@ class CustomListTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              Flexible(
-                // Use Flexible instead of Expanded for the trailing widget
-                fit: FlexFit.loose, // Allow the child to take its natural size
-                child: trailing,
-              ),
+              if (trailing != null) ...[
+                trailing!,
+              ]
             ],
           ),
         ),

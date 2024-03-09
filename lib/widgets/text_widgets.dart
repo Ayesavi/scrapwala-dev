@@ -53,12 +53,14 @@ class LabelMedium extends StatelessWidget {
   final String text;
   final TextOverflow overflow;
   final Color? color;
+  final TextAlign? align;
   final FontWeight? weight;
   final int? maxLines;
   const LabelMedium(
       {super.key,
       this.weight,
       this.maxLines,
+      this.align,
       this.color,
       required this.text,
       this.overflow = TextOverflow.ellipsis});
@@ -69,6 +71,7 @@ class LabelMedium extends StatelessWidget {
       text,
       maxLines: maxLines,
       overflow: overflow,
+      textAlign:align ,
       style: Theme.of(context).textTheme.labelMedium?.copyWith(
           color: color ??
               Theme.of(context).colorScheme.onBackground.withOpacity(.6),

@@ -65,8 +65,7 @@ class _LocationFormBottomSheetContentState
     return AddressModel(
       houseStreetNo: houseNumberController.text,
       apartmentRoadAreadLandmark: apartmentController.text,
-      address:
-          '${houseNumberController.text}, ${apartmentController.text}, ${directionsController.text}',
+      address: '${widget.pickResult.formattedAddress}',
       latlng: (
         lat: widget.pickResult.geometry!.location.lat,
         lng: widget.pickResult.geometry!.location.lng,

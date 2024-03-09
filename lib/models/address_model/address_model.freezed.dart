@@ -27,6 +27,7 @@ mixin _$AddressModel {
   String? get ownerId => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
   AddressCategory get category => throw _privateConstructorUsedError;
   String get label => throw _privateConstructorUsedError;
 
@@ -50,6 +51,7 @@ abstract class $AddressModelCopyWith<$Res> {
       String? ownerId,
       DateTime createdAt,
       String id,
+      String? phoneNumber,
       AddressCategory category,
       String label});
 }
@@ -74,6 +76,7 @@ class _$AddressModelCopyWithImpl<$Res, $Val extends AddressModel>
     Object? ownerId = freezed,
     Object? createdAt = null,
     Object? id = null,
+    Object? phoneNumber = freezed,
     Object? category = null,
     Object? label = null,
   }) {
@@ -106,6 +109,10 @@ class _$AddressModelCopyWithImpl<$Res, $Val extends AddressModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -134,6 +141,7 @@ abstract class _$$AddressModelImplCopyWith<$Res>
       String? ownerId,
       DateTime createdAt,
       String id,
+      String? phoneNumber,
       AddressCategory category,
       String label});
 }
@@ -156,6 +164,7 @@ class __$$AddressModelImplCopyWithImpl<$Res>
     Object? ownerId = freezed,
     Object? createdAt = null,
     Object? id = null,
+    Object? phoneNumber = freezed,
     Object? category = null,
     Object? label = null,
   }) {
@@ -188,6 +197,10 @@ class __$$AddressModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -211,6 +224,7 @@ class _$AddressModelImpl implements _AddressModel {
       this.ownerId,
       required this.createdAt,
       required this.id,
+      this.phoneNumber,
       required this.category,
       required this.label});
 
@@ -232,13 +246,15 @@ class _$AddressModelImpl implements _AddressModel {
   @override
   final String id;
   @override
+  final String? phoneNumber;
+  @override
   final AddressCategory category;
   @override
   final String label;
 
   @override
   String toString() {
-    return 'AddressModel(address: $address, houseStreetNo: $houseStreetNo, apartmentRoadAreadLandmark: $apartmentRoadAreadLandmark, latlng: $latlng, ownerId: $ownerId, createdAt: $createdAt, id: $id, category: $category, label: $label)';
+    return 'AddressModel(address: $address, houseStreetNo: $houseStreetNo, apartmentRoadAreadLandmark: $apartmentRoadAreadLandmark, latlng: $latlng, ownerId: $ownerId, createdAt: $createdAt, id: $id, phoneNumber: $phoneNumber, category: $category, label: $label)';
   }
 
   @override
@@ -258,6 +274,8 @@ class _$AddressModelImpl implements _AddressModel {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.label, label) || other.label == label));
@@ -274,6 +292,7 @@ class _$AddressModelImpl implements _AddressModel {
       ownerId,
       createdAt,
       id,
+      phoneNumber,
       category,
       label);
 
@@ -300,6 +319,7 @@ abstract class _AddressModel implements AddressModel {
       final String? ownerId,
       required final DateTime createdAt,
       required final String id,
+      final String? phoneNumber,
       required final AddressCategory category,
       required final String label}) = _$AddressModelImpl;
 
@@ -320,6 +340,8 @@ abstract class _AddressModel implements AddressModel {
   DateTime get createdAt;
   @override
   String get id;
+  @override
+  String? get phoneNumber;
   @override
   AddressCategory get category;
   @override

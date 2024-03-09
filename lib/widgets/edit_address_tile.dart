@@ -31,9 +31,11 @@ class EditAddressTile extends ConsumerWidget {
             text: model.label.capitalize,
           ),
           const SizedBox(
-            height: 10,                  
+            height: 10,
           ),
-          LabelMedium(text: model.address.capitalize),
+          LabelMedium(
+              text:
+                  '${model.houseStreetNo.capitalize}, ${model.apartmentRoadAreadLandmark?.capitalize}'),
           const SizedBox(
             height: 10,
           ),
@@ -43,7 +45,7 @@ class EditAddressTile extends ConsumerWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const LabelMedium(text: "Phone Number : 7489016865"),
+          LabelMedium(text: model.address.capitalize),
           const SizedBox(
             height: 10,
           ),
