@@ -19,7 +19,9 @@ final showProgress = StateProvider((ref) => false);
 class OtpVerifyPage extends StatelessWidget {
   final String? phoneNum;
   final OtpType otpType;
-  const OtpVerifyPage({super.key, this.phoneNum, this.otpType = OtpType.sms});
+  final String? email;
+  const OtpVerifyPage(
+      {super.key, this.email, this.phoneNum, this.otpType = OtpType.sms});
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +30,17 @@ class OtpVerifyPage extends StatelessWidget {
       child: OtpVerifyContent(
         phoneNum: phoneNum,
         otpType: otpType,
+        email: email,
       ),
     );
   }
 }
 
 class OtpVerifyContent extends ConsumerStatefulWidget {
-  const OtpVerifyContent({super.key, this.phoneNum, required this.otpType});
+  const OtpVerifyContent(
+      {super.key, this.phoneNum, this.email, required this.otpType});
   final String? phoneNum;
+  final String? email;
   final OtpType otpType;
 
   @override
@@ -61,7 +66,11 @@ class _OtpVerifyContentState extends ConsumerState<OtpVerifyContent> {
     try {
       ref.read(showProgress.notifier).update((state) => true);
 
-      await controller.verifyOtp(model.otp, widget.phoneNum!, widget.otpType);
+      await controller.verifyOtp(
+          token: model.otp,
+          phone: widget.phoneNum,
+          email: widget.email,
+          type: widget.otpType);
       ref.read(showProgress.notifier).update((state) => false);
       if (widget.otpType != OtpType.sms && context.mounted) {
         Navigator.pop(context);

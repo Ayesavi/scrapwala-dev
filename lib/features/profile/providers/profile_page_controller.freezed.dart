@@ -20,18 +20,21 @@ mixin _$ProfilePageControllerState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(UserModel model) data,
+    required TResult Function(Object e) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(UserModel model)? data,
+    TResult? Function(Object e)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(UserModel model)? data,
+    TResult Function(Object e)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$ProfilePageControllerState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Data value) data,
+    required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Data value)? data,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Data value)? data,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -116,6 +122,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(UserModel model) data,
+    required TResult Function(Object e) error,
   }) {
     return loading();
   }
@@ -125,6 +132,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(UserModel model)? data,
+    TResult? Function(Object e)? error,
   }) {
     return loading?.call();
   }
@@ -134,6 +142,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(UserModel model)? data,
+    TResult Function(Object e)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -147,6 +156,7 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Data value) data,
+    required TResult Function(_Error value) error,
   }) {
     return loading(this);
   }
@@ -156,6 +166,7 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Data value)? data,
+    TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
   }
@@ -165,6 +176,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Data value)? data,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -253,6 +265,7 @@ class _$DataImpl implements _Data {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(UserModel model) data,
+    required TResult Function(Object e) error,
   }) {
     return data(model);
   }
@@ -262,6 +275,7 @@ class _$DataImpl implements _Data {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(UserModel model)? data,
+    TResult? Function(Object e)? error,
   }) {
     return data?.call(model);
   }
@@ -271,6 +285,7 @@ class _$DataImpl implements _Data {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(UserModel model)? data,
+    TResult Function(Object e)? error,
     required TResult orElse(),
   }) {
     if (data != null) {
@@ -284,6 +299,7 @@ class _$DataImpl implements _Data {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Data value) data,
+    required TResult Function(_Error value) error,
   }) {
     return data(this);
   }
@@ -293,6 +309,7 @@ class _$DataImpl implements _Data {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Data value)? data,
+    TResult? Function(_Error value)? error,
   }) {
     return data?.call(this);
   }
@@ -302,6 +319,7 @@ class _$DataImpl implements _Data {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Data value)? data,
+    TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
     if (data != null) {
@@ -317,5 +335,142 @@ abstract class _Data implements ProfilePageControllerState {
   UserModel get model;
   @JsonKey(ignore: true)
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ErrorImplCopyWith<$Res> {
+  factory _$$ErrorImplCopyWith(
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+      __$$ErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Object e});
+}
+
+/// @nodoc
+class __$$ErrorImplCopyWithImpl<$Res>
+    extends _$ProfilePageControllerStateCopyWithImpl<$Res, _$ErrorImpl>
+    implements _$$ErrorImplCopyWith<$Res> {
+  __$$ErrorImplCopyWithImpl(
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? e = null,
+  }) {
+    return _then(_$ErrorImpl(
+      null == e ? _value.e : e,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ErrorImpl implements _Error {
+  const _$ErrorImpl(this.e);
+
+  @override
+  final Object e;
+
+  @override
+  String toString() {
+    return 'ProfilePageControllerState.error(e: $e)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorImpl &&
+            const DeepCollectionEquality().equals(other.e, e));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(e));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(UserModel model) data,
+    required TResult Function(Object e) error,
+  }) {
+    return error(e);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function(UserModel model)? data,
+    TResult? Function(Object e)? error,
+  }) {
+    return error?.call(e);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(UserModel model)? data,
+    TResult Function(Object e)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(e);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Data value) data,
+    required TResult Function(_Error value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Data value)? data,
+    TResult? Function(_Error value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Data value)? data,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Error implements ProfilePageControllerState {
+  const factory _Error(final Object e) = _$ErrorImpl;
+
+  Object get e;
+  @JsonKey(ignore: true)
+  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

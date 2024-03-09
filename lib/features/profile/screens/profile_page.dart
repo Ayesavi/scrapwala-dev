@@ -7,6 +7,7 @@ import 'package:scrapwala_dev/features/profile/providers/profile_page_controller
 import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.dart';
 import 'package:scrapwala_dev/models/user_model/user_model.dart';
 import 'package:scrapwala_dev/shimmering_widgets/profile_tile.dart';
+import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/logout_popup.dart';
 import 'package:scrapwala_dev/widgets/past_pickup_request_tile.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
@@ -55,6 +56,27 @@ class ProfilePage extends ConsumerWidget {
               Column(
                 children: [
                   state.when(
+                      error: (e) {
+                        return Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const TitleMedium(
+                                  text:
+                                      'Looks like there is an error from our side'),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              AppFilledButton(
+                                label: "Logout",
+                                onTap: () {
+                                  ref.read(authControllerProvider).signOut();
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                       loading: () => const ShimmeringProfileWidget(),
                       data: (userModel) {
                         return ListTile(
