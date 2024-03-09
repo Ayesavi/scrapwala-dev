@@ -20,6 +20,9 @@ class RouteConstants {
     TypedGoRoute<OtpPageRoute>(path: 'otp/:phone', name: 'otp')
   ]);
 
+  static const editProfileRoute = TypedGoRoute<EditProfileBaseRoute>(
+      path: '/editProfile', name: "editProfile");
+
   static const profileRoute =
       TypedGoRoute<ProfilePageRoute>(path: 'profile', name: "profile", routes: [
     TypedGoRoute<EditProfileRoute>(

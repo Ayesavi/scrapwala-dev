@@ -13,7 +13,7 @@ abstract class AuthRepository {
   Future<void> signInWithOtp(String phone);
   Future<void> signOut();
   Future<User?> signInWithGoogle();
-  Future<User?> verifyOtp(String t, String phoneNumber);
+  Future<User?> verifyOtp(String t, String phoneNumber,OtpType otpType);
   Future<User?> getUser();
   Future<void> sendOtp();
 }
@@ -64,9 +64,9 @@ class _AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<User?> verifyOtp(String token, String phoneNumber) async {
+  Future<User?> verifyOtp(String token, String phoneNumber,OtpType type) async {
     final response = (await _supabase.auth
-            .verifyOTP(token: token, type: OtpType.sms, phone: phoneNumber))
+            .verifyOTP(token: token, type: type, phone: phoneNumber))
         .user;
     if (response != null) {
       return (response);

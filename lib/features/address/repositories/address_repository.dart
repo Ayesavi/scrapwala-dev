@@ -17,9 +17,7 @@ abstract class BaseAddressRepository {
 }
 
 class SupabaseAddressRepository implements BaseAddressRepository {
-  final SupabaseClient _supabaseClient;
-
-  SupabaseAddressRepository(this._supabaseClient);
+  final _supabaseClient = Supabase.instance.client;
 
   @override
   Future<void> addAddress(AddressModel address) async {

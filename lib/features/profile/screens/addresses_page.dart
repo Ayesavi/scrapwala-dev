@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/features/address/providers/addresses_page_controller.dart';
 import 'package:scrapwala_dev/features/address/screens/select_address_page.dart';
-import 'package:scrapwala_dev/shared/show_snackbar.dart';
 import 'package:scrapwala_dev/widgets/edit_address_tile.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
@@ -66,7 +64,7 @@ class AddressesPage extends ConsumerWidget {
                                       model: models[index],
                                       onAddressSelected: (model) async {
                                         controller.updateAddress(
-                                              context, model);
+                                            context, model);
                                       });
                                 },
                               ));

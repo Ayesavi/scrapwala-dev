@@ -10,6 +10,7 @@ List<RouteBase> get $appRoutes => [
       $splashRoute,
       $authRoute,
       $homeRoute,
+      $editProfileBaseRoute,
     ];
 
 RouteBase get $splashRoute => GoRouteData.$route(
@@ -260,6 +261,30 @@ extension $RequestInfoPageRouteExtension on RequestInfoPageRoute {
 
   String get location => GoRouteData.$location(
         '/home/requestInfoPage/${Uri.encodeComponent(requestId)}',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $editProfileBaseRoute => GoRouteData.$route(
+      path: '/editProfile',
+      name: 'editProfile',
+      factory: $EditProfileBaseRouteExtension._fromState,
+    );
+
+extension $EditProfileBaseRouteExtension on EditProfileBaseRoute {
+  static EditProfileBaseRoute _fromState(GoRouterState state) =>
+      const EditProfileBaseRoute();
+
+  String get location => GoRouteData.$location(
+        '/editProfile',
       );
 
   void go(BuildContext context) => context.go(location);
