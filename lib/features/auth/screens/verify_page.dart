@@ -12,26 +12,32 @@ import 'package:scrapwala_dev/features/auth/widgets/headline_large.dart';
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 final showProgress = StateProvider((ref) => false);
 
 class OtpVerifyPage extends StatelessWidget {
   final String? phoneNum;
-
-  const OtpVerifyPage({super.key, this.phoneNum});
+  final OtpType otpType;
+  const OtpVerifyPage({super.key, this.phoneNum, this.otpType = OtpType.sms});
 
   @override
   Widget build(BuildContext context) {
     return p.ChangeNotifierProvider(
       create: (_) => OtpVerifyPageModel(),
-      child: OtpVerifyContent(phoneNum: phoneNum),
+      child: OtpVerifyContent(
+        phoneNum: phoneNum,
+        otpType: otpType,
+      ),
     );
   }
 }
 
 class OtpVerifyContent extends ConsumerStatefulWidget {
-  const OtpVerifyContent({super.key, this.phoneNum});
+  const OtpVerifyContent({super.key, this.phoneNum, required this.otpType});
   final String? phoneNum;
+  final OtpType otpType;
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _OtpVerifyContentState();
@@ -55,8 +61,11 @@ class _OtpVerifyContentState extends ConsumerState<OtpVerifyContent> {
     try {
       ref.read(showProgress.notifier).update((state) => true);
 
-      await controller.verifyOtp(model.otp, widget.phoneNum!);
+      await controller.verifyOtp(model.otp, widget.phoneNum!, widget.otpType);
       ref.read(showProgress.notifier).update((state) => false);
+      if (widget.otpType != OtpType.sms && context.mounted) {
+        Navigator.pop(context);
+      }
     } catch (e) {
       if (context.mounted) {
         showSnackBar(context, errorHandler(e).message);

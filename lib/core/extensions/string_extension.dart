@@ -1,3 +1,5 @@
+import 'package:scrapwala_dev/core/extensions/object_extension.dart';
+
 extension StringExtension on String {
   String get capitalize {
     if (isEmpty) {
@@ -46,4 +48,10 @@ extension StringExtension on String {
 
     return result;
   }
+}
+
+extension StringNullableExtension on String? {
+  bool get mayBeNullOrEmpty => (this == null || this!.trim().isEmpty);
+
+  bool get isNotNullAndNotEmpty => (isNotNull && this!.trim().isNotEmpty);
 }

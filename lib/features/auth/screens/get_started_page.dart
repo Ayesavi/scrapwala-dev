@@ -2,9 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/auth/widgets/phone_number_textfield.dart';
-import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
-import 'package:scrapwala_dev/widgets/location_bottomsheet.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
 class GetStartedPage extends StatelessWidget {
