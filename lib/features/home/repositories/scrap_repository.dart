@@ -12,32 +12,35 @@ abstract class BaseScrapRepository {
 class FakeScrapRepository implements BaseScrapRepository {
   final List<ScrapModel> _scraps = [
     const ScrapModel(
-        id: "i1",
+        id: "1",
         description:
             "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
         price: 23,
         photoUrl: 'https://picsum.photos/100/100?random=9',
         name: "Glossy Papers"),
     const ScrapModel(
-        id: "i1",
+        id: "1",
         description:
             "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
         price: 23,
         photoUrl: 'https://picsum.photos/100/100?random=9',
-        name: "Coated Papers"),  const ScrapModel(
-        id: "i1",
+        name: "Coated Papers"),
+    const ScrapModel(
+        id: "3",
         description:
             "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
         price: 23,
         photoUrl: 'https://picsum.photos/100/100?random=9',
-        name: "Coated Papers"),  const ScrapModel(
-        id: "i1",
+        name: "Coated Papers"),
+    const ScrapModel(
+        id: "4",
         description:
             "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
         price: 23,
         photoUrl: 'https://picsum.photos/100/100?random=9',
-        name: "Coated Papers"),  const ScrapModel(
-        id: "i1",
+        name: "Coated Papers"),
+    const ScrapModel(
+        id: "5",
         description:
             "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
         price: 23,

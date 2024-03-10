@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:scrapwala_dev/features/home/repositories/category_repository.dart';
 import 'package:scrapwala_dev/features/home/repositories/scrap_repository.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 
@@ -10,7 +9,6 @@ part 'scrap_search_state.dart';
 
 @riverpod
 class ScrapSearch extends _$ScrapSearch {
-  final _categoryRepo = FakeCategoryRepository();
   final _scrapRepo = FakeScrapRepository();
 
   @override
