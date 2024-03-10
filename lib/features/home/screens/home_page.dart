@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:scrapwala_dev/core/providers/location_provider/location_controller.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
+import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/features/home/providers/home_page_controller.dart';
+import 'package:scrapwala_dev/features/home/widgets/home_appbar_title.dart';
+import 'package:scrapwala_dev/shared/cart_bottom_bar.dart';
 import 'package:scrapwala_dev/shimmering_widgets/category_widget.dart';
 import 'package:scrapwala_dev/shimmering_widgets/shimmering_scrap_tile.dart';
-import 'package:scrapwala_dev/widgets/added_item_widget.dart';
-import 'package:scrapwala_dev/widgets/location_bottomsheet.dart';
-import 'package:scrapwala_dev/widgets/location_tile_open_bottomsheet.dart';
 import 'package:scrapwala_dev/widgets/scrap_category_widget.dart';
 import 'package:scrapwala_dev/widgets/scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/search_text_field.dart';
@@ -18,51 +17,23 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locationState = ref.watch(locationControllerProvider);
-    final locationController = ref.read(locationControllerProvider.notifier);
     final state = ref.watch(homePageControllerProvider);
     final controller = ref.read(homePageControllerProvider.notifier);
-
+    final cartController = ref.read(cartControllerProvider.notifier);
     return Scaffold(
-      bottomNavigationBar: const AddedItemCartWidget(
-        itemAdded: 2,
-      ),
+      bottomNavigationBar: const CartBottomBar(),
       body: Stack(
         children: [
           RefreshIndicator(
             onRefresh: () async {
-               controller.loadData();
+              controller.loadData();
             },
             child: CustomScrollView(slivers: [
               SliverAppBar(
                 automaticallyImplyLeading: false,
                 pinned: false,
                 floating: true,
-                title: locationState.when(
-                  locationNotSet: () {
-                    return const LocationTileOpenBottomsheet(model: null);
-                  },
-                  empty: () {
-                    return const TitleLarge(
-                      text: "ScrapWala Dev",
-                      weight: FontWeight.bold,
-                    );
-                  },
-                  location: (model) {
-                    return LocationTileOpenBottomsheet(
-                      model: model,
-                      onTap: () {
-                        showBottomLocationSheet(context, isDismissable: false,
-                            onTapAddress: (m) {
-                          locationController.setLocation(m);
-                          Navigator.pop(context);
-                        },
-                            isLocationPermissionGranted: false,
-                            addresses: locationController.address);
-                      },
-                    );
-                  },
-                ),
+                title: const HomeAppBarTitle(),
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(kToolbarHeight + 20),
                   child: Padding(
@@ -190,7 +161,15 @@ class HomePage extends ConsumerWidget {
               }, data: (categories, scraps) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate((ctx, index) {
-                    return ScrapTile(onTap: () {}, model: scraps[index]);
+                    return ScrapTile(
+                        isAdded: cartController.isCartContains(scraps[index]),
+                        onAdd: () {
+                          cartController.addCartItem(scraps[index]);
+                        },
+                        onRemove: () {
+                          cartController.remooveItemFromCart(scraps[index].id);
+                        },
+                        model: scraps[index]);
                   }, childCount: scraps.length),
                 );
               }, error: (e) {

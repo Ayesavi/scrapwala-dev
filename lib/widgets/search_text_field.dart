@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:scrapwala_dev/core/extensions/object_extension.dart';
+import 'package:scrapwala_dev/core/utils/debounder.dart';
 
 class SearchTextField extends StatefulWidget {
   final List<String> hintTexts;
@@ -36,6 +37,8 @@ class _SearchTextFieldState extends State<SearchTextField>
   late int _hintIndex;
   late Timer _timer;
 
+  final _debouncer = Debouncer(delay: const Duration(milliseconds: 300));
+
   @override
   void initState() {
     super.initState();
@@ -54,7 +57,11 @@ class _SearchTextFieldState extends State<SearchTextField>
     });
     if (widget.textController.isNotNull && widget.triggerSearchOnChange) {
       widget.textController!.addListener(() {
-        widget.onSearch?.call(widget.textController!.text);
+        if (widget.textController!.text.trim().isNotEmpty) {
+          _debouncer.call(() {
+            widget.onSearch?.call(widget.textController!.text);
+          });
+        }
       });
     }
   }

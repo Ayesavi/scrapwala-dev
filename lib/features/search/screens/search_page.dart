@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/features/auth/widgets/title_large.dart';
 import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
+import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/features/home/providers/home_page_controller.dart';
 import 'package:scrapwala_dev/features/search/providers/scrap_search.dart';
+import 'package:scrapwala_dev/shared/cart_bottom_bar.dart';
 import 'package:scrapwala_dev/shimmering_widgets/category_widget.dart';
 import 'package:scrapwala_dev/shimmering_widgets/shimmering_scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/scrap_category_widget.dart';
@@ -19,8 +21,10 @@ class SearchPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final searchResults = ref.watch(scrapSearchProvider);
     final controller = ref.watch(scrapSearchProvider.notifier);
-    final homePageState = ref.watch(homePageControllerProvider);
+    final cartController = ref.read(cartControllerProvider.notifier);
+
     return Scaffold(
+      bottomNavigationBar: const CartBottomBar(),
       appBar: AppBar(
         title: TitleLarge(
           text: 'Search',
@@ -36,7 +40,7 @@ class SearchPage extends ConsumerWidget {
               children: [
                 SearchTextField(
                   textController: textController,
-                  // triggerSearchOnChange: true,
+                  triggerSearchOnChange: true,
                   onSearch: (searchKey) {
                     controller.search(searchKey);
                   },
@@ -79,41 +83,56 @@ class SearchPage extends ConsumerWidget {
               )),
             );
           }, emptySearch: () {
-            return homePageState.when(loading: () {
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    (6),
-                    (index) => const Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                        child: ShimmeringCategoryWidget()),
-                  ),
-                ),
-              );
-            }, data: (categories, scraps) {
-              return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(
-                      (categories.length),
-                      (index) => Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 16),
-                        child: CategoryWidget(model: categories[index]),
+            return Builder(
+              builder: (context) {
+                final homePageState = ref.watch(homePageControllerProvider);
+
+                return homePageState.when(loading: () {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                        (6),
+                        (index) => const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 16),
+                            child: ShimmeringCategoryWidget()),
                       ),
                     ),
-                  ));
-            }, error: (e) {
-              return const SizedBox();
-            });
+                  );
+                }, data: (categories, scraps) {
+                  return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(
+                          (categories.length),
+                          (index) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 16),
+                            child: CategoryWidget(model: categories[index]),
+                          ),
+                        ),
+                      ));
+                }, error: (e) {
+                  return const SizedBox();
+                });
+              },
+            );
           }, results: (data) {
             return Expanded(
                 child: ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (ctx, index) {
-                      return ScrapTile(model: data[index], onTap: () {});
+                      return ScrapTile(
+                        model: data[index],
+                        isAdded: cartController.isCartContains(data[index]),
+                        onAdd: () {
+                          cartController.addCartItem(data[index]);
+                        },
+                        onRemove: () {
+                          cartController.remooveItemFromCart(data[index].id);
+                        },
+                      );
                     }));
           })
         ],

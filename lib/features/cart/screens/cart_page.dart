@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/constants/string_constants.dart';
 import 'package:scrapwala_dev/core/providers/location_provider/location_controller.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
+import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
-import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 import 'package:scrapwala_dev/widgets/cart_item_tile.dart';
 import 'package:scrapwala_dev/widgets/location_bottomsheet.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
@@ -17,23 +17,7 @@ class CartPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locationState = ref.watch(locationControllerProvider);
     final locationController = ref.read(locationControllerProvider.notifier);
-
-    final scrapModels = [
-      const ScrapModel(
-        id:"",
-          description:
-              "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
-          price: 23,
-          photoUrl: 'https://picsum.photos/100/100?random=9',
-          name: "Glossy Papers"),
-      const ScrapModel(
-         id:"",
-          description:
-              "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
-          price: 23,
-          photoUrl: 'https://picsum.photos/100/100?random=9',
-          name: "Glossy Papers")
-    ];
+    final state = ref.watch(cartControllerProvider);
 
     final buttonWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -193,8 +177,16 @@ class CartPage extends ConsumerWidget {
                       color: Theme.of(context).colorScheme.onInverseSurface),
                   child: Column(
                     children: [
-                      ...List.generate(scrapModels.length,
-                          (index) => CartItemTile(model: scrapModels[index])),
+                      state.when(
+                          initial: () => const SizedBox.shrink(),
+                          data: (data) {
+                            return Column(
+                              children: [
+                                ...List.generate(data.length,
+                                    (index) => CartItemTile(model: data[index]))
+                              ],
+                            );
+                          }),
                       const Divider(),
                       ListTile(
                         title: const TitleSmall(

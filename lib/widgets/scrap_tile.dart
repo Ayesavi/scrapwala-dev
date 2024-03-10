@@ -10,11 +10,14 @@ class ScrapTile extends ConsumerWidget {
   const ScrapTile(
       {super.key,
       required this.model,
-      required this.onTap,
-      this.added = false});
+      required this.onAdd,
+      required this.onRemove,
+      this.isAdded = false});
   final ScrapModel model;
-  final bool added;
-  final VoidCallback onTap;
+  final bool isAdded;
+  final VoidCallback onAdd;
+  final VoidCallback onRemove;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomListTile(
@@ -48,7 +51,9 @@ class ScrapTile extends ConsumerWidget {
         ),
       ),
       trailing: ScrapTileImageWidget(
-        callback: added ? null : () {},
+        onAdd: onAdd,
+        onRemove: onRemove,
+        isAdded: isAdded,
         imageUrl: model.photoUrl,
       ),
     );

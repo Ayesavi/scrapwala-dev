@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:scrapwala_dev/features/auth/screens/get_started_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/verify_page.dart';
-import 'package:scrapwala_dev/features/cart/cart_page.dart';
+import 'package:scrapwala_dev/features/cart/screens/cart_page.dart';
 import 'package:scrapwala_dev/features/home/screens/home_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/addresses_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/edit_profile.dart';
