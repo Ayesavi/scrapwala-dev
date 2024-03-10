@@ -4,8 +4,9 @@ import 'package:scrapwala_dev/core/extensions/string_extension.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 import 'package:scrapwala_dev/features/profile/providers/profile_page_controller.dart';
-import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.dart';
+import 'package:scrapwala_dev/features/profile/providers/transaction_controller/transactions_conroller.dart';
 import 'package:scrapwala_dev/models/user_model/user_model.dart';
+import 'package:scrapwala_dev/shimmering_widgets/pickup_request_tile.dart';
 import 'package:scrapwala_dev/shimmering_widgets/profile_tile.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/logout_popup.dart';
@@ -51,9 +52,9 @@ class ProfilePage extends ConsumerWidget {
           onRefresh: () async {
             controller.getProfileDetails();
           },
-          child: ListView(
-            children: [
-              Column(
+          child: CustomScrollView(slivers: [
+            SliverToBoxAdapter(
+              child: Column(
                 children: [
                   state.when(
                       error: (e) {
@@ -159,45 +160,33 @@ class ProfilePage extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.onInverseSurface,
                     child: const Text('Past Requests'),
                   ),
-                  PickRequestTile(
-                    model: PickupRequestModel(
-                        addressId: '',
-                        status: RequestStatus.denied,
-                        id: '168520888534237',
-                        requestDateTime: DateTime.now(),
-                        requestingUserId: '',
-                        totalPrice: 2,
-                        quantity: {}),
-                    onTap: (PickupRequestModel model) {
-                      RequestInfoPageRoute(model.id).push(context);
-                    },
-                  ),
-                  PickRequestTile(
-                    model: PickupRequestModel(
-                        addressId: '',
-                        status: RequestStatus.picked,
-                        id: '168520888534237',
-                        requestDateTime: DateTime.now(),
-                        requestingUserId: '',
-                        totalPrice: 2,
-                        quantity: {}),
-                    onTap: (PickupRequestModel model) {},
-                  ),
-                  PickRequestTile(
-                    model: PickupRequestModel(
-                        addressId: '',
-                        status: RequestStatus.pending,
-                        id: '168520888534237',
-                        requestDateTime: DateTime.now(),
-                        requestingUserId: '',
-                        totalPrice: 2,
-                        quantity: {}),
-                    onTap: (PickupRequestModel model) {},
-                  )
                 ],
               ),
-            ],
-          ),
+            ),
+            Builder(
+              builder: (context) {
+                final txnState = ref.watch(transactionsConrollerProvider);
+                return txnState.when(loading: () {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate((ctx, index) {
+                      return ShimmeringPickRequestTile();
+                    }, childCount: 6),
+                  );
+                }, data: (requests) {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate((ctx, index) {
+                      return PickRequestTile(
+                        model: requests[index],
+                        onTap: (model) {
+                          RequestInfoPageRoute(model.id).push(context);
+                        },
+                      );
+                    }, childCount: requests.length),
+                  );
+                });
+              },
+            )
+          ]),
         ));
   }
 }

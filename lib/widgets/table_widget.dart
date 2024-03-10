@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scrapwala_dev/core/constants/string_constants.dart';
+import 'package:scrapwala_dev/models/transaction_model/transaction_model.dart';
 
 class MapTableWidget extends StatelessWidget {
-  final Map<String, int> data;
+  final List<OrderQuantity> data;
 
   const MapTableWidget({super.key, required this.data});
 
@@ -56,19 +57,19 @@ class MapTableWidget extends StatelessWidget {
               ),
             ],
           ),
-          for (var entry in data.entries)
+          for (var entry in data)
             TableRow(
               children: [
                 TableCell(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text(entry.key)),
+                    child: Center(child: Text(entry.name)),
                   ),
                 ),
                 TableCell(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text(entry.value.toString())),
+                    child: Center(child: Text(entry.quantity.toString())),
                   ),
                 ),
                 TableCell(
@@ -76,40 +77,11 @@ class MapTableWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                         child: Text(
-                            '$kRupeeSymbol${entry.value.toString()} x ${entry.value.toString()}')),
+                            '$kRupeeSymbol${entry.price.toString()} x ${entry.quantity.toString()}')),
                   ),
                 ),
               ],
             ),
-          const TableRow(
-            children: [
-              TableCell(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                      child: Text(
-                    'Total',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-                ),
-              ),
-              TableCell(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text("60")),
-                ),
-              ),
-              TableCell(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text("60",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );

@@ -9,6 +9,8 @@ enum RequestStatus {
   denied,
 }
 
+
+/// We can also reference it as a transaction model
 @freezed
 class PickupRequestModel with _$PickupRequestModel {
   factory PickupRequestModel({
