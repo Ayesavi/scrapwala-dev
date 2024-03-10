@@ -42,6 +42,7 @@ extension ScrapMeasurementExtension on ScrapMeasurement {
 @freezed
 abstract class ScrapModel with _$ScrapModel {
   const factory ScrapModel({
+    required String id,
     required String name,
     String? photoUrl,
     required String description,

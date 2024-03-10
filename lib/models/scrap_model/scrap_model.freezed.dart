@@ -20,6 +20,7 @@ ScrapModel _$ScrapModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ScrapModel {
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get photoUrl => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -40,7 +41,8 @@ abstract class $ScrapModelCopyWith<$Res> {
       _$ScrapModelCopyWithImpl<$Res, ScrapModel>;
   @useResult
   $Res call(
-      {String name,
+      {String id,
+      String name,
       String? photoUrl,
       String description,
       double price,
@@ -61,6 +63,7 @@ class _$ScrapModelCopyWithImpl<$Res, $Val extends ScrapModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? photoUrl = freezed,
     Object? description = null,
@@ -69,6 +72,10 @@ class _$ScrapModelCopyWithImpl<$Res, $Val extends ScrapModel>
     Object? isNegotiable = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -106,7 +113,8 @@ abstract class _$$ScrapModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name,
+      {String id,
+      String name,
       String? photoUrl,
       String description,
       double price,
@@ -125,6 +133,7 @@ class __$$ScrapModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? photoUrl = freezed,
     Object? description = null,
@@ -133,6 +142,10 @@ class __$$ScrapModelImplCopyWithImpl<$Res>
     Object? isNegotiable = null,
   }) {
     return _then(_$ScrapModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -165,7 +178,8 @@ class __$$ScrapModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ScrapModelImpl implements _ScrapModel {
   const _$ScrapModelImpl(
-      {required this.name,
+      {required this.id,
+      required this.name,
       this.photoUrl,
       required this.description,
       required this.price,
@@ -175,6 +189,8 @@ class _$ScrapModelImpl implements _ScrapModel {
   factory _$ScrapModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScrapModelImplFromJson(json);
 
+  @override
+  final String id;
   @override
   final String name;
   @override
@@ -192,7 +208,7 @@ class _$ScrapModelImpl implements _ScrapModel {
 
   @override
   String toString() {
-    return 'ScrapModel(name: $name, photoUrl: $photoUrl, description: $description, price: $price, measure: $measure, isNegotiable: $isNegotiable)';
+    return 'ScrapModel(id: $id, name: $name, photoUrl: $photoUrl, description: $description, price: $price, measure: $measure, isNegotiable: $isNegotiable)';
   }
 
   @override
@@ -200,6 +216,7 @@ class _$ScrapModelImpl implements _ScrapModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ScrapModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.photoUrl, photoUrl) ||
                 other.photoUrl == photoUrl) &&
@@ -213,8 +230,8 @@ class _$ScrapModelImpl implements _ScrapModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, name, photoUrl, description, price, measure, isNegotiable);
+  int get hashCode => Object.hash(runtimeType, id, name, photoUrl, description,
+      price, measure, isNegotiable);
 
   @JsonKey(ignore: true)
   @override
@@ -232,7 +249,8 @@ class _$ScrapModelImpl implements _ScrapModel {
 
 abstract class _ScrapModel implements ScrapModel {
   const factory _ScrapModel(
-      {required final String name,
+      {required final String id,
+      required final String name,
       final String? photoUrl,
       required final String description,
       required final double price,
@@ -242,6 +260,8 @@ abstract class _ScrapModel implements ScrapModel {
   factory _ScrapModel.fromJson(Map<String, dynamic> json) =
       _$ScrapModelImpl.fromJson;
 
+  @override
+  String get id;
   @override
   String get name;
   @override

@@ -7,6 +7,7 @@ part 'scrap_category_model.g.dart';
 abstract class ScrapCategoryModel with _$ScrapCategoryModel {
   const factory ScrapCategoryModel({
     required String name,
+    required String id,
     required String photoUrl,
   }) = _ScrapCategory;
 

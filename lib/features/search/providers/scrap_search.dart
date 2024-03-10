@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:scrapwala_dev/features/home/repositories/category_repository.dart';
+import 'package:scrapwala_dev/features/home/repositories/scrap_repository.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 
 part 'scrap_search.freezed.dart';
@@ -8,6 +10,9 @@ part 'scrap_search_state.dart';
 
 @riverpod
 class ScrapSearch extends _$ScrapSearch {
+  final _categoryRepo = FakeCategoryRepository();
+  final _scrapRepo = FakeScrapRepository();
+
   @override
   ScrapSearchState build() {
     return const _EmptySearch();
@@ -15,22 +20,7 @@ class ScrapSearch extends _$ScrapSearch {
 
   void search(String key) async {
     state = const ScrapSearchState.loading();
-    final data = await Future.delayed(const Duration(seconds: 1), () {
-      return [
-        const ScrapModel(
-            description:
-                "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
-            price: 23,
-            photoUrl: 'https://picsum.photos/100/100?random=9',
-            name: "Glossy Papers"),
-        const ScrapModel(
-            description:
-                "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
-            price: 23,
-            photoUrl: 'https://picsum.photos/100/100?random=9',
-            name: "Glossy Papers")
-      ];
-    });
+    final data = await _scrapRepo.getScraps();
     if (key.isEmpty) {
       state = const ScrapSearchState.emptySearch();
     } else {

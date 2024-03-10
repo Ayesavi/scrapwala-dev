@@ -20,12 +20,14 @@ class CartPage extends ConsumerWidget {
 
     final scrapModels = [
       const ScrapModel(
+        id:"",
           description:
               "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
           price: 23,
           photoUrl: 'https://picsum.photos/100/100?random=9',
           name: "Glossy Papers"),
       const ScrapModel(
+         id:"",
           description:
               "Papers used to print photos,Papers used to print photos,Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos, Papers used to print photos",
           price: 23,
