@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/features/auth/widgets/title_large.dart';
 import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
+import 'package:scrapwala_dev/features/home/providers/home_page_controller.dart';
 import 'package:scrapwala_dev/features/search/providers/scrap_search.dart';
-import 'package:scrapwala_dev/models/scrap_category/scrap_category_model.dart';
-import 'package:scrapwala_dev/sample/data/mock_categories.dart' as data;
+import 'package:scrapwala_dev/shimmering_widgets/category_widget.dart';
+import 'package:scrapwala_dev/shimmering_widgets/shimmering_scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/scrap_category_widget.dart';
 import 'package:scrapwala_dev/widgets/scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/search_text_field.dart';
@@ -18,6 +19,7 @@ class SearchPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final searchResults = ref.watch(scrapSearchProvider);
     final controller = ref.watch(scrapSearchProvider.notifier);
+    final homePageState = ref.watch(homePageControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: TitleLarge(
@@ -34,7 +36,7 @@ class SearchPage extends ConsumerWidget {
               children: [
                 SearchTextField(
                   textController: textController,
-                  triggerSearchOnChange: true,
+                  // triggerSearchOnChange: true,
                   onSearch: (searchKey) {
                     controller.search(searchKey);
                   },
@@ -64,22 +66,48 @@ class SearchPage extends ConsumerWidget {
             ),
           ),
           searchResults.when(loading: () {
-            return const Center(child: CircularProgressIndicator());
+            return Expanded(
+              child: SingleChildScrollView(
+                  child: Column(
+                children: List.generate(
+                  (10),
+                  (index) => const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                    child: ShimmeringScrapTile(),
+                  ),
+                ),
+              )),
+            );
           }, emptySearch: () {
-            return SingleChildScrollView(
+            return homePageState.when(loading: () {
+              return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: List.generate(
-                    (data.categories.length),
-                    (index) => Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 16),
-                      child: CategoryWidget(
-                          model: ScrapCategoryModel.fromJson(
-                              data.categories[index])),
-                    ),
+                    (6),
+                    (index) => const Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                        child: ShimmeringCategoryWidget()),
                   ),
-                ));
+                ),
+              );
+            }, data: (categories, scraps) {
+              return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      (categories.length),
+                      (index) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 16),
+                        child: CategoryWidget(model: categories[index]),
+                      ),
+                    ),
+                  ));
+            }, error: (e) {
+              return const SizedBox();
+            });
           }, results: (data) {
             return Expanded(
                 child: ListView.builder(

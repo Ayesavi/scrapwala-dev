@@ -8,6 +8,7 @@ part of 'scrap_model.dart';
 
 _$ScrapModelImpl _$$ScrapModelImplFromJson(Map<String, dynamic> json) =>
     _$ScrapModelImpl(
+      id: json['id'] as String,
       name: json['name'] as String,
       photoUrl: json['photoUrl'] as String?,
       description: json['description'] as String,
@@ -20,6 +21,7 @@ _$ScrapModelImpl _$$ScrapModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$ScrapModelImplToJson(_$ScrapModelImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'photoUrl': instance.photoUrl,
       'description': instance.description,

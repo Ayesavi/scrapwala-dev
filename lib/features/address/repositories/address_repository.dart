@@ -69,7 +69,36 @@ class FakeAddressRepository implements BaseAddressRepository {
 
   FakeAddressRepository._(); // Private constructor
 
-  final List<AddressModel> _addresses = [];
+  final List<AddressModel> _addresses = [
+    AddressModel(
+      address: '123 Main Street',
+      latlng: (lat: 51.5074, lng: 0.1278),
+      ownerId: 'user123',
+      createdAt: DateTime.now(),
+      id: '1',
+      category: AddressCategory.friend,
+      label: 'Home',
+      houseStreetNo: '57',
+    ),
+    AddressModel(
+      address: '456 Elm Street',
+      latlng: (lat: 51.5074, lng: 0.1278),
+      createdAt: DateTime.now(),
+      id: '2',
+      houseStreetNo: '57',
+      category: AddressCategory.office,
+      label: 'Work',
+    ),
+    AddressModel(
+      address: '789 Oak Street',
+      latlng: (lat: 51.5074, lng: 0.1278),
+      createdAt: DateTime.now(),
+      id: '3',
+      houseStreetNo: '57',
+      category: AddressCategory.house,
+      label: 'Vacation Home',
+    ),
+  ];
 
   @override
   Future<void> addAddress(AddressModel address) async {

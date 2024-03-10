@@ -21,6 +21,7 @@ ScrapCategoryModel _$ScrapCategoryModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ScrapCategoryModel {
   String get name => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +36,7 @@ abstract class $ScrapCategoryModelCopyWith<$Res> {
           ScrapCategoryModel value, $Res Function(ScrapCategoryModel) then) =
       _$ScrapCategoryModelCopyWithImpl<$Res, ScrapCategoryModel>;
   @useResult
-  $Res call({String name, String photoUrl});
+  $Res call({String name, String id, String photoUrl});
 }
 
 /// @nodoc
@@ -52,12 +53,17 @@ class _$ScrapCategoryModelCopyWithImpl<$Res, $Val extends ScrapCategoryModel>
   @override
   $Res call({
     Object? name = null,
+    Object? id = null,
     Object? photoUrl = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       photoUrl: null == photoUrl
           ? _value.photoUrl
@@ -75,7 +81,7 @@ abstract class _$$ScrapCategoryImplCopyWith<$Res>
       __$$ScrapCategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String photoUrl});
+  $Res call({String name, String id, String photoUrl});
 }
 
 /// @nodoc
@@ -90,12 +96,17 @@ class __$$ScrapCategoryImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
+    Object? id = null,
     Object? photoUrl = null,
   }) {
     return _then(_$ScrapCategoryImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       photoUrl: null == photoUrl
           ? _value.photoUrl
@@ -108,7 +119,8 @@ class __$$ScrapCategoryImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ScrapCategoryImpl implements _ScrapCategory {
-  const _$ScrapCategoryImpl({required this.name, required this.photoUrl});
+  const _$ScrapCategoryImpl(
+      {required this.name, required this.id, required this.photoUrl});
 
   factory _$ScrapCategoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScrapCategoryImplFromJson(json);
@@ -116,11 +128,13 @@ class _$ScrapCategoryImpl implements _ScrapCategory {
   @override
   final String name;
   @override
+  final String id;
+  @override
   final String photoUrl;
 
   @override
   String toString() {
-    return 'ScrapCategoryModel(name: $name, photoUrl: $photoUrl)';
+    return 'ScrapCategoryModel(name: $name, id: $id, photoUrl: $photoUrl)';
   }
 
   @override
@@ -129,13 +143,14 @@ class _$ScrapCategoryImpl implements _ScrapCategory {
         (other.runtimeType == runtimeType &&
             other is _$ScrapCategoryImpl &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.photoUrl, photoUrl) ||
                 other.photoUrl == photoUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, photoUrl);
+  int get hashCode => Object.hash(runtimeType, name, id, photoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -154,6 +169,7 @@ class _$ScrapCategoryImpl implements _ScrapCategory {
 abstract class _ScrapCategory implements ScrapCategoryModel {
   const factory _ScrapCategory(
       {required final String name,
+      required final String id,
       required final String photoUrl}) = _$ScrapCategoryImpl;
 
   factory _ScrapCategory.fromJson(Map<String, dynamic> json) =
@@ -161,6 +177,8 @@ abstract class _ScrapCategory implements ScrapCategoryModel {
 
   @override
   String get name;
+  @override
+  String get id;
   @override
   String get photoUrl;
   @override
