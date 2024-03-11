@@ -18,6 +18,7 @@ _$TransactionModelImpl _$$TransactionModelImplFromJson(
           .map((e) => OrderQuantity.fromJson(e as Map<String, dynamic>))
           .toList(),
       photograph: json['photograph'] as String?,
+      paymentMode: json['paymentMode'] ?? PaymentMode.cash,
       totalAmountPaid: json['totalAmountPaid'] as int,
     );
 
@@ -30,6 +31,7 @@ Map<String, dynamic> _$$TransactionModelImplToJson(
       'pickupTime': instance.pickupTime.toIso8601String(),
       'orders': instance.orders,
       'photograph': instance.photograph,
+      'paymentMode': instance.paymentMode,
       'totalAmountPaid': instance.totalAmountPaid,
     };
 
