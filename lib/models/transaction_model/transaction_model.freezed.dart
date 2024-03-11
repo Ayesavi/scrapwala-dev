@@ -26,6 +26,7 @@ mixin _$TransactionModel {
   DateTime get pickupTime => throw _privateConstructorUsedError;
   List<OrderQuantity> get orders => throw _privateConstructorUsedError;
   String? get photograph => throw _privateConstructorUsedError;
+  dynamic get paymentMode => throw _privateConstructorUsedError;
   int get totalAmountPaid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,6 +48,7 @@ abstract class $TransactionModelCopyWith<$Res> {
       DateTime pickupTime,
       List<OrderQuantity> orders,
       String? photograph,
+      dynamic paymentMode,
       int totalAmountPaid});
 
   $AddressModelCopyWith<$Res> get pickupLocation;
@@ -71,6 +73,7 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
     Object? pickupTime = null,
     Object? orders = null,
     Object? photograph = freezed,
+    Object? paymentMode = freezed,
     Object? totalAmountPaid = null,
   }) {
     return _then(_value.copyWith(
@@ -98,6 +101,10 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
           ? _value.photograph
           : photograph // ignore: cast_nullable_to_non_nullable
               as String?,
+      paymentMode: freezed == paymentMode
+          ? _value.paymentMode
+          : paymentMode // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       totalAmountPaid: null == totalAmountPaid
           ? _value.totalAmountPaid
           : totalAmountPaid // ignore: cast_nullable_to_non_nullable
@@ -129,6 +136,7 @@ abstract class _$$TransactionModelImplCopyWith<$Res>
       DateTime pickupTime,
       List<OrderQuantity> orders,
       String? photograph,
+      dynamic paymentMode,
       int totalAmountPaid});
 
   @override
@@ -152,6 +160,7 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
     Object? pickupTime = null,
     Object? orders = null,
     Object? photograph = freezed,
+    Object? paymentMode = freezed,
     Object? totalAmountPaid = null,
   }) {
     return _then(_$TransactionModelImpl(
@@ -179,6 +188,7 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
           ? _value.photograph
           : photograph // ignore: cast_nullable_to_non_nullable
               as String?,
+      paymentMode: freezed == paymentMode ? _value.paymentMode! : paymentMode,
       totalAmountPaid: null == totalAmountPaid
           ? _value.totalAmountPaid
           : totalAmountPaid // ignore: cast_nullable_to_non_nullable
@@ -197,6 +207,7 @@ class _$TransactionModelImpl implements _TransactionModel {
       required this.pickupTime,
       required final List<OrderQuantity> orders,
       this.photograph,
+      this.paymentMode = PaymentMode.cash,
       required this.totalAmountPaid})
       : _orders = orders;
 
@@ -222,11 +233,14 @@ class _$TransactionModelImpl implements _TransactionModel {
   @override
   final String? photograph;
   @override
+  @JsonKey()
+  final dynamic paymentMode;
+  @override
   final int totalAmountPaid;
 
   @override
   String toString() {
-    return 'TransactionModel(transactionId: $transactionId, requestId: $requestId, pickupLocation: $pickupLocation, pickupTime: $pickupTime, orders: $orders, photograph: $photograph, totalAmountPaid: $totalAmountPaid)';
+    return 'TransactionModel(transactionId: $transactionId, requestId: $requestId, pickupLocation: $pickupLocation, pickupTime: $pickupTime, orders: $orders, photograph: $photograph, paymentMode: $paymentMode, totalAmountPaid: $totalAmountPaid)';
   }
 
   @override
@@ -245,6 +259,8 @@ class _$TransactionModelImpl implements _TransactionModel {
             const DeepCollectionEquality().equals(other._orders, _orders) &&
             (identical(other.photograph, photograph) ||
                 other.photograph == photograph) &&
+            const DeepCollectionEquality()
+                .equals(other.paymentMode, paymentMode) &&
             (identical(other.totalAmountPaid, totalAmountPaid) ||
                 other.totalAmountPaid == totalAmountPaid));
   }
@@ -259,6 +275,7 @@ class _$TransactionModelImpl implements _TransactionModel {
       pickupTime,
       const DeepCollectionEquality().hash(_orders),
       photograph,
+      const DeepCollectionEquality().hash(paymentMode),
       totalAmountPaid);
 
   @JsonKey(ignore: true)
@@ -284,6 +301,7 @@ abstract class _TransactionModel implements TransactionModel {
       required final DateTime pickupTime,
       required final List<OrderQuantity> orders,
       final String? photograph,
+      final dynamic paymentMode,
       required final int totalAmountPaid}) = _$TransactionModelImpl;
 
   factory _TransactionModel.fromJson(Map<String, dynamic> json) =
@@ -301,6 +319,8 @@ abstract class _TransactionModel implements TransactionModel {
   List<OrderQuantity> get orders;
   @override
   String? get photograph;
+  @override
+  dynamic get paymentMode;
   @override
   int get totalAmountPaid;
   @override

@@ -14,6 +14,7 @@ abstract class TransactionModel with _$TransactionModel {
     required DateTime pickupTime,
     required List<OrderQuantity> orders,
     String? photograph,
+    @Default(PaymentMode.cash) paymentMode,
     required int totalAmountPaid,
   }) = _TransactionModel;
 
@@ -34,3 +35,5 @@ abstract class OrderQuantity with _$OrderQuantity {
   factory OrderQuantity.fromJson(Map<String, dynamic> json) =>
       _$OrderQuantityFromJson(json);
 }
+
+enum PaymentMode { cash, upi }
