@@ -51,7 +51,7 @@ dependencies:
   country_code_picker: ^3.0.0
   palette_generator: ^0.3.3+3
   permission_handler: ^11.2.0
-  riverpod_annotation: ^2.3.3
+  riverpod_annotation: ^2.3.5
   flutter_dotenv: ^5.1.0
   firebase_core: ^2.27.0
   shimmer: ^3.0.0
