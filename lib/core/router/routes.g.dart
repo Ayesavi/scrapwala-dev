@@ -133,6 +133,11 @@ RouteBase get $homeRoute => GoRouteData.$route(
               factory: $EditProfileRouteExtension._fromState,
             ),
             GoRouteData.$route(
+              path: 'pastRequestsPage',
+              name: 'pastRequestsPage',
+              factory: $PastRequestsRouteExtension._fromState,
+            ),
+            GoRouteData.$route(
               path: 'addressesPage',
               name: 'addressesPage',
               factory: $AddressPageRouteExtension._fromState,
@@ -223,6 +228,24 @@ extension $EditProfileRouteExtension on EditProfileRoute {
 
   String get location => GoRouteData.$location(
         '/home/profile/editProfilePage',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $PastRequestsRouteExtension on PastRequestsRoute {
+  static PastRequestsRoute _fromState(GoRouterState state) =>
+      const PastRequestsRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/profile/pastRequestsPage',
       );
 
   void go(BuildContext context) => context.go(location);

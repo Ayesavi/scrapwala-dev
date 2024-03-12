@@ -5,7 +5,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract class BaseCartRepository {
   Future<List<CartModel>> getCartItems();
 
-  Future<void> addToCart(CartModel cartItem);
+  Future<CartModel> addToCart(CartModel cartItem);
+
+  Future<void> updateCartQty(String cartId, int newQty);
 
   Future<void> removeFromCart(String itemId);
 }
@@ -27,14 +29,21 @@ class SupabaseCartRepository implements BaseCartRepository {
   }
 
   @override
-  Future<void> addToCart(CartModel cartItem) async {
+  Future<CartModel> addToCart(CartModel cartItem) async {
     try {
-      await _supabaseClient.from('cart').insert({
-        "qty": cartItem.qty,
-        'scrap_id': cartItem.scrap.id,
-      });
+      final data = await _supabaseClient
+          .from('cart')
+          .insert({
+            "id": cartItem.id,
+            "qty": cartItem.qty,
+            'scrap_id': cartItem.scrap.id,
+          })
+          .select()
+          .single();
+      data['scrap'] = cartItem.scrap.toJson();
+      return CartModel.fromJson(data);
     } catch (error) {
-      throw SkException('Failed to add item to cart: $error');
+      throw errorHandler(error);
     }
   }
 
@@ -42,6 +51,17 @@ class SupabaseCartRepository implements BaseCartRepository {
   Future<void> removeFromCart(String itemId) async {
     try {
       await _supabaseClient.from('cart').delete().eq('id', itemId);
+    } catch (error) {
+      throw SkException('Failed to remove item from cart: $error');
+    }
+  }
+
+  @override
+  Future<void> updateCartQty(String cartId, int newQty) async {
+    try {
+      await _supabaseClient
+          .from('cart')
+          .update({'qty': newQty}).eq('id', cartId);
     } catch (error) {
       throw SkException('Failed to remove item from cart: $error');
     }
@@ -57,13 +77,20 @@ class FakeCartRepository implements BaseCartRepository {
   }
 
   @override
-  Future<void> addToCart(CartModel cartItem) async {
+  Future<CartModel> addToCart(CartModel cartItem) async {
     _cartItems.add(cartItem); // Add the item to the cart
+
+    return cartItem;
   }
 
   @override
   Future<void> removeFromCart(String itemId) async {
     _cartItems
         .removeWhere((item) => item.id == itemId); // Remove item from the cart
+  }
+
+  @override
+  Future<void> updateCartQty(String cartId, int newQty) {
+    throw UnimplementedError();
   }
 }

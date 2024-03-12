@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/utils/debounder.dart';
-import 'package:scrapwala_dev/shared/show_snackbar.dart';
 
 class CounterCumTextFieldWidget extends ConsumerStatefulWidget {
-  const CounterCumTextFieldWidget({super.key, required this.onCounterChange});
-
+  const CounterCumTextFieldWidget(
+      {super.key,
+      required this.onCounterChange,
+      this.onDecrementItemToZero,
+      this.initialValue = 1});
+  final int initialValue;
+  final VoidCallback? onDecrementItemToZero;
   final void Function(int qty) onCounterChange;
 
   @override
@@ -16,7 +20,13 @@ class CounterCumTextFieldWidget extends ConsumerStatefulWidget {
 
 class _CounterCumTextFieldWidgetState
     extends ConsumerState<CounterCumTextFieldWidget> {
-  int _counter = 0;
+  late int _counter;
+
+  @override
+  void initState() {
+    super.initState();
+    _counter = widget.initialValue;
+  }
 
   final _debouncer = Debouncer(delay: const Duration(milliseconds: 800));
 
@@ -35,13 +45,11 @@ class _CounterCumTextFieldWidgetState
             icon: const Icon(Icons.remove),
             onPressed: () {
               setState(() {
-                if (_counter > 0) {
+                if (_counter > 1) {
                   _counter--;
                   widget.onCounterChange(_counter);
                 } else {
-                  _debouncer.call(() {
-                    showSnackBar(context, 'Number can not be negative int');
-                  });
+                  widget.onDecrementItemToZero?.call();
                 }
               });
             },

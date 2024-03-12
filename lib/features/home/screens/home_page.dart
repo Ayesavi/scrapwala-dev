@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/features/home/providers/home_page_controller.dart';
 import 'package:scrapwala_dev/features/home/widgets/home_appbar_title.dart';
 import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:scrapwala_dev/shared/cart_bottom_bar.dart';
+import 'package:scrapwala_dev/shared/show_snackbar.dart';
 import 'package:scrapwala_dev/shimmering_widgets/category_widget.dart';
 import 'package:scrapwala_dev/shimmering_widgets/shimmering_scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/scrap_category_widget.dart';
 import 'package:scrapwala_dev/widgets/scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/search_text_field.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
+import 'package:uuid/uuid.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -112,7 +115,24 @@ class HomePage extends ConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    state.when(loading: () {
+                    state.when(networkError: (e) {
+                      return SizedBox(
+                        height: 240,
+                        child: GridView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount:
+                                  2, // You can change this value according to your requirement
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                            ),
+                            itemCount: 12,
+                            itemBuilder: (context, index) =>
+                                const ShimmeringCategoryWidget()),
+                      );
+                    }, loading: () {
                       return SizedBox(
                         height: 240,
                         child: GridView.builder(
@@ -154,30 +174,54 @@ class HomePage extends ConsumerWidget {
                   ],
                 ),
               ])),
-              state.when(loading: () {
+              state.when(networkError: (e) {
+                Future.delayed(const Duration(seconds: 1), () {
+                  showSnackBar(
+                      context, 'Looks like you are not connected to internet');
+                });
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate((ctx, index) {
+                    return const ShimmeringScrapTile();
+                  }, childCount: 6),
+                );
+              }, loading: () {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate((ctx, index) {
                     return const ShimmeringScrapTile();
                   }, childCount: 6),
                 );
               }, data: (categories, scraps) {
+                ref.watch(cartControllerProvider);
                 return SliverList(
                   delegate: SliverChildBuilderDelegate((ctx, index) {
                     return ScrapTile(
                         isAdded: cartController.isCartContains(scraps[index]),
-                        onAdd: () {
-                          cartController.addCartItem(
-                              CartModel(id: "", qty: 0, scrap: scraps[index]));
+                        onAdd: () async {
+                          try {
+                            await cartController.addCartItem(CartModel(
+                                id: const Uuid().v4(),
+                                qty: 1,
+                                scrap: scraps[index]));
+                          } catch (e) {
+                            if (context.mounted) {
+                              showSnackBar(context, errorHandler(e).message);
+                            }
+                          }
                         },
-                        onRemove: () {
-                          cartController.remooveItemFromCart(scraps[index].id);
+                        onRemove: () async {
+                          await cartController
+                              .remooveItemFromCart(scraps[index].id);
                         },
                         model: scraps[index]);
                   }, childCount: scraps.length),
                 );
               }, error: (e) {
                 return const SliverToBoxAdapter(
-                    child: Text("An Error Occurred"));
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("An Error Occurred"),
+                  ),
+                );
               })
             ]),
           ),

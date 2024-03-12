@@ -22,6 +22,7 @@ mixin _$HomePageControllerState {
     required TResult Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)
         data,
+    required TResult Function(Object e) networkError,
     required TResult Function(Object e) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -31,6 +32,7 @@ mixin _$HomePageControllerState {
     TResult? Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)?
         data,
+    TResult? Function(Object e)? networkError,
     TResult? Function(Object e)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -40,6 +42,7 @@ mixin _$HomePageControllerState {
     TResult Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)?
         data,
+    TResult Function(Object e)? networkError,
     TResult Function(Object e)? error,
     required TResult orElse(),
   }) =>
@@ -48,6 +51,7 @@ mixin _$HomePageControllerState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) loading,
     required TResult Function(_Data value) data,
+    required TResult Function(_NetworkError value) networkError,
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +59,7 @@ mixin _$HomePageControllerState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? loading,
     TResult? Function(_Data value)? data,
+    TResult? Function(_NetworkError value)? networkError,
     TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -62,6 +67,7 @@ mixin _$HomePageControllerState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? loading,
     TResult Function(_Data value)? data,
+    TResult Function(_NetworkError value)? networkError,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
@@ -129,6 +135,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)
         data,
+    required TResult Function(Object e) networkError,
     required TResult Function(Object e) error,
   }) {
     return loading();
@@ -141,6 +148,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)?
         data,
+    TResult? Function(Object e)? networkError,
     TResult? Function(Object e)? error,
   }) {
     return loading?.call();
@@ -153,6 +161,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)?
         data,
+    TResult Function(Object e)? networkError,
     TResult Function(Object e)? error,
     required TResult orElse(),
   }) {
@@ -167,6 +176,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) loading,
     required TResult Function(_Data value) data,
+    required TResult Function(_NetworkError value) networkError,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -177,6 +187,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? loading,
     TResult? Function(_Data value)? data,
+    TResult? Function(_NetworkError value)? networkError,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -187,6 +198,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? loading,
     TResult Function(_Data value)? data,
+    TResult Function(_NetworkError value)? networkError,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -295,6 +307,7 @@ class _$DataImpl implements _Data {
     required TResult Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)
         data,
+    required TResult Function(Object e) networkError,
     required TResult Function(Object e) error,
   }) {
     return data(categories, scraps);
@@ -307,6 +320,7 @@ class _$DataImpl implements _Data {
     TResult? Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)?
         data,
+    TResult? Function(Object e)? networkError,
     TResult? Function(Object e)? error,
   }) {
     return data?.call(categories, scraps);
@@ -319,6 +333,7 @@ class _$DataImpl implements _Data {
     TResult Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)?
         data,
+    TResult Function(Object e)? networkError,
     TResult Function(Object e)? error,
     required TResult orElse(),
   }) {
@@ -333,6 +348,7 @@ class _$DataImpl implements _Data {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) loading,
     required TResult Function(_Data value) data,
+    required TResult Function(_NetworkError value) networkError,
     required TResult Function(_Error value) error,
   }) {
     return data(this);
@@ -343,6 +359,7 @@ class _$DataImpl implements _Data {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? loading,
     TResult? Function(_Data value)? data,
+    TResult? Function(_NetworkError value)? networkError,
     TResult? Function(_Error value)? error,
   }) {
     return data?.call(this);
@@ -353,6 +370,7 @@ class _$DataImpl implements _Data {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? loading,
     TResult Function(_Data value)? data,
+    TResult Function(_NetworkError value)? networkError,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -372,6 +390,155 @@ abstract class _Data implements HomePageControllerState {
   List<ScrapModel> get scraps;
   @JsonKey(ignore: true)
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$NetworkErrorImplCopyWith<$Res> {
+  factory _$$NetworkErrorImplCopyWith(
+          _$NetworkErrorImpl value, $Res Function(_$NetworkErrorImpl) then) =
+      __$$NetworkErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Object e});
+}
+
+/// @nodoc
+class __$$NetworkErrorImplCopyWithImpl<$Res>
+    extends _$HomePageControllerStateCopyWithImpl<$Res, _$NetworkErrorImpl>
+    implements _$$NetworkErrorImplCopyWith<$Res> {
+  __$$NetworkErrorImplCopyWithImpl(
+      _$NetworkErrorImpl _value, $Res Function(_$NetworkErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? e = null,
+  }) {
+    return _then(_$NetworkErrorImpl(
+      null == e ? _value.e : e,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$NetworkErrorImpl implements _NetworkError {
+  const _$NetworkErrorImpl(this.e);
+
+  @override
+  final Object e;
+
+  @override
+  String toString() {
+    return 'HomePageControllerState.networkError(e: $e)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NetworkErrorImpl &&
+            const DeepCollectionEquality().equals(other.e, e));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(e));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NetworkErrorImplCopyWith<_$NetworkErrorImpl> get copyWith =>
+      __$$NetworkErrorImplCopyWithImpl<_$NetworkErrorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(
+            List<ScrapCategoryModel> categories, List<ScrapModel> scraps)
+        data,
+    required TResult Function(Object e) networkError,
+    required TResult Function(Object e) error,
+  }) {
+    return networkError(e);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function(
+            List<ScrapCategoryModel> categories, List<ScrapModel> scraps)?
+        data,
+    TResult? Function(Object e)? networkError,
+    TResult? Function(Object e)? error,
+  }) {
+    return networkError?.call(e);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(
+            List<ScrapCategoryModel> categories, List<ScrapModel> scraps)?
+        data,
+    TResult Function(Object e)? networkError,
+    TResult Function(Object e)? error,
+    required TResult orElse(),
+  }) {
+    if (networkError != null) {
+      return networkError(e);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) loading,
+    required TResult Function(_Data value) data,
+    required TResult Function(_NetworkError value) networkError,
+    required TResult Function(_Error value) error,
+  }) {
+    return networkError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? loading,
+    TResult? Function(_Data value)? data,
+    TResult? Function(_NetworkError value)? networkError,
+    TResult? Function(_Error value)? error,
+  }) {
+    return networkError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? loading,
+    TResult Function(_Data value)? data,
+    TResult Function(_NetworkError value)? networkError,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (networkError != null) {
+      return networkError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NetworkError implements HomePageControllerState {
+  const factory _NetworkError(final Object e) = _$NetworkErrorImpl;
+
+  Object get e;
+  @JsonKey(ignore: true)
+  _$$NetworkErrorImplCopyWith<_$NetworkErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -441,6 +608,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)
         data,
+    required TResult Function(Object e) networkError,
     required TResult Function(Object e) error,
   }) {
     return error(e);
@@ -453,6 +621,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)?
         data,
+    TResult? Function(Object e)? networkError,
     TResult? Function(Object e)? error,
   }) {
     return error?.call(e);
@@ -465,6 +634,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(
             List<ScrapCategoryModel> categories, List<ScrapModel> scraps)?
         data,
+    TResult Function(Object e)? networkError,
     TResult Function(Object e)? error,
     required TResult orElse(),
   }) {
@@ -479,6 +649,7 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) loading,
     required TResult Function(_Data value) data,
+    required TResult Function(_NetworkError value) networkError,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -489,6 +660,7 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? loading,
     TResult? Function(_Data value)? data,
+    TResult? Function(_NetworkError value)? networkError,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -499,6 +671,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? loading,
     TResult Function(_Data value)? data,
+    TResult Function(_NetworkError value)? networkError,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {

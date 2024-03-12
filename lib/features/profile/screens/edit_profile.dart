@@ -81,7 +81,7 @@ class EditProfilePage extends ConsumerWidget {
               ),
             );
           }, loading: () {
-            return ShimmeringTextField();
+            return const ShimmeringTextField();
           }, data: (data) {
             final nameController = TextEditingController(text: data.name);
             final phoneNumberController = TextEditingController(
@@ -152,7 +152,7 @@ class EditProfilePage extends ConsumerWidget {
                             builder: (context) {
                               return OtpVerifyPage(
                                 email: email,
-                                otpType: OtpType.emailChange,
+                                otpType: OtpType.email,
                               );
                             },
                           ));

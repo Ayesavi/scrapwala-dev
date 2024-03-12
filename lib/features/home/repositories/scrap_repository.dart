@@ -68,7 +68,7 @@ class SupabaseScrapRepository implements BaseScrapRepository {
       final data = await _supabaseClient.from('scraps').select();
       return data.map((item) => ScrapModel.fromJson(item)).toList();
     } catch (error) {
-      throw SkException('Failed to fetch scraps: $error');
+      throw errorHandler(error);
     }
   }
 

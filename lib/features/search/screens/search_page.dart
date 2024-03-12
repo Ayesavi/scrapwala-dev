@@ -12,6 +12,7 @@ import 'package:scrapwala_dev/shimmering_widgets/shimmering_scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/scrap_category_widget.dart';
 import 'package:scrapwala_dev/widgets/scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/search_text_field.dart';
+import 'package:uuid/uuid.dart';
 
 class SearchPage extends ConsumerWidget {
   SearchPage({super.key});
@@ -88,7 +89,20 @@ class SearchPage extends ConsumerWidget {
               builder: (context) {
                 final homePageState = ref.watch(homePageControllerProvider);
 
-                return homePageState.when(loading: () {
+                return homePageState.when(networkError: (e) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                        (6),
+                        (index) => const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 16),
+                            child: ShimmeringCategoryWidget()),
+                      ),
+                    ),
+                  );
+                }, loading: () {
                   return SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -128,10 +142,13 @@ class SearchPage extends ConsumerWidget {
                           return ScrapTile(
                             model: data[index],
                             isAdded: cartController.isCartContains(data[index]),
-                            onAdd: () {
-                              CartModel(id: "", qty: 0, scrap: data[index]);
+                            onAdd: () async {
+                              await cartController.addCartItem(CartModel(
+                                  id: const Uuid().v4(),
+                                  qty: 1,
+                                  scrap: data[index]));
                             },
-                            onRemove: () {
+                            onRemove: () async {
                               cartController
                                   .remooveItemFromCart(data[index].id);
                             },

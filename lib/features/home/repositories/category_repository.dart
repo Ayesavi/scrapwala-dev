@@ -85,7 +85,7 @@ class SupabaseCategoryRepository implements BaseCategoryRepository {
       final data = await _supabaseClient.from('product_categories').select();
       return data.map((item) => ScrapCategoryModel.fromJson(item)).toList();
     } catch (error) {
-      throw SkException('Failed to fetch categories: $error');
+      throw errorHandler(error);
     }
   }
 }

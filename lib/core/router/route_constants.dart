@@ -27,6 +27,8 @@ class RouteConstants {
       TypedGoRoute<ProfilePageRoute>(path: 'profile', name: "profile", routes: [
     TypedGoRoute<EditProfileRoute>(
         path: 'editProfilePage', name: "editProfilePage"),
+    TypedGoRoute<PastRequestsRoute>(
+        path: 'pastRequestsPage', name: "pastRequestsPage"),
     TypedGoRoute<AddressPageRoute>(
         path: 'addressesPage', name: "addressesPage"),
   ]);

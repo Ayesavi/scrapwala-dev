@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/features/cart/repositories/cart_repository.dart';
 import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
@@ -28,17 +29,28 @@ class CartController extends _$CartController {
     }
   }
 
-  void addCartItem(CartModel model) {
-    _repo.addToCart(model);
-    _cart.add(model);
+  Future<void> addCartItem(CartModel model) async {
+    if (!isCartContains(model.scrap)) {
+      _cart.add(await _repo.addToCart(model));
+      state = _Data(_cart);
+    } else {
+      throw const SkException('Scrap has been already added!');
+    }
+    return;
+  }
+
+  Future<void> remooveItemFromCart(String itemId) async {
+    final cartId =
+        (_cart.firstWhere((element) => element.scrap.id == itemId)).id;
+    await _repo.removeFromCart(cartId);
+    _cart.removeWhere((e) => e.id == cartId);
     state = _Data(_cart);
   }
 
-  void remooveItemFromCart(String itemId) {
-    final cartId =
-        (_cart.firstWhere((element) => element.scrap.id == itemId)).id;
-    _repo.removeFromCart(cartId);
-    _cart.removeWhere((e) => e.id == cartId);
+  void updateCartQty(String cartId, int newQty) {
+    _repo.updateCartQty(cartId, newQty);
+    final index = _cart.indexWhere((element) => element.id == cartId);
+    _cart[index] = _cart[index].copyWith(qty: newQty);
     state = _Data(_cart);
   }
 
@@ -56,4 +68,8 @@ class CartController extends _$CartController {
     // If no matching ID is found after iterating through all cart items, return false
     return false;
   }
+
+  // void requestPickUp(,context){
+
+  // }
 }

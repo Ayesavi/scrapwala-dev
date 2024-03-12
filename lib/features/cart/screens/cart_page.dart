@@ -5,6 +5,7 @@ import 'package:scrapwala_dev/core/providers/location_provider/location_controll
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
+import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:scrapwala_dev/widgets/cart_item_tile.dart';
 import 'package:scrapwala_dev/widgets/location_bottomsheet.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
@@ -13,11 +14,20 @@ import 'package:slider_button/slider_button.dart';
 class CartPage extends ConsumerWidget {
   const CartPage({super.key});
 
+  double totalPrice(List<CartModel> cartItems) {
+    double price = 0;
+    for (var element in cartItems) {
+      price += element.qty * element.scrap.price;
+    }
+    return price;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locationState = ref.watch(locationControllerProvider);
     final locationController = ref.read(locationControllerProvider.notifier);
     final state = ref.watch(cartControllerProvider);
+    final controller = ref.watch(cartControllerProvider.notifier);
 
     final buttonWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -182,8 +192,14 @@ class CartPage extends ConsumerWidget {
                           data: (data) {
                             return Column(
                               children: [
-                                ...List.generate(data.length,
-                                    (index) => CartItemTile(model: data[index]))
+                                ...List.generate(
+                                    data.length,
+                                    (index) => CartItemTile(
+                                        onCounterChange: (newQty) {
+                                          controller.updateCartQty(
+                                              data[index].id, newQty);
+                                        },
+                                        model: data[index]))
                               ],
                             );
                           }),
@@ -193,7 +209,9 @@ class CartPage extends ConsumerWidget {
                           text: "Add more items",
                         ),
                         trailing: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             icon:
                                 const Icon(Icons.add_circle_outline_outlined)),
                       )
@@ -217,12 +235,19 @@ class CartPage extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.onInverseSurface),
                 child: Column(
                   children: [
-                    const ListTile(
-                      contentPadding: EdgeInsets.only(left: 16, right: 16),
-                      title: TitleSmall(
+                    ListTile(
+                      contentPadding:
+                          const EdgeInsets.only(left: 16, right: 16),
+                      title: const TitleSmall(
                         text: 'Item Total',
                       ),
-                      trailing: TitleMedium(text: "$kRupeeSymbol${99}"),
+                      trailing: state.when(
+                          initial: () =>
+                              const TitleMedium(text: "$kRupeeSymbol 0"),
+                          data: (data) {
+                            return TitleMedium(
+                                text: "$kRupeeSymbol${totalPrice(data)}");
+                          }),
                     ),
                     ListTile(
                       contentPadding:

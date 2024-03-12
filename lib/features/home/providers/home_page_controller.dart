@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/features/home/repositories/category_repository.dart';
 import 'package:scrapwala_dev/features/home/repositories/scrap_repository.dart';
 import 'package:scrapwala_dev/models/scrap_category/scrap_category_model.dart';
@@ -26,7 +27,11 @@ class HomePageController extends _$HomePageController {
       final scraps = await _scrapRepo.getScraps();
       state = _Data(scraps: scraps, categories: categories);
     } catch (e) {
-      state = _Error(e);
+      if (e is NetworkException) {
+        state = _NetworkError(e);
+      } else {
+        state = _Error(e);
+      }
     }
   }
 }

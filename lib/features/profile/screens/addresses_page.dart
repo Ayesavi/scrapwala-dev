@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/features/address/providers/addresses_page_controller.dart';
 import 'package:scrapwala_dev/features/address/screens/select_address_page.dart';
+import 'package:scrapwala_dev/shimmering_widgets/shimmering_address_tile.dart';
+import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/edit_address_tile.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
@@ -15,32 +16,31 @@ class AddressesPage extends ConsumerWidget {
     final controller = ref.read(addressesPageControllerProvider.notifier);
     return Scaffold(
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: OutlinedButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return SelectAddressPage(onAddressSelected: (model) {
-                      controller.addAddress(context, model);
-                    });
-                  },
-                ));
-              },
-              child: const Text("Add Address")),
+          padding: const EdgeInsets.all(16.0),
+          child: AppFilledButton(
+            label: 'Add Address',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return SelectAddressPage(onAddressSelected: (model) {
+                    controller.addAddress(context, model);
+                  });
+                },
+              ));
+            },
+          ),
         ),
         appBar: AppBar(
           title: const TitleMedium(text: "Manage Addresses"),
         ),
         body: state.when(
-            loading: () => const Center(
-                  child: CupertinoActivityIndicator(),
+            loading: () => SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...List.generate(
+                          12, (index) => const ShimmeringAddressTile())
+                    ],
+                  ),
                 ),
             data: (models) {
               return Stack(
