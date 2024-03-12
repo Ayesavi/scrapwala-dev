@@ -1,4 +1,5 @@
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
+import 'package:scrapwala_dev/core/services/api_service.dart';
 import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -10,10 +11,16 @@ abstract class BaseCartRepository {
   Future<void> updateCartQty(String cartId, int newQty);
 
   Future<void> removeFromCart(String itemId);
+
+  Future<void> requestPickup({
+    DateTime? scheduleTime,
+    required String addressId,
+  });
 }
 
 class SupabaseCartRepository implements BaseCartRepository {
   final _supabaseClient = Supabase.instance.client;
+  final _api = ApiService();
 
   @override
   Future<List<CartModel>> getCartItems() async {
@@ -66,6 +73,20 @@ class SupabaseCartRepository implements BaseCartRepository {
       throw SkException('Failed to remove item from cart: $error');
     }
   }
+
+  @override
+  Future<void> requestPickup(
+      {DateTime? scheduleTime, required String addressId}) async {
+    final response = await _api.post(ApiEndpoints.requestPickup.route, {
+      "scheduleDateTime": scheduleTime?.toIso8601String(),
+      "addressId": addressId
+    });
+    if (response.data['success'] == true) {
+      return;
+    } else {
+      throw const SkException('Can not create a pickup request at the moment');
+    }
+  }
 }
 
 class FakeCartRepository implements BaseCartRepository {
@@ -93,4 +114,8 @@ class FakeCartRepository implements BaseCartRepository {
   Future<void> updateCartQty(String cartId, int newQty) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> requestPickup(
+      {DateTime? scheduleTime, required String addressId}) async {}
 }

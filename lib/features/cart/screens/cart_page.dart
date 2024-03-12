@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:scrapwala_dev/core/constants/string_constants.dart';
+import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
+import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:scrapwala_dev/core/providers/location_provider/location_controller.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
+import 'package:scrapwala_dev/shared/show_snackbar.dart';
+import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/cart_item_tile.dart';
 import 'package:scrapwala_dev/widgets/location_bottomsheet.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
-import 'package:slider_button/slider_button.dart';
 
 class CartPage extends ConsumerWidget {
   const CartPage({super.key});
@@ -24,40 +28,37 @@ class CartPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String? addressId;
     final locationState = ref.watch(locationControllerProvider);
     final locationController = ref.read(locationControllerProvider.notifier);
     final state = ref.watch(cartControllerProvider);
     final controller = ref.watch(cartControllerProvider.notifier);
-
-    final buttonWidth = MediaQuery.of(context).size.width;
+    final dateNotifier = ValueNotifier<DateTime?>(null);
     return Scaffold(
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SliderButton(
-          alignLabel: Alignment.center,
-          width: buttonWidth,
-          buttonSize: 60,
-          baseColor: Theme.of(context).colorScheme.onPrimary,
-          highlightedColor: Theme.of(context).colorScheme.outlineVariant,
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          action: () async {
-            /// Do something here OnSlide
-            return false;
-          },
-          label: Text(
-            "Slide to Request Pickup",
-            style: TextStyle(
-                color: Theme.of(context).colorScheme.onPrimary,
-                fontWeight: FontWeight.bold,
-                fontSize: 17),
-          ),
-          icon: Icon(
-            Icons.chevron_right,
-            size: 50,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-      ),
+          padding: const EdgeInsets.all(16.0),
+          child: AppFilledButton(
+            label: "Request Pickup",
+            asyncTap: () async {
+              try {
+                if (addressId.isNotNull) {
+                  await controller.requestPickUp(
+                      scheduleDateTime: dateNotifier.value,
+                      addressId: addressId!);
+                  ref.invalidate(cartControllerProvider);
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
+                } else {
+                  showSnackBar(context, "Please add an address to continue");
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  showSnackBar(context, errorHandler(e).message);
+                }
+              }
+            },
+          )),
       appBar: AppBar(
           title: TitleLarge(
         text: 'Request',
@@ -116,6 +117,7 @@ class CartPage extends ConsumerWidget {
                       )),
                 );
               }, location: (model) {
+                addressId = model.id;
                 return InkWell(
                   onTap: () {
                     showBottomLocationSheet(context, isDismissable: false,
@@ -221,6 +223,69 @@ class CartPage extends ConsumerWidget {
                 height: 20,
               ),
               const TitleMedium(
+                text: '  Schedule Date And Time',
+                weight: FontWeight.bold,
+              ),
+              // ListTile for scheduling date and time
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Theme.of(context).colorScheme.onInverseSurface),
+                  child: ListTile(
+                    onTap: () async {
+                      // Show date time picker and update the selected date-time
+                      final DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(DateTime.now().year + 1),
+                      );
+                      final TimeOfDay? pickedTime = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                      if (pickedDate != null && pickedTime != null) {
+                        dateNotifier.value = DateTime(
+                          pickedDate.year,
+                          pickedDate.month,
+                          pickedDate.day,
+                          pickedTime.hour,
+                          pickedTime.minute,
+                        );
+                      }
+                    },
+                    title: ValueListenableBuilder(
+                      valueListenable: dateNotifier,
+                      builder: (BuildContext context, DateTime? value,
+                          Widget? child) {
+                        if (value.isNotNull) {
+                          return Text(
+                              DateFormat('d MMMM h:mm a').format(value!));
+                        }
+                        return const Text('Select Date & Time');
+                      },
+                    ),
+                    trailing: const Icon(Icons.calendar_today),
+                  )),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: const EdgeInsets.all(0),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Theme.of(context).colorScheme.onInverseSurface),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const TitleMedium(
                 text: '  Bill Details',
                 weight: FontWeight.bold,
               ),
@@ -253,7 +318,7 @@ class CartPage extends ConsumerWidget {
                       contentPadding:
                           const EdgeInsets.only(left: 16, right: 16),
                       title: Text(
-                        'Delivery Fee',
+                        'Service Fee',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             decoration: TextDecoration.underline,
                             decorationStyle: TextDecorationStyle.dashed),
@@ -265,7 +330,7 @@ class CartPage extends ConsumerWidget {
                             text:
                                 'Your request will be travelling long enough to get your order.'),
                       ),
-                      trailing: const TitleMedium(text: "$kRupeeSymbol${99}"),
+                      trailing: const TitleMedium(text: "$kRupeeSymbol${15}"),
                     ),
                   ],
                 ),

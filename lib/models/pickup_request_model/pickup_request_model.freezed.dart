@@ -29,9 +29,6 @@ mixin _$PickupRequestModel {
   int get totalPrice => throw _privateConstructorUsedError;
   RequestStatus get status => throw _privateConstructorUsedError;
 
-  /// Maps scrap ids with their approx quantities
-  Map<String, int> get quantity => throw _privateConstructorUsedError;
-
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PickupRequestModelCopyWith<PickupRequestModel> get copyWith =>
@@ -52,8 +49,7 @@ abstract class $PickupRequestModelCopyWith<$Res> {
       DateTime? scheduleDateTime,
       DateTime? pickedDateTime,
       int totalPrice,
-      RequestStatus status,
-      Map<String, int> quantity});
+      RequestStatus status});
 }
 
 /// @nodoc
@@ -77,7 +73,6 @@ class _$PickupRequestModelCopyWithImpl<$Res, $Val extends PickupRequestModel>
     Object? pickedDateTime = freezed,
     Object? totalPrice = null,
     Object? status = null,
-    Object? quantity = null,
   }) {
     return _then(_value.copyWith(
       addressId: null == addressId
@@ -112,10 +107,6 @@ class _$PickupRequestModelCopyWithImpl<$Res, $Val extends PickupRequestModel>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as RequestStatus,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
     ) as $Val);
   }
 }
@@ -136,8 +127,7 @@ abstract class _$$PickupRequestModelImplCopyWith<$Res>
       DateTime? scheduleDateTime,
       DateTime? pickedDateTime,
       int totalPrice,
-      RequestStatus status,
-      Map<String, int> quantity});
+      RequestStatus status});
 }
 
 /// @nodoc
@@ -159,7 +149,6 @@ class __$$PickupRequestModelImplCopyWithImpl<$Res>
     Object? pickedDateTime = freezed,
     Object? totalPrice = null,
     Object? status = null,
-    Object? quantity = null,
   }) {
     return _then(_$PickupRequestModelImpl(
       addressId: null == addressId
@@ -194,10 +183,6 @@ class __$$PickupRequestModelImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as RequestStatus,
-      quantity: null == quantity
-          ? _value._quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
     ));
   }
 }
@@ -213,9 +198,7 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
       this.scheduleDateTime,
       this.pickedDateTime,
       required this.totalPrice,
-      this.status = RequestStatus.pending,
-      required final Map<String, int> quantity})
-      : _quantity = quantity;
+      this.status = RequestStatus.pending});
 
   factory _$PickupRequestModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PickupRequestModelImplFromJson(json);
@@ -238,20 +221,9 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
   @JsonKey()
   final RequestStatus status;
 
-  /// Maps scrap ids with their approx quantities
-  final Map<String, int> _quantity;
-
-  /// Maps scrap ids with their approx quantities
-  @override
-  Map<String, int> get quantity {
-    if (_quantity is EqualUnmodifiableMapView) return _quantity;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_quantity);
-  }
-
   @override
   String toString() {
-    return 'PickupRequestModel(addressId: $addressId, id: $id, requestDateTime: $requestDateTime, requestingUserId: $requestingUserId, scheduleDateTime: $scheduleDateTime, pickedDateTime: $pickedDateTime, totalPrice: $totalPrice, status: $status, quantity: $quantity)';
+    return 'PickupRequestModel(addressId: $addressId, id: $id, requestDateTime: $requestDateTime, requestingUserId: $requestingUserId, scheduleDateTime: $scheduleDateTime, pickedDateTime: $pickedDateTime, totalPrice: $totalPrice, status: $status)';
   }
 
   @override
@@ -272,23 +244,13 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
                 other.pickedDateTime == pickedDateTime) &&
             (identical(other.totalPrice, totalPrice) ||
                 other.totalPrice == totalPrice) &&
-            (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality().equals(other._quantity, _quantity));
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      addressId,
-      id,
-      requestDateTime,
-      requestingUserId,
-      scheduleDateTime,
-      pickedDateTime,
-      totalPrice,
-      status,
-      const DeepCollectionEquality().hash(_quantity));
+  int get hashCode => Object.hash(runtimeType, addressId, id, requestDateTime,
+      requestingUserId, scheduleDateTime, pickedDateTime, totalPrice, status);
 
   @JsonKey(ignore: true)
   @override
@@ -314,8 +276,7 @@ abstract class _PickupRequestModel implements PickupRequestModel {
       final DateTime? scheduleDateTime,
       final DateTime? pickedDateTime,
       required final int totalPrice,
-      final RequestStatus status,
-      required final Map<String, int> quantity}) = _$PickupRequestModelImpl;
+      final RequestStatus status}) = _$PickupRequestModelImpl;
 
   factory _PickupRequestModel.fromJson(Map<String, dynamic> json) =
       _$PickupRequestModelImpl.fromJson;
@@ -336,10 +297,6 @@ abstract class _PickupRequestModel implements PickupRequestModel {
   int get totalPrice;
   @override
   RequestStatus get status;
-  @override
-
-  /// Maps scrap ids with their approx quantities
-  Map<String, int> get quantity;
   @override
   @JsonKey(ignore: true)
   _$$PickupRequestModelImplCopyWith<_$PickupRequestModelImpl> get copyWith =>

@@ -2,6 +2,7 @@ import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 import 'package:scrapwala_dev/models/transaction_model/transaction_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 final List<TransactionModel> randomTransactionModels = [
   TransactionModel(
@@ -70,7 +71,6 @@ final List<PickupRequestModel> randomPickupRequests = [
     scheduleDateTime: DateTime(2024, 3, 12, 10, 0, 0),
     totalPrice: 50,
     status: RequestStatus.picked,
-    quantity: {'scrap1': 5, 'scrap2': 10},
   ),
   PickupRequestModel(
     addressId: '2',
@@ -80,7 +80,6 @@ final List<PickupRequestModel> randomPickupRequests = [
     scheduleDateTime: DateTime(2024, 3, 13, 12, 0, 0),
     totalPrice: 100,
     status: RequestStatus.picked,
-    quantity: {'scrap3': 7, 'scrap4': 15},
   ),
   PickupRequestModel(
     addressId: '3',
@@ -90,7 +89,6 @@ final List<PickupRequestModel> randomPickupRequests = [
     scheduleDateTime: DateTime(2024, 3, 14, 9, 0, 0),
     totalPrice: 75,
     status: RequestStatus.pending,
-    quantity: {'scrap5': 3, 'scrap6': 8},
   ),
   PickupRequestModel(
     addressId: '4',
@@ -100,7 +98,6 @@ final List<PickupRequestModel> randomPickupRequests = [
     scheduleDateTime: DateTime(2024, 3, 15, 14, 0, 0),
     totalPrice: 200,
     status: RequestStatus.denied,
-    quantity: {'scrap7': 12, 'scrap8': 20},
   ),
   PickupRequestModel(
     addressId: '5',
@@ -110,7 +107,6 @@ final List<PickupRequestModel> randomPickupRequests = [
     scheduleDateTime: DateTime(2024, 3, 16, 11, 0, 0),
     totalPrice: 150,
     status: RequestStatus.picked,
-    quantity: {'scrap9': 9, 'scrap10': 18},
   ),
 ];
 
@@ -134,5 +130,20 @@ class FakeTxnRepository implements BaseTransactionRepository {
         .where((element) => element.requestId == id)
         .toList()
         .first;
+  }
+}
+
+class SupabaseTxnRepository implements BaseTransactionRepository {
+  final _supabaseClient = Supabase.instance.client;
+
+  @override
+  Future<List<PickupRequestModel>> getPrevRequests() async {
+    final data = await _supabaseClient.from('requests').select();
+    return data.map((e) => PickupRequestModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<TransactionModel> getTransactionById(String id) async {
+    throw 'error';
   }
 }

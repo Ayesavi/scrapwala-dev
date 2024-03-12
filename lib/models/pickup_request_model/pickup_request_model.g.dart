@@ -22,7 +22,6 @@ _$PickupRequestModelImpl _$$PickupRequestModelImplFromJson(
       totalPrice: json['totalPrice'] as int,
       status: $enumDecodeNullable(_$RequestStatusEnumMap, json['status']) ??
           RequestStatus.pending,
-      quantity: Map<String, int>.from(json['quantity'] as Map),
     );
 
 Map<String, dynamic> _$$PickupRequestModelImplToJson(
@@ -36,7 +35,6 @@ Map<String, dynamic> _$$PickupRequestModelImplToJson(
       'pickedDateTime': instance.pickedDateTime?.toIso8601String(),
       'totalPrice': instance.totalPrice,
       'status': _$RequestStatusEnumMap[instance.status]!,
-      'quantity': instance.quantity,
     };
 
 const _$RequestStatusEnumMap = {

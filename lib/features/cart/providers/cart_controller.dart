@@ -69,7 +69,9 @@ class CartController extends _$CartController {
     return false;
   }
 
-  // void requestPickUp(,context){
-
-  // }
+  Future<void> requestPickUp(
+      {DateTime? scheduleDateTime, required String addressId}) async {
+    await _repo.requestPickup(
+        addressId: addressId, scheduleTime: scheduleDateTime ?? DateTime.now());
+  }
 }
