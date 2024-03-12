@@ -38,7 +38,7 @@ class EditTextFieldWidget extends ConsumerWidget {
               return TextFormField(
                 controller: textEditingController,
                 keyboardType: type,
-                readOnly: !value,
+                readOnly: textEditingController.text.isEmpty && !value,
                 decoration: InputDecoration(
                   hintText: hintText,
                   labelText: labelText,

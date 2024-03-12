@@ -18,8 +18,9 @@ AuthController authController(AuthControllerRef ref) {
     final name = userMetadata?.containsKey("full_name") ?? false
         ? userMetadata!['full_name']
         : null;
-    if ([email, phone, name].contains(null) ||
-        [email, phone, name].contains('')) {
+
+    // TODO: add the email and phone in the fields below in prod mode
+    if ([name].contains(null) || [name].contains('')) {
       return const AuthController(AppAuthState.unfulfilledProfile);
     }
 
@@ -65,8 +66,13 @@ class AuthController {
     return await _repo.signInWithGoogle();
   }
 
-  Future<User?> verifyOtp({required String token, String? phone,required  OtpType type,String? email}) async {
-    return await _repo.verifyOtp(t: token,phoneNumber: phone,email: email,otpType:type);
+  Future<User?> verifyOtp(
+      {required String token,
+      String? phone,
+      required OtpType type,
+      String? email}) async {
+    return await _repo.verifyOtp(
+        t: token, phoneNumber: phone, email: email, otpType: type);
   }
 
   Future<User?> getUser() async {

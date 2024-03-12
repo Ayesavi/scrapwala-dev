@@ -1,48 +1,56 @@
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
-import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
+import 'package:scrapwala_dev/core/services/api_service.dart';
+import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class BaseCartRepository {
-  Future<List<ScrapModel>> getCartItems();
+  Future<List<CartModel>> getCartItems();
 
-  Future<void> addToCart(ScrapModel cartItem);
+  Future<CartModel> addToCart(CartModel cartItem);
 
-  Future<void> updateCartItem(ScrapModel updatedCartItem);
+  Future<void> updateCartQty(String cartId, int newQty);
 
   Future<void> removeFromCart(String itemId);
+
+  Future<void> requestPickup({
+    DateTime? scheduleTime,
+    required String addressId,
+  });
 }
 
 class SupabaseCartRepository implements BaseCartRepository {
   final _supabaseClient = Supabase.instance.client;
+  final _api = ApiService();
 
   @override
-  Future<List<ScrapModel>> getCartItems() async {
+  Future<List<CartModel>> getCartItems() async {
     try {
-      final data = await _supabaseClient.from('cart').select();
-      return data.map((item) => ScrapModel.fromJson(item)).toList();
+      final data = await _supabaseClient
+          .from('cart')
+          .select("*,scrap:scrap_id(*)")
+          .isFilter('request_id', null);
+      return data.map((item) => CartModel.fromJson(item)).toList();
     } catch (error) {
       throw SkException('Failed to fetch cart items: $error');
     }
   }
 
   @override
-  Future<void> addToCart(ScrapModel cartItem) async {
+  Future<CartModel> addToCart(CartModel cartItem) async {
     try {
-      await _supabaseClient.from('cart').insert(cartItem.toJson());
-    } catch (error) {
-      throw SkException('Failed to add item to cart: $error');
-    }
-  }
-
-  @override
-  Future<void> updateCartItem(ScrapModel updatedCartItem) async {
-    try {
-      await _supabaseClient
+      final data = await _supabaseClient
           .from('cart')
-          .update(updatedCartItem.toJson())
-          .eq('id', updatedCartItem.id);
+          .insert({
+            "id": cartItem.id,
+            "qty": cartItem.qty,
+            'scrap_id': cartItem.scrap.id,
+          })
+          .select()
+          .single();
+      data['scrap'] = cartItem.scrap.toJson();
+      return CartModel.fromJson(data);
     } catch (error) {
-      throw SkException('Failed to update cart item: $error');
+      throw errorHandler(error);
     }
   }
 
@@ -54,30 +62,46 @@ class SupabaseCartRepository implements BaseCartRepository {
       throw SkException('Failed to remove item from cart: $error');
     }
   }
+
+  @override
+  Future<void> updateCartQty(String cartId, int newQty) async {
+    try {
+      await _supabaseClient
+          .from('cart')
+          .update({'qty': newQty}).eq('id', cartId);
+    } catch (error) {
+      throw SkException('Failed to remove item from cart: $error');
+    }
+  }
+
+  @override
+  Future<void> requestPickup(
+      {DateTime? scheduleTime, required String addressId}) async {
+    final response = await _api.post(ApiEndpoints.requestPickup.route, {
+      "scheduleDateTime": scheduleTime?.toIso8601String(),
+      "addressId": addressId
+    });
+    if (response.data['success'] == true) {
+      return;
+    } else {
+      throw const SkException('Can not create a pickup request at the moment');
+    }
+  }
 }
 
 class FakeCartRepository implements BaseCartRepository {
-  final List<ScrapModel> _cartItems = []; // Dummy storage for cart items
+  final List<CartModel> _cartItems = []; // Dummy storage for cart items
 
   @override
-  Future<List<ScrapModel>> getCartItems() async {
+  Future<List<CartModel>> getCartItems() async {
     return List.from(_cartItems); // Return the list of cart items
   }
 
   @override
-  Future<void> addToCart(ScrapModel cartItem) async {
+  Future<CartModel> addToCart(CartModel cartItem) async {
     _cartItems.add(cartItem); // Add the item to the cart
-  }
 
-  @override
-  Future<void> updateCartItem(ScrapModel updatedCartItem) async {
-    final index =
-        _cartItems.indexWhere((item) => item.id == updatedCartItem.id);
-    if (index != -1) {
-      _cartItems[index] = updatedCartItem; // Update the cart item
-    } else {
-      throw Exception('Cart item not found');
-    }
+    return cartItem;
   }
 
   @override
@@ -85,4 +109,13 @@ class FakeCartRepository implements BaseCartRepository {
     _cartItems
         .removeWhere((item) => item.id == itemId); // Remove item from the cart
   }
+
+  @override
+  Future<void> updateCartQty(String cartId, int newQty) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> requestPickup(
+      {DateTime? scheduleTime, required String addressId}) async {}
 }

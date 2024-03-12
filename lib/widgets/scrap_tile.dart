@@ -15,8 +15,8 @@ class ScrapTile extends ConsumerWidget {
       this.isAdded = false});
   final ScrapModel model;
   final bool isAdded;
-  final VoidCallback onAdd;
-  final VoidCallback onRemove;
+  final Future<void> Function() onAdd;
+  final Future<void> Function() onRemove;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -37,7 +37,7 @@ class _SearchTextFieldState extends State<SearchTextField>
   late int _hintIndex;
   late Timer _timer;
 
-  final _debouncer = Debouncer(delay: const Duration(milliseconds: 300));
+  final _debouncer = Debouncer(delay: const Duration(milliseconds: 500));
 
   @override
   void initState() {

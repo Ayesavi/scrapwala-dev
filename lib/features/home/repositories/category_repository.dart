@@ -3,10 +3,7 @@ import 'package:scrapwala_dev/models/scrap_category/scrap_category_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class BaseCategoryRepository {
-  Future<void> addCategory(ScrapCategoryModel category);
   Future<List<ScrapCategoryModel>> getCategories();
-  Future<void> updateCategory(ScrapCategoryModel category);
-  Future<void> deleteCategory(String categoryId);
 }
 
 class FakeCategoryRepository implements BaseCategoryRepository {
@@ -72,28 +69,10 @@ class FakeCategoryRepository implements BaseCategoryRepository {
   final List<ScrapCategoryModel> _categories = [];
 
   @override
-  Future<void> addCategory(ScrapCategoryModel category) async {
-    _categories.add(category);
-  }
-
-  @override
   Future<List<ScrapCategoryModel>> getCategories() async {
     return await Future.delayed(const Duration(seconds: 4), () {
       return _categories;
     });
-  }
-
-  @override
-  Future<void> updateCategory(ScrapCategoryModel category) async {
-    final index = _categories.indexWhere((c) => c.id == category.id);
-    if (index != -1) {
-      _categories[index] = category;
-    }
-  }
-
-  @override
-  Future<void> deleteCategory(String categoryId) async {
-    _categories.removeWhere((c) => c.id == categoryId);
   }
 }
 
@@ -101,42 +80,12 @@ class SupabaseCategoryRepository implements BaseCategoryRepository {
   final _supabaseClient = Supabase.instance.client;
 
   @override
-  Future<void> addCategory(ScrapCategoryModel category) async {
-    try {
-      await _supabaseClient.from('categories').insert(category.toJson());
-    } catch (error) {
-      throw SkException('Failed to add category: $error');
-    }
-  }
-
-  @override
   Future<List<ScrapCategoryModel>> getCategories() async {
     try {
-      final data = await _supabaseClient.from('categories').select();
+      final data = await _supabaseClient.from('product_categories').select();
       return data.map((item) => ScrapCategoryModel.fromJson(item)).toList();
     } catch (error) {
-      throw SkException('Failed to fetch categories: $error');
-    }
-  }
-
-  @override
-  Future<void> updateCategory(ScrapCategoryModel category) async {
-    try {
-      await _supabaseClient
-          .from('categories')
-          .update(category.toJson())
-          .eq('id', category.id);
-    } catch (error) {
-      throw SkException('Failed to update category: $error');
-    }
-  }
-
-  @override
-  Future<void> deleteCategory(String categoryId) async {
-    try {
-      await _supabaseClient.from('categories').delete().eq('id', categoryId);
-    } catch (error) {
-      throw SkException('Failed to delete category: $error');
+      throw errorHandler(error);
     }
   }
 }

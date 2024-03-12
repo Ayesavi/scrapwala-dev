@@ -23,8 +23,8 @@ class PickupRequestModel with _$PickupRequestModel {
     required int totalPrice,
     @Default(RequestStatus.pending) RequestStatus status,
 
-    /// Maps scrap ids with their approx quantities
-    required Map<String, int> quantity,
+    // /// Maps scrap ids with their approx quantities
+    // required Map<String, int> quantity,
   }) = _PickupRequestModel;
 
   factory PickupRequestModel.fromJson(Map<String, dynamic> json) =>

@@ -14,20 +14,32 @@ class ShimmeringAddressTile extends StatelessWidget {
       baseColor: baseColor,
       highlightColor: highlightColor,
       child: ListTile(
-        leading: Container(
-          width: 56,
-          height: 56,
-          color: Colors.white,
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(
+              10.0), // Adjust the value as per your preference
+          child: Container(
+            width: 56,
+            height: 56,
+            color: Colors.white,
+          ),
         ),
-        title: Container(
-          width: double.infinity,
-          height: 16,
-          color: Colors.white,
+        title: ClipRRect(
+          borderRadius: BorderRadius.circular(
+              10.0), // Adjust the value as per your preference
+          child: Container(
+            width: double.infinity,
+            height: 16,
+            color: Colors.white,
+          ),
         ),
-        subtitle: Container(
-          width: double.infinity,
-          height: 14,
-          color: Colors.white,
+        subtitle: ClipRRect(
+          borderRadius: BorderRadius.circular(
+              10.0), // Adjust the value as per your preference
+          child: Container(
+            width: double.infinity,
+            height: 14,
+            color: Colors.white,
+          ),
         ),
       ),
     );

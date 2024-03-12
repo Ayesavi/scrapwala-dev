@@ -22,7 +22,10 @@ class SupabaseAddressRepository implements BaseAddressRepository {
   @override
   Future<void> addAddress(AddressModel address) async {
     try {
-      await _supabaseClient.from('addresses').insert(address.toJson());
+      // Remove the 'id' field from the JSON object
+      final Map<String, dynamic> addressData = address.toSupaJson();
+
+      await _supabaseClient.from('addresses').insert(addressData);
     } catch (error) {
       throw SkException('Failed to add address: $error');
     }
@@ -31,8 +34,9 @@ class SupabaseAddressRepository implements BaseAddressRepository {
   @override
   Future<List<AddressModel>> getAddresses() async {
     try {
-      final data = await _supabaseClient.from('addresses').select();
-      return data.map((item) => AddressModel.fromJson(item)).toList();
+      final data = (await _supabaseClient.rpc('fetch_addresses'));
+      final list = (data as List).map((e) => AddressModel.fromJson(e)).toList();
+      return list;
     } catch (error) {
       throw SkException('Failed to fetch addresses: $error');
     }
@@ -41,9 +45,13 @@ class SupabaseAddressRepository implements BaseAddressRepository {
   @override
   Future<void> updateAddress(AddressModel address) async {
     try {
+      // Remove the 'id' field from the JSON object
+      final Map<String, dynamic> addressData = address.toSupaJson();
+
+      // Perform the update operation with the modified JSON object and filter by id
       await _supabaseClient
           .from('addresses')
-          .update(address.toJson())
+          .update(addressData)
           .eq('id', address.id);
     } catch (error) {
       throw SkException('Failed to update address: $error');

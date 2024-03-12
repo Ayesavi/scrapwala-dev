@@ -5,12 +5,14 @@ import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/features/home/providers/home_page_controller.dart';
 import 'package:scrapwala_dev/features/search/providers/scrap_search.dart';
+import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:scrapwala_dev/shared/cart_bottom_bar.dart';
 import 'package:scrapwala_dev/shimmering_widgets/category_widget.dart';
 import 'package:scrapwala_dev/shimmering_widgets/shimmering_scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/scrap_category_widget.dart';
 import 'package:scrapwala_dev/widgets/scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/search_text_field.dart';
+import 'package:uuid/uuid.dart';
 
 class SearchPage extends ConsumerWidget {
   SearchPage({super.key});
@@ -87,7 +89,20 @@ class SearchPage extends ConsumerWidget {
               builder: (context) {
                 final homePageState = ref.watch(homePageControllerProvider);
 
-                return homePageState.when(loading: () {
+                return homePageState.when(networkError: (e) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                        (6),
+                        (index) => const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 16),
+                            child: ShimmeringCategoryWidget()),
+                      ),
+                    ),
+                  );
+                }, loading: () {
                   return SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -120,20 +135,26 @@ class SearchPage extends ConsumerWidget {
             );
           }, results: (data) {
             return Expanded(
-                child: ListView.builder(
-                    itemCount: data.length,
-                    itemBuilder: (ctx, index) {
-                      return ScrapTile(
-                        model: data[index],
-                        isAdded: cartController.isCartContains(data[index]),
-                        onAdd: () {
-                          cartController.addCartItem(data[index]);
-                        },
-                        onRemove: () {
-                          cartController.remooveItemFromCart(data[index].id);
-                        },
-                      );
-                    }));
+                child: data.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (ctx, index) {
+                          return ScrapTile(
+                            model: data[index],
+                            isAdded: cartController.isCartContains(data[index]),
+                            onAdd: () async {
+                              await cartController.addCartItem(CartModel(
+                                  id: const Uuid().v4(),
+                                  qty: 1,
+                                  scrap: data[index]));
+                            },
+                            onRemove: () async {
+                              cartController
+                                  .remooveItemFromCart(data[index].id);
+                            },
+                          );
+                        })
+                    : const Center(child: Text('No Results Found')));
           })
         ],
       ),

@@ -9,6 +9,7 @@ import 'package:scrapwala_dev/features/cart/screens/cart_page.dart';
 import 'package:scrapwala_dev/features/home/screens/home_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/addresses_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/edit_profile.dart';
+import 'package:scrapwala_dev/features/profile/screens/past_requests.dart';
 import 'package:scrapwala_dev/features/profile/screens/profile_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/request_info_page.dart';
 import 'package:scrapwala_dev/features/search/screens/search_page.dart';
@@ -41,7 +42,7 @@ class HomeRoute extends GoRouteData {
   const HomeRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => HomePage();
+  Widget build(BuildContext context, GoRouterState state) => const HomePage();
 
   @override
   FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
@@ -121,4 +122,12 @@ class AddressPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const AddressesPage();
+}
+
+class PastRequestsRoute extends GoRouteData {
+  const PastRequestsRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const PastRequestsPage();
 }

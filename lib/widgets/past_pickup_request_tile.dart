@@ -8,13 +8,13 @@ import 'package:scrapwala_dev/widgets/request_status_widget.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
 class PickRequestTile extends ConsumerWidget {
-  const PickRequestTile({super.key, required this.onTap,required this.model});
+  const PickRequestTile({super.key, required this.onTap, required this.model});
   final PickupRequestModel model;
   final void Function(PickupRequestModel model) onTap;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
-      onTap: ()=> onTap.call(model),
+      onTap: () => onTap.call(model),
       title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         TitleSmall(
           text: '#${model.id}',
@@ -35,8 +35,8 @@ class PickRequestTile extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           RequestStatusWidget(model.status),
-          Text(
-              DateFormat('d MMMM yyyy', 'en_US').format(model.requestDateTime)),
+          Text(DateFormat('d MMMM yyyy', 'en_US')
+              .format(model.requestDateTime.toLocal())),
         ],
       ),
     );
