@@ -176,7 +176,8 @@ class HomePage extends ConsumerWidget {
                   }, childCount: scraps.length),
                 );
               }, error: (e) {
-                return const Text("An Error Occurred");
+                return const SliverToBoxAdapter(
+                    child: Text("An Error Occurred"));
               })
             ]),
           ),
