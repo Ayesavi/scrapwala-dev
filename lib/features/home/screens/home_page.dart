@@ -4,6 +4,7 @@ import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/features/home/providers/home_page_controller.dart';
 import 'package:scrapwala_dev/features/home/widgets/home_appbar_title.dart';
+import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:scrapwala_dev/shared/cart_bottom_bar.dart';
 import 'package:scrapwala_dev/shimmering_widgets/category_widget.dart';
 import 'package:scrapwala_dev/shimmering_widgets/shimmering_scrap_tile.dart';
@@ -27,6 +28,7 @@ class HomePage extends ConsumerWidget {
           RefreshIndicator(
             onRefresh: () async {
               controller.loadData();
+              cartController.getCartItems();
             },
             child: CustomScrollView(slivers: [
               SliverAppBar(
@@ -164,7 +166,8 @@ class HomePage extends ConsumerWidget {
                     return ScrapTile(
                         isAdded: cartController.isCartContains(scraps[index]),
                         onAdd: () {
-                          cartController.addCartItem(scraps[index]);
+                          cartController.addCartItem(
+                              CartModel(id: "", qty: 0, scrap: scraps[index]));
                         },
                         onRemove: () {
                           cartController.remooveItemFromCart(scraps[index].id);

@@ -10,7 +10,7 @@ part 'location_controller_state.dart';
 
 @Riverpod(keepAlive: true)
 class LocationController extends _$LocationController {
-  final _repo = FakeAddressRepository();
+  final _repo = SupabaseAddressRepository();
 
   var _addresses = <AddressModel>[];
 

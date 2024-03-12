@@ -14,7 +14,7 @@ part 'addresses_page_controller_state.dart';
 @riverpod
 class AddressesPageController extends _$AddressesPageController {
   List<AddressModel> _addresses = [];
-  final _repo = FakeAddressRepository();
+  final _repo = SupabaseAddressRepository();
 
   @override
   AddressesPageControllerState build() {
@@ -64,6 +64,7 @@ class AddressesPageController extends _$AddressesPageController {
   void addAddress(BuildContext context, AddressModel newAddress) async {
     try {
       await _repo.addAddress(newAddress);
+      _addresses.add(newAddress);
       state = _Data(_addresses);
       ref.invalidate(locationControllerProvider);
     } catch (e) {

@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scrapwala_dev/features/cart/repositories/cart_repository.dart';
+import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 
 part 'cart_controller.freezed.dart';
@@ -9,8 +10,8 @@ part 'cart_controller_state.dart';
 
 @Riverpod(keepAlive: true)
 class CartController extends _$CartController {
-  final _repo = FakeCartRepository();
-  var _cart = <ScrapModel>[];
+  final _repo = SupabaseCartRepository();
+  var _cart = <CartModel>[];
 
   @override
   CartControllerState build() {
@@ -22,24 +23,37 @@ class CartController extends _$CartController {
     try {
       _cart = await _repo.getCartItems();
       state = _Data(_cart);
-    } catch (e) {}
+    } catch (e) {
+      rethrow;
+    }
   }
 
-  void addCartItem(ScrapModel model) {
+  void addCartItem(CartModel model) {
     _repo.addToCart(model);
     _cart.add(model);
     state = _Data(_cart);
   }
 
   void remooveItemFromCart(String itemId) {
-    _repo.removeFromCart(itemId);
-    _cart.removeWhere((e) => e.id == itemId);
+    final cartId =
+        (_cart.firstWhere((element) => element.scrap.id == itemId)).id;
+    _repo.removeFromCart(cartId);
+    _cart.removeWhere((e) => e.id == cartId);
     state = _Data(_cart);
   }
 
   /// Works locally only and hence do not come with
   /// capability of remote database until now
   bool isCartContains(ScrapModel model) {
-    return _cart.contains(model);
+    // Iterate through each item in the cart
+    for (var cartItem in _cart) {
+      // Check if the ID of the current cart item matches the ID of the given model
+      if (cartItem.scrap.id == model.id) {
+        // If a matching ID is found, return true
+        return true;
+      }
+    }
+    // If no matching ID is found after iterating through all cart items, return false
+    return false;
   }
 }

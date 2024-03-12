@@ -73,3 +73,14 @@ extension GetBool on AddressCategory {
     };
   }
 }
+
+extension ToSupa on AddressModel {
+  Map<String, dynamic> toSupaJson() {
+    final json = toJson();
+    json['latlng'] = 'POINT(${json['latlng']['lng']} ${json['latlng']['lat']})';
+    json.remove('id');
+    json.remove('ownerId');
+
+    return json;
+  }
+}

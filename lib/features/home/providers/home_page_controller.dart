@@ -11,8 +11,8 @@ part 'home_page_controller_state.dart';
 
 @riverpod
 class HomePageController extends _$HomePageController {
-  final _categoryRepo = FakeCategoryRepository();
-  final _scrapRepo = FakeScrapRepository();
+  final _categoryRepo = SupabaseCategoryRepository();
+  final _scrapRepo = SupabaseScrapRepository();
 
   @override
   HomePageControllerState build() {

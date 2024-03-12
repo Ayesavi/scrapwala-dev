@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/constants/string_constants.dart';
 import 'package:scrapwala_dev/core/utils/debounder.dart';
+import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
 import 'package:scrapwala_dev/widgets/counter_cum_textfield_widget.dart';
@@ -10,7 +11,7 @@ import 'package:scrapwala_dev/widgets/text_widgets.dart';
 class CartItemTile extends ConsumerStatefulWidget {
   const CartItemTile({super.key, required this.model});
 
-  final ScrapModel model;
+  final CartModel model;
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CartItemTileState();
 }
@@ -23,9 +24,9 @@ class _CartItemTileState extends ConsumerState<CartItemTile> {
   Widget build(BuildContext context) {
     return ListTile(
       title: TitleSmall(
-        text: widget.model.name,
+        text: widget.model.scrap.name,
       ),
-      subtitle: LabelMedium(text: widget.model.description),
+      subtitle: LabelMedium(text: widget.model.scrap.description),
       trailing: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
@@ -40,14 +41,14 @@ class _CartItemTileState extends ConsumerState<CartItemTile> {
                   });
                   _debouncer.call(() {
                     showSnackBar(context,
-                        'Total quantity of ${widget.model.name} is $_counter ${widget.model.measure.toName}');
+                        'Total quantity of ${widget.model.scrap.name} is $_counter ${widget.model.scrap.measure.toName}');
                   });
                 },
               )),
           const SizedBox(
             width: 10,
           ),
-          Text('$kRupeeSymbol ${widget.model.price * _counter}'),
+          Text('$kRupeeSymbol ${widget.model.scrap.price * _counter}'),
         ],
       ),
     );

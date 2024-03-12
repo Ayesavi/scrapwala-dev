@@ -19,19 +19,19 @@ mixin _$CartControllerState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ScrapModel> scraps) data,
+    required TResult Function(List<CartModel> scraps) data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ScrapModel> scraps)? data,
+    TResult? Function(List<CartModel> scraps)? data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ScrapModel> scraps)? data,
+    TResult Function(List<CartModel> scraps)? data,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -113,7 +113,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ScrapModel> scraps) data,
+    required TResult Function(List<CartModel> scraps) data,
   }) {
     return initial();
   }
@@ -122,7 +122,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ScrapModel> scraps)? data,
+    TResult? Function(List<CartModel> scraps)? data,
   }) {
     return initial?.call();
   }
@@ -131,7 +131,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ScrapModel> scraps)? data,
+    TResult Function(List<CartModel> scraps)? data,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -182,7 +182,7 @@ abstract class _$$DataImplCopyWith<$Res> {
           _$DataImpl value, $Res Function(_$DataImpl) then) =
       __$$DataImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ScrapModel> scraps});
+  $Res call({List<CartModel> scraps});
 }
 
 /// @nodoc
@@ -201,7 +201,7 @@ class __$$DataImplCopyWithImpl<$Res>
       null == scraps
           ? _value._scraps
           : scraps // ignore: cast_nullable_to_non_nullable
-              as List<ScrapModel>,
+              as List<CartModel>,
     ));
   }
 }
@@ -209,11 +209,11 @@ class __$$DataImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DataImpl implements _Data {
-  const _$DataImpl(final List<ScrapModel> scraps) : _scraps = scraps;
+  const _$DataImpl(final List<CartModel> scraps) : _scraps = scraps;
 
-  final List<ScrapModel> _scraps;
+  final List<CartModel> _scraps;
   @override
-  List<ScrapModel> get scraps {
+  List<CartModel> get scraps {
     if (_scraps is EqualUnmodifiableListView) return _scraps;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_scraps);
@@ -246,7 +246,7 @@ class _$DataImpl implements _Data {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ScrapModel> scraps) data,
+    required TResult Function(List<CartModel> scraps) data,
   }) {
     return data(scraps);
   }
@@ -255,7 +255,7 @@ class _$DataImpl implements _Data {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ScrapModel> scraps)? data,
+    TResult? Function(List<CartModel> scraps)? data,
   }) {
     return data?.call(scraps);
   }
@@ -264,7 +264,7 @@ class _$DataImpl implements _Data {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ScrapModel> scraps)? data,
+    TResult Function(List<CartModel> scraps)? data,
     required TResult orElse(),
   }) {
     if (data != null) {
@@ -306,9 +306,9 @@ class _$DataImpl implements _Data {
 }
 
 abstract class _Data implements CartControllerState {
-  const factory _Data(final List<ScrapModel> scraps) = _$DataImpl;
+  const factory _Data(final List<CartModel> scraps) = _$DataImpl;
 
-  List<ScrapModel> get scraps;
+  List<CartModel> get scraps;
   @JsonKey(ignore: true)
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
       throw _privateConstructorUsedError;

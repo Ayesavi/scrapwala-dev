@@ -9,7 +9,7 @@ part 'scrap_search_state.dart';
 
 @riverpod
 class ScrapSearch extends _$ScrapSearch {
-  final _scrapRepo = FakeScrapRepository();
+  final _scrapRepo = SupabaseScrapRepository();
 
   @override
   ScrapSearchState build() {
@@ -18,7 +18,7 @@ class ScrapSearch extends _$ScrapSearch {
 
   void search(String key) async {
     state = const ScrapSearchState.loading();
-    final data = await _scrapRepo.getScraps();
+    final data = await _scrapRepo.searchScraps(key);
     if (key.isEmpty) {
       state = const ScrapSearchState.emptySearch();
     } else {

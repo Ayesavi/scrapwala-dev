@@ -14,6 +14,9 @@ void showBottomLocationSheet(
   showModalBottomSheet(
     context: context,
     isDismissible: isDismissable,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+    ),
     builder: (BuildContext context) {
       return _LocationBottomSheetContent(
         isLocationPermissionGranted: isLocationPermissionGranted,
@@ -50,53 +53,9 @@ class _LocationBottomSheetContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(12.0),
-          topRight: Radius.circular(12.0),
-        ),
-      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // ListTile(
-          //   tileColor: Theme.of(context).colorScheme.tertiaryContainer,
-          //   subtitle: const LabelMedium(
-          //     text: LocationBottomSheetConstants.locationOfDesc,
-          //     maxLines: 3,
-          //   ),
-          //   title: const Padding(
-          //     padding: EdgeInsets.symmetric(
-          //       vertical: 4.0,
-          //     ),
-          //     child: Row(
-          //       children: [
-          //         Icon(Icons.location_searching_outlined),
-          //         SizedBox(
-          //           width: 10,
-          //         ),
-          //         Expanded(
-          //           child: TitleMedium(
-          //             overflow: TextOverflow.ellipsis,
-          //             text: LocationBottomSheetConstants.locationOffText,
-          //             weight: FontWeight.bold,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          //   trailing: !isLocationPermissionGranted
-          //       ? ElevatedButton(
-          //           onPressed: onTapLocationPermissionGrant as void Function()?,
-          //           style: ElevatedButton.styleFrom(
-          //             shape: RoundedRectangleBorder(
-          //               borderRadius: BorderRadius.circular(12.0),
-          //             ),
-          //           ),
-          //           child: const Text('Grant'),
-          //         )
-          //       : null,
-          // ),
           ListTile(
             title: const TitleLarge(
               text: LocationBottomSheetConstants.selectDeliveryAddress,

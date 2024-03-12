@@ -5,6 +5,7 @@ import 'package:scrapwala_dev/features/auth/widgets/title_medium.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/features/home/providers/home_page_controller.dart';
 import 'package:scrapwala_dev/features/search/providers/scrap_search.dart';
+import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:scrapwala_dev/shared/cart_bottom_bar.dart';
 import 'package:scrapwala_dev/shimmering_widgets/category_widget.dart';
 import 'package:scrapwala_dev/shimmering_widgets/shimmering_scrap_tile.dart';
@@ -120,20 +121,23 @@ class SearchPage extends ConsumerWidget {
             );
           }, results: (data) {
             return Expanded(
-                child: ListView.builder(
-                    itemCount: data.length,
-                    itemBuilder: (ctx, index) {
-                      return ScrapTile(
-                        model: data[index],
-                        isAdded: cartController.isCartContains(data[index]),
-                        onAdd: () {
-                          cartController.addCartItem(data[index]);
-                        },
-                        onRemove: () {
-                          cartController.remooveItemFromCart(data[index].id);
-                        },
-                      );
-                    }));
+                child: data.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (ctx, index) {
+                          return ScrapTile(
+                            model: data[index],
+                            isAdded: cartController.isCartContains(data[index]),
+                            onAdd: () {
+                              CartModel(id: "", qty: 0, scrap: data[index]);
+                            },
+                            onRemove: () {
+                              cartController
+                                  .remooveItemFromCart(data[index].id);
+                            },
+                          );
+                        })
+                    : const Center(child: Text('No Results Found')));
           })
         ],
       ),
