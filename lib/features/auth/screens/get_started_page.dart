@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/auth/widgets/phone_number_textfield.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
@@ -21,6 +22,12 @@ class GetStartedPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Center(
+                  child: Lottie.asset(
+                    'assets/lottie/recycle.json',
+                    // controller: _controller,s
+                  ),
+                ),
                 const ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: TitleLarge(
