@@ -116,7 +116,7 @@ class SelectAddressPage extends ConsumerWidget {
         return AlertDialog(
           title: const Text('Sorry'),
           content: const Text(
-              'Since, We are at the early stage we dont pickup scraps there.'),
+              'Since, We are at the early stage we dont pickup scraps there. Select location within Ambikapur only'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
