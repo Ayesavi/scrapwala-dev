@@ -22,11 +22,14 @@ class $AssetsImagesGen {
 class $AssetsLottieGen {
   const $AssetsLottieGen();
 
+  /// File path: assets/lottie/check_mark.json
+  String get checkMark => 'assets/lottie/check_mark.json';
+
   /// File path: assets/lottie/recycle.json
   String get recycle => 'assets/lottie/recycle.json';
 
   /// List of all assets
-  List<String> get values => [recycle];
+  List<String> get values => [checkMark, recycle];
 }
 
 class Assets {

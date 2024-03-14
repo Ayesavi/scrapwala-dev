@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:scrapwala_dev/core/constants/string_constants.dart';
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:scrapwala_dev/core/providers/location_provider/location_controller.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
+import 'package:scrapwala_dev/gen/assets.gen.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
 import 'package:scrapwala_dev/widgets/address_category_chip.dart';
@@ -33,30 +35,12 @@ class CartPage extends ConsumerWidget {
           padding: const EdgeInsets.all(16.0),
           child: AppFilledButton(
             label: "Request Pickup",
-            asyncTap: () async {
-              try {
-                if (addressId.isNotNull && !isCartEmpty) {
-                  await controller.requestPickUp(
-                      scheduleDateTime: dateNotifier.value,
-                      addressId: addressId!,
-                      qtyRange: '20-30');
-                  ref.invalidate(cartControllerProvider);
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
-                } else {
-                  if (isCartEmpty) {
-                    showSnackBar(context, "Atleast add one scrap to continue");
-                  } else {
-                    showSnackBar(context, "Please add an address to continue");
-                  }
-                }
-              } catch (e) {
-                if (context.mounted) {
-                  showSnackBar(context, errorHandler(e).message);
-                }
-              }
-            },
+            asyncTap: () async => onTapRequestPickup(context,
+                addressId: addressId,
+                ref: ref,
+                isCartEmpty: isCartEmpty,
+                dateNotifier: dateNotifier,
+                controller: controller),
           )),
       appBar: AppBar(
           title: TitleLarge(
@@ -344,7 +328,6 @@ class CartPage extends ConsumerWidget {
       BuildContext context, ValueNotifier<DateTime?> dateNotifier) async {
     // Show date time picker and update the selected date-time
     final DateTime now = DateTime.now();
-    final DateTime todayAt2PM = DateTime(now.year, now.month, now.day, 14, 0);
 
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -367,55 +350,96 @@ class CartPage extends ConsumerWidget {
           pickedTime.hour,
           pickedTime.minute,
         );
+        final bool isSelectedDayToday = ((selectedDateTime.day == now.day) &&
+            (selectedDateTime.month == now.month) &&
+            (selectedDateTime.year == selectedDateTime.year));
 
-        if (selectedDateTime.isBefore(todayAt2PM)) {
+        if ((!isSelectedDayToday && isTimeInRange(selectedDateTime, 10, 17)) ||
+            (isSelectedDayToday &&
+                isTimeInRange(selectedDateTime, 10, 14) &&
+                selectedDateTime.isAfter(now))) {
           dateNotifier.value = selectedDateTime;
         } else {
           // Inform the user
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('Note'),
-                content: const Text(
-                    'Please select a time before 2 PM on the next day.'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      Navigator.of(context).pop();
-                      // Show a popup to select a time before 2 PM on the next day
-                      final DateTime nextDay = now.add(const Duration(days: 1));
-                      final TimeOfDay? nextDayTime = await showTimePicker(
-                        context: context,
-                        initialTime: const TimeOfDay(hour: 12, minute: 0),
-                      );
+          if (context.mounted) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Note'),
+                  content: Text(
+                      'Please select a time between 10 AM to 5 PM on the ${isSelectedDayToday ? 'next' : ""} day.'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        Navigator.of(context).pop();
 
-                      if (nextDayTime != null) {
-                        dateNotifier.value = DateTime(
-                          nextDay.year,
-                          nextDay.month,
-                          nextDay.day,
-                          nextDayTime.hour,
-                          nextDayTime.minute,
-                        );
-                      }
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              );
-            },
-          );
+                        // Show a popup to select a time before 2 PM on the next day
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         }
       }
     }
   }
+
+  // void showNextDayTimePicker(
+  //     BuildContext context, ValueNotifier<DateTime?> dateNotifier) async {
+  //   final DateTime nextDay = DateTime.now().add(const Duration(days: 1));
+  //   final TimeOfDay? nextDayTime = await showTimePicker(
+  //     context: context,
+  //     initialTime: const TimeOfDay(hour: 12, minute: 0),
+  //   );
+
+  //   if (nextDayTime != null) {
+  //     if (nextDayTime.hour >= 17 || nextDayTime.hour <= 10) {
+  //       // Show a popup if the selected time is after 5 PM
+  //       if (context.mounted) {
+  //         showDialog(
+  //           context: context,
+  //           builder: (BuildContext context) {
+  //             return AlertDialog(
+  //               title: const Text('Warning'),
+  //               content: const Text(
+  //                   'Please select a time between 10 AM to 5 PM. We do not operate after 5 PM.'),
+  //               actions: <Widget>[
+  //                 TextButton(
+  //                   onPressed: () {
+  //                     Navigator.of(context).pop();
+  //                     Navigator.of(context).pop();
+  //                   },
+  //                   child: const Text('OK'),
+  //                 ),
+  //               ],
+  //             );
+  //           },
+  //         );
+  //       }
+  //     } else {
+  //       dateNotifier.value = DateTime(
+  //         nextDay.year,
+  //         nextDay.month,
+  //         nextDay.day,
+  //         nextDayTime.hour,
+  //         nextDayTime.minute,
+  //       );
+  //       if (context.mounted) {
+  //         Navigator.of(context).pop();
+  //       }
+  //     }
+  //   }
+  // }
 
   bool isRangeValid(String range) {
     // Split the string by the dash
@@ -434,5 +458,78 @@ class CartPage extends ConsumerWidget {
       // Parsing failed, return false
       return false;
     }
+  }
+
+  void onTapRequestPickup(
+    BuildContext context, {
+    required String? addressId,
+    required WidgetRef ref,
+    required bool isCartEmpty,
+    required ValueNotifier<DateTime?> dateNotifier,
+    required CartController controller,
+  }) async {
+    try {
+      if (addressId.isNotNull && !isCartEmpty && dateNotifier.value.isNotNull) {
+        await controller.requestPickUp(
+            scheduleDateTime: dateNotifier.value,
+            addressId: addressId!,
+            qtyRange: '20-30');
+        ref.invalidate(cartControllerProvider);
+        if (context.mounted) {
+          showAnimatedCheckMarkPopup(context);
+        }
+      } else {
+        if (isCartEmpty) {
+          showSnackBar(context, "Atleast add one scrap to continue");
+        } else if (addressId == null) {
+          showSnackBar(context, "Please add an address to continue");
+        } else if (dateNotifier.value == null) {
+          showSnackBar(context, "Please select date and time to continue");
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        showSnackBar(context, errorHandler(e).message);
+      }
+    }
+  }
+
+  bool isTimeInRange(DateTime selectedDateTime, int r1, int r2) {
+    return (selectedDateTime.hour >= r1 && selectedDateTime.hour <= r2);
+  }
+
+  Future<void> showAnimatedCheckMarkPopup(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset(
+                Assets.lottie
+                    .checkMark, // Replace with your Lottie animation file
+                width: 200,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(height: 20),
+              const Text('Pickup Requested Successfully!',
+                  style: TextStyle(fontSize: 18)),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

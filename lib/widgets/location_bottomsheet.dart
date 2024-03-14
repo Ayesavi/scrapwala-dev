@@ -52,58 +52,56 @@ class _LocationBottomSheetContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: const TitleLarge(
-              text: LocationBottomSheetConstants.selectDeliveryAddress,
-              weight: FontWeight.bold,
-            ),
-            trailing: TextButton(
-                onPressed: () {
-                  const AddressPageRoute().push(context);
-                },
-                child: BodyLarge(
-                    color: Theme.of(context).colorScheme.primary,
-                    text: 'View All')),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ListTile(
+          title: const TitleLarge(
+            text: LocationBottomSheetConstants.selectDeliveryAddress,
+            weight: FontWeight.bold,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Divider(),
+          trailing: TextButton(
+              onPressed: () {
+                const AddressPageRoute().push(context);
+              },
+              child: BodyLarge(
+                  color: Theme.of(context).colorScheme.primary,
+                  text: 'View All')),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Divider(),
+        ),
+        if (addresses.isNotEmpty)
+          Column(
+            children: addresses
+                .map((address) => AddressTile(
+                      model: address,
+                      isSelected: false,
+                      onTap: () => onTapAddress(address),
+                    ))
+                .toList(),
           ),
-          if (addresses.isNotEmpty)
-            Column(
-              children: addresses
-                  .map((address) => AddressTile(
-                        model: address,
-                        isSelected: false,
-                        onTap: () => onTapAddress(address),
-                      ))
-                  .toList(),
-            ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            // child: Divider(),
-          ),
-          // ListTile(
-          //   title: Row(
-          //     children: [
-          //       Icon(
-          //         Icons.search,
-          //         color: Theme.of(context).colorScheme.primary,
-          //       ),
-          //       const SizedBox(
-          //         width: 10,
-          //       ),
-          //       const Text('Enter Address Manually')
-          //     ],
-          //   ),
-          //   onTap: onTapEnterLocationManually as void Function()?,
-          // ),
-        ],
-      ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          // child: Divider(),
+        ),
+        // ListTile(
+        //   title: Row(
+        //     children: [
+        //       Icon(
+        //         Icons.search,
+        //         color: Theme.of(context).colorScheme.primary,
+        //       ),
+        //       const SizedBox(
+        //         width: 10,
+        //       ),
+        //       const Text('Enter Address Manually')
+        //     ],
+        //   ),
+        //   onTap: onTapEnterLocationManually as void Function()?,
+        // ),
+      ],
     );
   }
 }

@@ -20,6 +20,7 @@ class ScrapTileImageWidget extends ConsumerWidget {
   final Future<void> Function()? onAdd;
   final Future<void> Function()? onRemove;
 
+  // ignore: library_private_types_in_public_api
   Widget getChild(BuildContext context, _AddedNotifierValue value) {
     return switch (value) {
       _AddedNotifierValue.progress => const CupertinoActivityIndicator(),

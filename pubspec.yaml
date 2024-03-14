@@ -65,6 +65,7 @@ dependencies:
   google_maps_flutter: ^2.6.0
   dio: ^5.4.1
   flutter_native_splash: ^2.3.10
+  url_launcher: ^6.2.5
 
 dev_dependencies:
 
@@ -101,7 +102,7 @@ flutter:
     - assets/images/logo.png
 
     - assets/lottie/recycle.json
-  #   - assets/svgs/google.svg
+    - assets/lottie/check_mark.json
   #   - .env
   #   - assets/images/profile_image.png
   #   - images/a_dot_ham.jpeg

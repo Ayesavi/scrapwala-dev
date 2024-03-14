@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:scrapwala_dev/core/utils/debounder.dart';
 
 class CounterCumTextFieldWidget extends ConsumerStatefulWidget {
   const CounterCumTextFieldWidget(
@@ -27,8 +26,6 @@ class _CounterCumTextFieldWidgetState
     super.initState();
     _counter = widget.initialValue;
   }
-
-  final _debouncer = Debouncer(delay: const Duration(milliseconds: 800));
 
   @override
   Widget build(BuildContext context) {
