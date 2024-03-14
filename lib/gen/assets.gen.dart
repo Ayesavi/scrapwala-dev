@@ -19,10 +19,21 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [logo];
 }
 
+class $AssetsLottieGen {
+  const $AssetsLottieGen();
+
+  /// File path: assets/lottie/recycle.json
+  String get recycle => 'assets/lottie/recycle.json';
+
+  /// List of all assets
+  List<String> get values => [recycle];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLottieGen lottie = $AssetsLottieGen();
 }
 
 class AssetGenImage {

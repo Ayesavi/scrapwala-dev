@@ -1,6 +1,6 @@
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
-import 'package:scrapwala_dev/core/services/api_service.dart';
 import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
+import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class BaseCartRepository {
@@ -12,15 +12,15 @@ abstract class BaseCartRepository {
 
   Future<void> removeFromCart(String itemId);
 
-  Future<void> requestPickup({
+  Future<PickupRequestModel> requestPickup({
     DateTime? scheduleTime,
     required String addressId,
+    required String qtyRange,
   });
 }
 
 class SupabaseCartRepository implements BaseCartRepository {
   final _supabaseClient = Supabase.instance.client;
-  final _api = ApiService();
 
   @override
   Future<List<CartModel>> getCartItems() async {
@@ -75,17 +75,18 @@ class SupabaseCartRepository implements BaseCartRepository {
   }
 
   @override
-  Future<void> requestPickup(
-      {DateTime? scheduleTime, required String addressId}) async {
-    final response = await _api.post(ApiEndpoints.requestPickup.route, {
-      "scheduleDateTime": scheduleTime?.toIso8601String(),
-      "addressId": addressId
-    });
-    if (response.data['success'] == true) {
-      return;
-    } else {
-      throw const SkException('Can not create a pickup request at the moment');
-    }
+  Future<PickupRequestModel> requestPickup(
+      {DateTime? scheduleTime,
+      required String addressId,
+      required String qtyRange}) async {
+    final response =
+        await _supabaseClient.rpc('handle_pickup_request', params: {
+      "schedule_date_time": scheduleTime?.toIso8601String(),
+      "address_id": addressId,
+      "qty_range": qtyRange
+    }).single();
+
+    return PickupRequestModel.fromJson(response);
   }
 }
 
@@ -116,6 +117,11 @@ class FakeCartRepository implements BaseCartRepository {
   }
 
   @override
-  Future<void> requestPickup(
-      {DateTime? scheduleTime, required String addressId}) async {}
+  Future<PickupRequestModel> requestPickup(
+      {DateTime? scheduleTime,
+      required String addressId,
+      required String qtyRange}) {
+    // TODO: implement requestPickup
+    throw UnimplementedError();
+  }
 }

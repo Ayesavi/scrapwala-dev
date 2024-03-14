@@ -14,6 +14,8 @@ class CartController extends _$CartController {
   final _repo = SupabaseCartRepository();
   var _cart = <CartModel>[];
 
+  bool get isCartEmpty => _cart.isEmpty;
+
   @override
   CartControllerState build() {
     getCartItems();
@@ -70,8 +72,9 @@ class CartController extends _$CartController {
   }
 
   Future<void> requestPickUp(
-      {DateTime? scheduleDateTime, required String addressId}) async {
+      {DateTime? scheduleDateTime, required String addressId, required String qtyRange}) async {
     await _repo.requestPickup(
-        addressId: addressId, scheduleTime: scheduleDateTime ?? DateTime.now());
+        addressId: addressId, scheduleTime: scheduleDateTime ?? DateTime.now(),qtyRange: qtyRange
+        );
   }
 }

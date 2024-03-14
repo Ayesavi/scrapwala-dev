@@ -8,8 +8,8 @@ import 'package:scrapwala_dev/core/providers/location_provider/location_controll
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
-import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
+import 'package:scrapwala_dev/widgets/address_category_chip.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/cart_item_tile.dart';
 import 'package:scrapwala_dev/widgets/location_bottomsheet.dart';
@@ -17,14 +17,6 @@ import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
 class CartPage extends ConsumerWidget {
   const CartPage({super.key});
-
-  double totalPrice(List<CartModel> cartItems) {
-    double price = 0;
-    for (var element in cartItems) {
-      price += element.qty * element.scrap.price;
-    }
-    return price;
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,6 +26,8 @@ class CartPage extends ConsumerWidget {
     final state = ref.watch(cartControllerProvider);
     final controller = ref.watch(cartControllerProvider.notifier);
     final dateNotifier = ValueNotifier<DateTime?>(null);
+    final qtyRangeNotifier = ValueNotifier<String>('5-10');
+    var isCartEmpty = true;
     return Scaffold(
       bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -41,16 +35,21 @@ class CartPage extends ConsumerWidget {
             label: "Request Pickup",
             asyncTap: () async {
               try {
-                if (addressId.isNotNull) {
+                if (addressId.isNotNull && !isCartEmpty) {
                   await controller.requestPickUp(
                       scheduleDateTime: dateNotifier.value,
-                      addressId: addressId!);
+                      addressId: addressId!,
+                      qtyRange: '20-30');
                   ref.invalidate(cartControllerProvider);
                   if (context.mounted) {
                     Navigator.pop(context);
                   }
                 } else {
-                  showSnackBar(context, "Please add an address to continue");
+                  if (isCartEmpty) {
+                    showSnackBar(context, "Atleast add one scrap to continue");
+                  } else {
+                    showSnackBar(context, "Please add an address to continue");
+                  }
                 }
               } catch (e) {
                 if (context.mounted) {
@@ -192,6 +191,7 @@ class CartPage extends ConsumerWidget {
                       state.when(
                           initial: () => const SizedBox.shrink(),
                           data: (data) {
+                            isCartEmpty = data.isEmpty;
                             return Column(
                               children: [
                                 ...List.generate(
@@ -237,28 +237,7 @@ class CartPage extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12),
                       color: Theme.of(context).colorScheme.onInverseSurface),
                   child: ListTile(
-                    onTap: () async {
-                      // Show date time picker and update the selected date-time
-                      final DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime(DateTime.now().year + 1),
-                      );
-                      final TimeOfDay? pickedTime = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                      );
-                      if (pickedDate != null && pickedTime != null) {
-                        dateNotifier.value = DateTime(
-                          pickedDate.year,
-                          pickedDate.month,
-                          pickedDate.day,
-                          pickedTime.hour,
-                          pickedTime.minute,
-                        );
-                      }
-                    },
+                    onTap: () => onTapSheduleTime(context, dateNotifier),
                     title: ValueListenableBuilder(
                       valueListenable: dateNotifier,
                       builder: (BuildContext context, DateTime? value,
@@ -286,7 +265,7 @@ class CartPage extends ConsumerWidget {
                 height: 20,
               ),
               const TitleMedium(
-                text: '  Bill Details',
+                text: '  Select Approx Quantity',
                 weight: FontWeight.bold,
               ),
               const SizedBox(
@@ -300,19 +279,35 @@ class CartPage extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.onInverseSurface),
                 child: Column(
                   children: [
-                    ListTile(
-                      contentPadding:
-                          const EdgeInsets.only(left: 16, right: 16),
-                      title: const TitleSmall(
-                        text: 'Item Total',
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: ValueListenableBuilder(
+                          valueListenable: qtyRangeNotifier,
+                          builder: (BuildContext context, String value,
+                              Widget? child) {
+                            return Row(
+                              children: [
+                                ...List.generate(10, (index) {
+                                  final range =
+                                      '${(index + 1) * 5}-${(5 + ((index + 1) * 5))}';
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ChipWidget(
+                                      label: range,
+                                      isSelected: value == range,
+                                      onTap: () {
+                                        qtyRangeNotifier.value = range;
+                                      },
+                                    ),
+                                  );
+                                })
+                              ],
+                            );
+                          },
+                        ),
                       ),
-                      trailing: state.when(
-                          initial: () =>
-                              const TitleMedium(text: "$kRupeeSymbol 0"),
-                          data: (data) {
-                            return TitleMedium(
-                                text: "$kRupeeSymbol${totalPrice(data)}");
-                          }),
                     ),
                     ListTile(
                       contentPadding:
@@ -343,5 +338,101 @@ class CartPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  void onTapSheduleTime(
+      BuildContext context, ValueNotifier<DateTime?> dateNotifier) async {
+    // Show date time picker and update the selected date-time
+    final DateTime now = DateTime.now();
+    final DateTime todayAt2PM = DateTime(now.year, now.month, now.day, 14, 0);
+
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: now,
+      lastDate: DateTime(now.year + 1),
+    );
+
+    if (context.mounted && pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+
+      if (pickedTime != null) {
+        DateTime selectedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        if (selectedDateTime.isBefore(todayAt2PM)) {
+          dateNotifier.value = selectedDateTime;
+        } else {
+          // Inform the user
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Note'),
+                content: const Text(
+                    'Please select a time before 2 PM on the next day.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                      // Show a popup to select a time before 2 PM on the next day
+                      final DateTime nextDay = now.add(const Duration(days: 1));
+                      final TimeOfDay? nextDayTime = await showTimePicker(
+                        context: context,
+                        initialTime: const TimeOfDay(hour: 12, minute: 0),
+                      );
+
+                      if (nextDayTime != null) {
+                        dateNotifier.value = DateTime(
+                          nextDay.year,
+                          nextDay.month,
+                          nextDay.day,
+                          nextDayTime.hour,
+                          nextDayTime.minute,
+                        );
+                      }
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      }
+    }
+  }
+
+  bool isRangeValid(String range) {
+    // Split the string by the dash
+    List<String> parts = range.split('-');
+    // Check if there are exactly two parts
+    if (parts.length != 2) {
+      return false;
+    }
+    // Try parsing both parts to integers
+    try {
+      int.parse(parts[0]);
+      int.parse(parts[1]);
+      // Check if both integers can be parsed successfully
+      return true;
+    } catch (e) {
+      // Parsing failed, return false
+      return false;
+    }
   }
 }
