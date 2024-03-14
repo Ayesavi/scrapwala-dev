@@ -26,7 +26,7 @@ mixin _$PickupRequestModel {
   String get requestingUserId => throw _privateConstructorUsedError;
   DateTime? get scheduleDateTime => throw _privateConstructorUsedError;
   DateTime? get pickedDateTime => throw _privateConstructorUsedError;
-  int get totalPrice => throw _privateConstructorUsedError;
+  String get qtyRange => throw _privateConstructorUsedError;
   RequestStatus get status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $PickupRequestModelCopyWith<$Res> {
       String requestingUserId,
       DateTime? scheduleDateTime,
       DateTime? pickedDateTime,
-      int totalPrice,
+      String qtyRange,
       RequestStatus status});
 }
 
@@ -71,7 +71,7 @@ class _$PickupRequestModelCopyWithImpl<$Res, $Val extends PickupRequestModel>
     Object? requestingUserId = null,
     Object? scheduleDateTime = freezed,
     Object? pickedDateTime = freezed,
-    Object? totalPrice = null,
+    Object? qtyRange = null,
     Object? status = null,
   }) {
     return _then(_value.copyWith(
@@ -99,10 +99,10 @@ class _$PickupRequestModelCopyWithImpl<$Res, $Val extends PickupRequestModel>
           ? _value.pickedDateTime
           : pickedDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      totalPrice: null == totalPrice
-          ? _value.totalPrice
-          : totalPrice // ignore: cast_nullable_to_non_nullable
-              as int,
+      qtyRange: null == qtyRange
+          ? _value.qtyRange
+          : qtyRange // ignore: cast_nullable_to_non_nullable
+              as String,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -126,7 +126,7 @@ abstract class _$$PickupRequestModelImplCopyWith<$Res>
       String requestingUserId,
       DateTime? scheduleDateTime,
       DateTime? pickedDateTime,
-      int totalPrice,
+      String qtyRange,
       RequestStatus status});
 }
 
@@ -147,7 +147,7 @@ class __$$PickupRequestModelImplCopyWithImpl<$Res>
     Object? requestingUserId = null,
     Object? scheduleDateTime = freezed,
     Object? pickedDateTime = freezed,
-    Object? totalPrice = null,
+    Object? qtyRange = null,
     Object? status = null,
   }) {
     return _then(_$PickupRequestModelImpl(
@@ -175,10 +175,10 @@ class __$$PickupRequestModelImplCopyWithImpl<$Res>
           ? _value.pickedDateTime
           : pickedDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      totalPrice: null == totalPrice
-          ? _value.totalPrice
-          : totalPrice // ignore: cast_nullable_to_non_nullable
-              as int,
+      qtyRange: null == qtyRange
+          ? _value.qtyRange
+          : qtyRange // ignore: cast_nullable_to_non_nullable
+              as String,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -197,7 +197,7 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
       required this.requestingUserId,
       this.scheduleDateTime,
       this.pickedDateTime,
-      required this.totalPrice,
+      required this.qtyRange,
       this.status = RequestStatus.pending});
 
   factory _$PickupRequestModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -216,14 +216,14 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
   @override
   final DateTime? pickedDateTime;
   @override
-  final int totalPrice;
+  final String qtyRange;
   @override
   @JsonKey()
   final RequestStatus status;
 
   @override
   String toString() {
-    return 'PickupRequestModel(addressId: $addressId, id: $id, requestDateTime: $requestDateTime, requestingUserId: $requestingUserId, scheduleDateTime: $scheduleDateTime, pickedDateTime: $pickedDateTime, totalPrice: $totalPrice, status: $status)';
+    return 'PickupRequestModel(addressId: $addressId, id: $id, requestDateTime: $requestDateTime, requestingUserId: $requestingUserId, scheduleDateTime: $scheduleDateTime, pickedDateTime: $pickedDateTime, qtyRange: $qtyRange, status: $status)';
   }
 
   @override
@@ -242,15 +242,15 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
                 other.scheduleDateTime == scheduleDateTime) &&
             (identical(other.pickedDateTime, pickedDateTime) ||
                 other.pickedDateTime == pickedDateTime) &&
-            (identical(other.totalPrice, totalPrice) ||
-                other.totalPrice == totalPrice) &&
+            (identical(other.qtyRange, qtyRange) ||
+                other.qtyRange == qtyRange) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, addressId, id, requestDateTime,
-      requestingUserId, scheduleDateTime, pickedDateTime, totalPrice, status);
+      requestingUserId, scheduleDateTime, pickedDateTime, qtyRange, status);
 
   @JsonKey(ignore: true)
   @override
@@ -275,7 +275,7 @@ abstract class _PickupRequestModel implements PickupRequestModel {
       required final String requestingUserId,
       final DateTime? scheduleDateTime,
       final DateTime? pickedDateTime,
-      required final int totalPrice,
+      required final String qtyRange,
       final RequestStatus status}) = _$PickupRequestModelImpl;
 
   factory _PickupRequestModel.fromJson(Map<String, dynamic> json) =
@@ -294,7 +294,7 @@ abstract class _PickupRequestModel implements PickupRequestModel {
   @override
   DateTime? get pickedDateTime;
   @override
-  int get totalPrice;
+  String get qtyRange;
   @override
   RequestStatus get status;
   @override

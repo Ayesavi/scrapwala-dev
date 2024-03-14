@@ -5,6 +5,7 @@ import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/auth/widgets/phone_number_textfield.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
@@ -25,7 +26,6 @@ class GetStartedPage extends StatelessWidget {
                 Center(
                   child: Lottie.asset(
                     'assets/lottie/recycle.json',
-                    // controller: _controller,s
                   ),
                 ),
                 const ListTile(
@@ -81,6 +81,9 @@ class GetStartedPage extends StatelessWidget {
                         ]))),
                 const Divider(),
                 ListTile(
+                  onTap: () {
+                    _launchUrl();
+                  },
                   contentPadding: EdgeInsets.zero,
                   leading: Icon(
                     Icons.mail_outline,
@@ -108,6 +111,13 @@ class GetStartedPage extends StatelessWidget {
   }
 }
 
+_launchUrl() async {
+  if (!await launchUrl(Uri.parse(GetStartedPageConstants.scrapPriceUri))) {
+    throw Exception('Could not launch url');
+  }
+}
+
 class GetStartedPageConstants {
   static const getStartedPage = "Get Started";
+  static const scrapPriceUri = 'https://www.swachhkabadi.com/scrap-rates';
 }

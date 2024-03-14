@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
 class ChipWidget extends StatelessWidget {
   final String label;
   final bool isSelected;
-  final IconData icon;
+  final IconData? icon;
   final VoidCallback? onTap;
 
   const ChipWidget({
@@ -12,7 +13,7 @@ class ChipWidget extends StatelessWidget {
     required this.label,
     this.onTap,
     required this.isSelected,
-    required this.icon,
+    this.icon,
   });
 
   @override
@@ -37,12 +38,14 @@ class ChipWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        avatar: Icon(
-          icon,
-          color: isSelected
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.onSurface,
-        ),
+        avatar: icon.isNotNull
+            ? Icon(
+                icon,
+                color: isSelected
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.onSurface,
+              )
+            : null,
       ),
     );
   }

@@ -25,7 +25,7 @@ class PickRequestTile extends ConsumerWidget {
       subtitle: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: LabelLarge(
-          text: "$kRupeeSymbol ${model.totalPrice} >",
+          text: "$kRupeeSymbol ${model.qtyRange} >",
           color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
         ),
       ),

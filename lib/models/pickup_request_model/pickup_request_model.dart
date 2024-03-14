@@ -9,7 +9,6 @@ enum RequestStatus {
   denied,
 }
 
-
 /// We can also reference it as a transaction model
 @freezed
 class PickupRequestModel with _$PickupRequestModel {
@@ -20,7 +19,7 @@ class PickupRequestModel with _$PickupRequestModel {
     required String requestingUserId,
     DateTime? scheduleDateTime,
     DateTime? pickedDateTime,
-    required int totalPrice,
+    required String qtyRange,
     @Default(RequestStatus.pending) RequestStatus status,
 
     // /// Maps scrap ids with their approx quantities

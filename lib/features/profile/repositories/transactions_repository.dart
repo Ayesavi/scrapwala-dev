@@ -69,7 +69,7 @@ final List<PickupRequestModel> randomPickupRequests = [
     requestDateTime: DateTime(2024, 3, 11, 8, 0, 0),
     requestingUserId: 'user123',
     scheduleDateTime: DateTime(2024, 3, 12, 10, 0, 0),
-    totalPrice: 50,
+    qtyRange: '20-30',
     status: RequestStatus.picked,
   ),
   PickupRequestModel(
@@ -78,7 +78,7 @@ final List<PickupRequestModel> randomPickupRequests = [
     requestDateTime: DateTime(2024, 3, 10, 9, 0, 0),
     requestingUserId: 'user456',
     scheduleDateTime: DateTime(2024, 3, 13, 12, 0, 0),
-    totalPrice: 100,
+    qtyRange: '20-30',
     status: RequestStatus.picked,
   ),
   PickupRequestModel(
@@ -87,7 +87,7 @@ final List<PickupRequestModel> randomPickupRequests = [
     requestDateTime: DateTime(2024, 3, 9, 10, 0, 0),
     requestingUserId: 'user789',
     scheduleDateTime: DateTime(2024, 3, 14, 9, 0, 0),
-    totalPrice: 75,
+    qtyRange: '20-30',
     status: RequestStatus.pending,
   ),
   PickupRequestModel(
@@ -96,7 +96,7 @@ final List<PickupRequestModel> randomPickupRequests = [
     requestDateTime: DateTime(2024, 3, 8, 11, 0, 0),
     requestingUserId: 'user101112',
     scheduleDateTime: DateTime(2024, 3, 15, 14, 0, 0),
-    totalPrice: 200,
+    qtyRange: '20-30',
     status: RequestStatus.denied,
   ),
   PickupRequestModel(
@@ -105,7 +105,7 @@ final List<PickupRequestModel> randomPickupRequests = [
     requestDateTime: DateTime(2024, 3, 7, 12, 0, 0),
     requestingUserId: 'user131415',
     scheduleDateTime: DateTime(2024, 3, 16, 11, 0, 0),
-    totalPrice: 150,
+    qtyRange: '20-30',
     status: RequestStatus.picked,
   ),
 ];

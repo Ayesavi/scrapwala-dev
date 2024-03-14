@@ -20,54 +20,50 @@ class EditAddressTileShimmer extends StatelessWidget {
           color: Colors.white,
         ),
         child: ListTile(
-          title: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 20,
-                  color: Colors.white,
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  height: 20,
-                  color: Colors.white,
-                ),
-                const SizedBox(height: 10),
-              ],
-            ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                height: 20,
+                color: Colors.white,
+              ),
+              const SizedBox(height: 10),
+              Container(
+                width: double.infinity,
+                height: 20,
+                color: Colors.white,
+              ),
+              const SizedBox(height: 10),
+            ],
           ),
           onTap: () {},
-          subtitle: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 20,
-                  color: Colors.white,
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 80,
-                      height: 40,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      width: 80,
-                      height: 40,
-                      color: Colors.white,
-                    ),
-                  ],
-                )
-              ],
-            ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                height: 20,
+                color: Colors.white,
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 80,
+                    height: 40,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(width: 10),
+                  Container(
+                    width: 80,
+                    height: 40,
+                    color: Colors.white,
+                  ),
+                ],
+              )
+            ],
           ),
           leading: _buildLeadingIcon(context),
         ),

@@ -13,8 +13,8 @@ AuthController authController(AuthControllerRef ref) {
   if (authStates.value?.session != null) {
     final sessionUser = authStates.value!.session!.user;
     final userMetadata = sessionUser.userMetadata;
-    final email = sessionUser.email;
-    final phone = sessionUser.phone;
+    // final email = sessionUser.email;
+    // final phone = sessionUser.phone;
     final name = userMetadata?.containsKey("full_name") ?? false
         ? userMetadata!['full_name']
         : null;

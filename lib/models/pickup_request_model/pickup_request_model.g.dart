@@ -19,7 +19,7 @@ _$PickupRequestModelImpl _$$PickupRequestModelImplFromJson(
       pickedDateTime: json['pickedDateTime'] == null
           ? null
           : DateTime.parse(json['pickedDateTime'] as String),
-      totalPrice: json['totalPrice'] as int,
+      qtyRange: json['qtyRange'] as String,
       status: $enumDecodeNullable(_$RequestStatusEnumMap, json['status']) ??
           RequestStatus.pending,
     );
@@ -33,7 +33,7 @@ Map<String, dynamic> _$$PickupRequestModelImplToJson(
       'requestingUserId': instance.requestingUserId,
       'scheduleDateTime': instance.scheduleDateTime?.toIso8601String(),
       'pickedDateTime': instance.pickedDateTime?.toIso8601String(),
-      'totalPrice': instance.totalPrice,
+      'qtyRange': instance.qtyRange,
       'status': _$RequestStatusEnumMap[instance.status]!,
     };
 
