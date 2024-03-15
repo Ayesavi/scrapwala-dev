@@ -13,7 +13,7 @@ enum RequestStatus {
 @freezed
 class PickupRequestModel with _$PickupRequestModel {
   factory PickupRequestModel({
-    required String addressId,
+    required String? addressId,
     required String id,
     required DateTime requestDateTime,
     required String requestingUserId,

@@ -9,7 +9,7 @@ part of 'pickup_request_model.dart';
 _$PickupRequestModelImpl _$$PickupRequestModelImplFromJson(
         Map<String, dynamic> json) =>
     _$PickupRequestModelImpl(
-      addressId: json['addressId'] as String,
+      addressId: json['addressId'] as String?,
       id: json['id'] as String,
       requestDateTime: DateTime.parse(json['requestDateTime'] as String),
       requestingUserId: json['requestingUserId'] as String,
