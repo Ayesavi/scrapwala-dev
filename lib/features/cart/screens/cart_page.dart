@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-import 'package:scrapwala_dev/core/constants/string_constants.dart';
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:scrapwala_dev/core/providers/location_provider/location_controller.dart';
@@ -28,6 +27,7 @@ class CartPage extends ConsumerWidget {
     final state = ref.watch(cartControllerProvider);
     final controller = ref.watch(cartControllerProvider.notifier);
     final dateNotifier = ValueNotifier<DateTime?>(null);
+    final ranges = ['1-10', '10-20', '20-30', '30-40', '40-50', '50+'];
     final qtyRangeNotifier = ValueNotifier<String>('5-10');
     var isCartEmpty = true;
     return Scaffold(
@@ -274,9 +274,8 @@ class CartPage extends ConsumerWidget {
                               Widget? child) {
                             return Row(
                               children: [
-                                ...List.generate(10, (index) {
-                                  final range =
-                                      '${(index + 1) * 5}-${(5 + ((index + 1) * 5))}';
+                                ...List.generate(ranges.length, (index) {
+                                  final range = ranges[index];
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: ChipWidget(
@@ -293,24 +292,6 @@ class CartPage extends ConsumerWidget {
                           },
                         ),
                       ),
-                    ),
-                    ListTile(
-                      contentPadding:
-                          const EdgeInsets.only(left: 16, right: 16),
-                      title: Text(
-                        'Service Fee',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            decoration: TextDecoration.underline,
-                            decorationStyle: TextDecorationStyle.dashed),
-                      ),
-                      subtitle: const Padding(
-                        padding: EdgeInsets.only(top: 8.0),
-                        child: LabelMedium(
-                            maxLines: 2,
-                            text:
-                                'Your request will be travelling long enough to get your order.'),
-                      ),
-                      trailing: const TitleMedium(text: "$kRupeeSymbol${15}"),
                     ),
                   ],
                 ),
