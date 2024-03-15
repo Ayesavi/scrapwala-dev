@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC5axotXXu_ja1hgX2rdIZIWfQcUFmSvak',
-    appId: '1:607639301039:android:8d591c53504357ada45d5a',
+    appId: '1:607639301039:android:782cdf7463bfa427a45d5a',
     messagingSenderId: '607639301039',
     projectId: 'swacch-kabadi',
     storageBucket: 'swacch-kabadi.appspot.com',
@@ -63,13 +63,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAPdckHJQXIhgF5JlJWJQKP9YP6PESyt0Q',
-    appId: '1:607639301039:ios:5e54fe784e4dd2aba45d5a',
+    appId: '1:607639301039:ios:c960585fb5807b88a45d5a',
     messagingSenderId: '607639301039',
     projectId: 'swacch-kabadi',
     storageBucket: 'swacch-kabadi.appspot.com',
-    androidClientId: '607639301039-tiljq091l0ureh0ino4qjrb26210f10j.apps.googleusercontent.com',
-    iosClientId: '607639301039-gdj8bql3ddp87g1fhe5vein9lgf69c30.apps.googleusercontent.com',
-    iosBundleId: 'com.example.scrapwalaDev',
+    androidClientId: '607639301039-5no0llqpf6tub4j2nppcdugav4ihob78.apps.googleusercontent.com',
+    iosClientId: '607639301039-jqfggg5nuah48e8ror1c7ntihi0avb4i.apps.googleusercontent.com',
+    iosBundleId: 'com.swacchkabadi.swacchkabadi',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -78,7 +78,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '607639301039',
     projectId: 'swacch-kabadi',
     storageBucket: 'swacch-kabadi.appspot.com',
-    androidClientId: '607639301039-tiljq091l0ureh0ino4qjrb26210f10j.apps.googleusercontent.com',
+    androidClientId: '607639301039-5no0llqpf6tub4j2nppcdugav4ihob78.apps.googleusercontent.com',
     iosClientId: '607639301039-bfnbr2udp8g4q3mv0i44upkucvoggu5v.apps.googleusercontent.com',
     iosBundleId: 'com.example.scrapwalaDev.RunnerTests',
   );
