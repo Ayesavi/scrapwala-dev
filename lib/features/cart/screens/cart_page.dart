@@ -40,6 +40,7 @@ class CartPage extends ConsumerWidget {
                 ref: ref,
                 isCartEmpty: isCartEmpty,
                 dateNotifier: dateNotifier,
+                qtyNotifier: qtyRangeNotifier,
                 controller: controller),
           )),
       appBar: AppBar(
@@ -466,6 +467,7 @@ class CartPage extends ConsumerWidget {
     required WidgetRef ref,
     required bool isCartEmpty,
     required ValueNotifier<DateTime?> dateNotifier,
+    required ValueNotifier<String> qtyNotifier,
     required CartController controller,
   }) async {
     try {
@@ -473,7 +475,7 @@ class CartPage extends ConsumerWidget {
         await controller.requestPickUp(
             scheduleDateTime: dateNotifier.value,
             addressId: addressId!,
-            qtyRange: '20-30');
+            qtyRange: qtyNotifier.value);
         ref.invalidate(cartControllerProvider);
         if (context.mounted) {
           showAnimatedCheckMarkPopup(context);
