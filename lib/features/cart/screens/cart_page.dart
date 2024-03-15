@@ -28,7 +28,7 @@ class CartPage extends ConsumerWidget {
     final controller = ref.watch(cartControllerProvider.notifier);
     final dateNotifier = ValueNotifier<DateTime?>(null);
     final ranges = ['1-10', '10-20', '20-30', '30-40', '40-50', '50+'];
-    final qtyRangeNotifier = ValueNotifier<String>('5-10');
+    final qtyRangeNotifier = ValueNotifier<String>('1-10');
     var isCartEmpty = true;
     return Scaffold(
       bottomNavigationBar: Padding(
