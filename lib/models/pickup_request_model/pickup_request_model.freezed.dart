@@ -20,7 +20,7 @@ PickupRequestModel _$PickupRequestModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PickupRequestModel {
-  String get addressId => throw _privateConstructorUsedError;
+  String? get addressId => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   DateTime get requestDateTime => throw _privateConstructorUsedError;
   String get requestingUserId => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $PickupRequestModelCopyWith<$Res> {
       _$PickupRequestModelCopyWithImpl<$Res, PickupRequestModel>;
   @useResult
   $Res call(
-      {String addressId,
+      {String? addressId,
       String id,
       DateTime requestDateTime,
       String requestingUserId,
@@ -65,7 +65,7 @@ class _$PickupRequestModelCopyWithImpl<$Res, $Val extends PickupRequestModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? addressId = null,
+    Object? addressId = freezed,
     Object? id = null,
     Object? requestDateTime = null,
     Object? requestingUserId = null,
@@ -75,10 +75,10 @@ class _$PickupRequestModelCopyWithImpl<$Res, $Val extends PickupRequestModel>
     Object? status = null,
   }) {
     return _then(_value.copyWith(
-      addressId: null == addressId
+      addressId: freezed == addressId
           ? _value.addressId
           : addressId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -120,7 +120,7 @@ abstract class _$$PickupRequestModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String addressId,
+      {String? addressId,
       String id,
       DateTime requestDateTime,
       String requestingUserId,
@@ -141,7 +141,7 @@ class __$$PickupRequestModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? addressId = null,
+    Object? addressId = freezed,
     Object? id = null,
     Object? requestDateTime = null,
     Object? requestingUserId = null,
@@ -151,10 +151,10 @@ class __$$PickupRequestModelImplCopyWithImpl<$Res>
     Object? status = null,
   }) {
     return _then(_$PickupRequestModelImpl(
-      addressId: null == addressId
+      addressId: freezed == addressId
           ? _value.addressId
           : addressId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -204,7 +204,7 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
       _$$PickupRequestModelImplFromJson(json);
 
   @override
-  final String addressId;
+  final String? addressId;
   @override
   final String id;
   @override
@@ -269,7 +269,7 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
 
 abstract class _PickupRequestModel implements PickupRequestModel {
   factory _PickupRequestModel(
-      {required final String addressId,
+      {required final String? addressId,
       required final String id,
       required final DateTime requestDateTime,
       required final String requestingUserId,
@@ -282,7 +282,7 @@ abstract class _PickupRequestModel implements PickupRequestModel {
       _$PickupRequestModelImpl.fromJson;
 
   @override
-  String get addressId;
+  String? get addressId;
   @override
   String get id;
   @override
