@@ -88,7 +88,7 @@ final List<PickupRequestModel> randomPickupRequests = [
     requestingUserId: 'user789',
     scheduleDateTime: DateTime(2024, 3, 14, 9, 0, 0),
     qtyRange: '20-30',
-    status: RequestStatus.pending,
+    status: RequestStatus.requested,
   ),
   PickupRequestModel(
     addressId: '4',
@@ -138,7 +138,8 @@ class SupabaseTxnRepository implements BaseTransactionRepository {
 
   @override
   Future<List<PickupRequestModel>> getPrevRequests() async {
-    final data = await _supabaseClient.from('requests').select();
+    final data =
+        await _supabaseClient.from('requests').select('*,address:addressId(*)');
     return data.map((e) => PickupRequestModel.fromJson(e)).toList();
   }
 

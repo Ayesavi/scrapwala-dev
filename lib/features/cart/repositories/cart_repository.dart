@@ -17,6 +17,10 @@ abstract class BaseCartRepository {
     required String addressId,
     required String qtyRange,
   });
+
+  /// Used to fetch request's which has been requested recently
+  /// and whose status is not equal to picked/denied
+  Future<List<PickupRequestModel>> getCurrentlyRequestedReqs();
 }
 
 class SupabaseCartRepository implements BaseCartRepository {
@@ -88,6 +92,16 @@ class SupabaseCartRepository implements BaseCartRepository {
 
     return PickupRequestModel.fromJson(response);
   }
+
+  @override
+  Future<List<PickupRequestModel>> getCurrentlyRequestedReqs() async {
+    final response = await _supabaseClient
+        .from('requests')
+        .select('*')
+        .neq('status', RequestStatus.picked.name)
+        .neq('status', RequestStatus.denied.name);
+    return response.map((e) => PickupRequestModel.fromJson(e)).toList();
+  }
 }
 
 class FakeCartRepository implements BaseCartRepository {
@@ -122,6 +136,12 @@ class FakeCartRepository implements BaseCartRepository {
       required String addressId,
       required String qtyRange}) {
     // TODO: implement requestPickup
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<PickupRequestModel>> getCurrentlyRequestedReqs() {
+    // TODO: implement getCurrentlyRequestedReqs
     throw UnimplementedError();
   }
 }

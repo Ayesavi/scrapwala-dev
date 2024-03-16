@@ -11,6 +11,9 @@ class RequestStatusWidget extends ConsumerWidget {
     return switch (status) {
       RequestStatus.picked => Colors.greenAccent,
       RequestStatus.denied => Theme.of(context).colorScheme.error,
+      RequestStatus.requested => Theme.of(context).colorScheme.tertiary,
+      RequestStatus.accepted => Theme.of(context).colorScheme.tertiary,
+      RequestStatus.onTheWay => Theme.of(context).colorScheme.tertiary,
       RequestStatus.pending => Theme.of(context).colorScheme.tertiary,
     };
   }
@@ -19,6 +22,9 @@ class RequestStatusWidget extends ConsumerWidget {
     return switch (status) {
       RequestStatus.picked => Colors.black,
       RequestStatus.denied => Theme.of(context).colorScheme.onError,
+      RequestStatus.requested => Theme.of(context).colorScheme.onTertiary,
+      RequestStatus.accepted => Theme.of(context).colorScheme.onPrimary,
+      RequestStatus.onTheWay => Theme.of(context).colorScheme.onTertiary,
       RequestStatus.pending => Theme.of(context).colorScheme.onTertiary,
     };
   }

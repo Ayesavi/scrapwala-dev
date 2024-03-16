@@ -26,6 +26,8 @@ mixin _$PickupRequestModel {
   String get requestingUserId => throw _privateConstructorUsedError;
   DateTime? get scheduleDateTime => throw _privateConstructorUsedError;
   DateTime? get pickedDateTime => throw _privateConstructorUsedError;
+  ({String address, String houseStreetNo, String label})? get address =>
+      throw _privateConstructorUsedError;
   String get qtyRange => throw _privateConstructorUsedError;
   RequestStatus get status => throw _privateConstructorUsedError;
 
@@ -48,6 +50,7 @@ abstract class $PickupRequestModelCopyWith<$Res> {
       String requestingUserId,
       DateTime? scheduleDateTime,
       DateTime? pickedDateTime,
+      ({String address, String houseStreetNo, String label})? address,
       String qtyRange,
       RequestStatus status});
 }
@@ -71,6 +74,7 @@ class _$PickupRequestModelCopyWithImpl<$Res, $Val extends PickupRequestModel>
     Object? requestingUserId = null,
     Object? scheduleDateTime = freezed,
     Object? pickedDateTime = freezed,
+    Object? address = freezed,
     Object? qtyRange = null,
     Object? status = null,
   }) {
@@ -99,6 +103,10 @@ class _$PickupRequestModelCopyWithImpl<$Res, $Val extends PickupRequestModel>
           ? _value.pickedDateTime
           : pickedDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as ({String address, String houseStreetNo, String label})?,
       qtyRange: null == qtyRange
           ? _value.qtyRange
           : qtyRange // ignore: cast_nullable_to_non_nullable
@@ -126,6 +134,7 @@ abstract class _$$PickupRequestModelImplCopyWith<$Res>
       String requestingUserId,
       DateTime? scheduleDateTime,
       DateTime? pickedDateTime,
+      ({String address, String houseStreetNo, String label})? address,
       String qtyRange,
       RequestStatus status});
 }
@@ -147,6 +156,7 @@ class __$$PickupRequestModelImplCopyWithImpl<$Res>
     Object? requestingUserId = null,
     Object? scheduleDateTime = freezed,
     Object? pickedDateTime = freezed,
+    Object? address = freezed,
     Object? qtyRange = null,
     Object? status = null,
   }) {
@@ -175,6 +185,10 @@ class __$$PickupRequestModelImplCopyWithImpl<$Res>
           ? _value.pickedDateTime
           : pickedDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as ({String address, String houseStreetNo, String label})?,
       qtyRange: null == qtyRange
           ? _value.qtyRange
           : qtyRange // ignore: cast_nullable_to_non_nullable
@@ -197,8 +211,9 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
       required this.requestingUserId,
       this.scheduleDateTime,
       this.pickedDateTime,
+      this.address,
       required this.qtyRange,
-      this.status = RequestStatus.pending});
+      this.status = RequestStatus.requested});
 
   factory _$PickupRequestModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PickupRequestModelImplFromJson(json);
@@ -216,6 +231,8 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
   @override
   final DateTime? pickedDateTime;
   @override
+  final ({String address, String houseStreetNo, String label})? address;
+  @override
   final String qtyRange;
   @override
   @JsonKey()
@@ -223,7 +240,7 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
 
   @override
   String toString() {
-    return 'PickupRequestModel(addressId: $addressId, id: $id, requestDateTime: $requestDateTime, requestingUserId: $requestingUserId, scheduleDateTime: $scheduleDateTime, pickedDateTime: $pickedDateTime, qtyRange: $qtyRange, status: $status)';
+    return 'PickupRequestModel(addressId: $addressId, id: $id, requestDateTime: $requestDateTime, requestingUserId: $requestingUserId, scheduleDateTime: $scheduleDateTime, pickedDateTime: $pickedDateTime, address: $address, qtyRange: $qtyRange, status: $status)';
   }
 
   @override
@@ -242,6 +259,7 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
                 other.scheduleDateTime == scheduleDateTime) &&
             (identical(other.pickedDateTime, pickedDateTime) ||
                 other.pickedDateTime == pickedDateTime) &&
+            (identical(other.address, address) || other.address == address) &&
             (identical(other.qtyRange, qtyRange) ||
                 other.qtyRange == qtyRange) &&
             (identical(other.status, status) || other.status == status));
@@ -249,8 +267,17 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, addressId, id, requestDateTime,
-      requestingUserId, scheduleDateTime, pickedDateTime, qtyRange, status);
+  int get hashCode => Object.hash(
+      runtimeType,
+      addressId,
+      id,
+      requestDateTime,
+      requestingUserId,
+      scheduleDateTime,
+      pickedDateTime,
+      address,
+      qtyRange,
+      status);
 
   @JsonKey(ignore: true)
   @override
@@ -275,6 +302,7 @@ abstract class _PickupRequestModel implements PickupRequestModel {
       required final String requestingUserId,
       final DateTime? scheduleDateTime,
       final DateTime? pickedDateTime,
+      final ({String address, String houseStreetNo, String label})? address,
       required final String qtyRange,
       final RequestStatus status}) = _$PickupRequestModelImpl;
 
@@ -293,6 +321,8 @@ abstract class _PickupRequestModel implements PickupRequestModel {
   DateTime? get scheduleDateTime;
   @override
   DateTime? get pickedDateTime;
+  @override
+  ({String address, String houseStreetNo, String label})? get address;
   @override
   String get qtyRange;
   @override

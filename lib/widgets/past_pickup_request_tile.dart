@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:scrapwala_dev/core/constants/string_constants.dart';
+import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:scrapwala_dev/core/extensions/string_extension.dart';
 import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.dart';
 import 'package:scrapwala_dev/widgets/request_status_widget.dart';
@@ -17,15 +17,18 @@ class PickRequestTile extends ConsumerWidget {
       onTap: () => onTap.call(model),
       title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         TitleSmall(
-          text: '#${model.id}',
+          text: DateFormat('d MMMM yyyy', 'en_US')
+              .format(model.requestDateTime.toLocal()),
         ),
         const SizedBox(height: 5),
-        LabelMedium(text: 'Civil Lines'.capitalize)
+        if (model.address.isNotNull) ...[
+          LabelMedium(text: model.address!.address.capitalize)
+        ]
       ]),
       subtitle: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: LabelLarge(
-          text: "$kRupeeSymbol ${model.qtyRange} >",
+          text: "Quantity ${model.qtyRange} >",
           color: Theme.of(context).colorScheme.onBackground.withOpacity(.6),
         ),
       ),
