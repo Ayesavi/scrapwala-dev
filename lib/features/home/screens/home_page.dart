@@ -5,11 +5,14 @@ import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/features/home/providers/home_page_controller.dart';
 import 'package:scrapwala_dev/features/home/widgets/home_appbar_title.dart';
+import 'package:scrapwala_dev/features/profile/providers/transaction_controller/transactions_conroller.dart';
 import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
+import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.dart';
 import 'package:scrapwala_dev/shared/cart_bottom_bar.dart';
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
 import 'package:scrapwala_dev/shimmering_widgets/category_widget.dart';
 import 'package:scrapwala_dev/shimmering_widgets/shimmering_scrap_tile.dart';
+import 'package:scrapwala_dev/widgets/requess_status_combined_widget.dart';
 import 'package:scrapwala_dev/widgets/scrap_category_widget.dart';
 import 'package:scrapwala_dev/widgets/scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/search_text_field.dart';
@@ -26,6 +29,33 @@ class HomePage extends ConsumerWidget {
     final cartController = ref.read(cartControllerProvider.notifier);
     return Scaffold(
       bottomNavigationBar: const CartBottomBar(),
+      floatingActionButton: Builder(
+        builder: (context) {
+          final txnState = ref.watch(transactionsConrollerProvider);
+          return txnState.when(loading: () {
+            return const SizedBox();
+          }, data: (d) {
+            final list = d
+                .where((element) =>
+                    element.status != RequestStatus.picked ||
+                    element.status != RequestStatus.picked)
+                .toList();
+            if (list.isNotEmpty) {
+              return FloatingActionButton(
+                onPressed: () {
+                  showStatusBottomSheet(context, models: list);
+                },
+                backgroundColor:
+                    Theme.of(context).colorScheme.tertiaryContainer,
+                child: Icon(Icons.track_changes,
+                    color: Theme.of(context).colorScheme.onTertiaryContainer),
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          });
+        },
+      ),
       body: Stack(
         children: [
           RefreshIndicator(

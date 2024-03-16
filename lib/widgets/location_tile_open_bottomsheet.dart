@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/extensions/object_extension.dart';
+import 'package:scrapwala_dev/core/extensions/string_extension.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/widgets/scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
@@ -32,7 +33,7 @@ class LocationTileOpenBottomsheet extends ConsumerWidget {
           width: 10,
         ),
         TitleMedium(
-          text: !model.isNotNull ? "Loading..." : model!.label,
+          text: !model.isNotNull ? "Loading..." : model!.label.capitalize,
           weight: FontWeight.bold,
         ),
         const SizedBox(
@@ -48,7 +49,7 @@ class LocationTileOpenBottomsheet extends ConsumerWidget {
       ]),
       subtitle: model.isNotNull
           ? LabelMedium(
-              text: model!.address,
+              text: model!.address.capitalize,
               maxLines: 1,
             )
           : const SizedBox.shrink(),

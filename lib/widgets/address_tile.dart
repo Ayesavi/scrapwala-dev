@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scrapwala_dev/core/extensions/string_extension.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
@@ -20,10 +21,10 @@ class AddressTile extends ConsumerWidget {
           ? Theme.of(context).colorScheme.primary.withOpacity(.1)
           : null,
       title: TitleMedium(
-        text: model.label,
+        text: model.label.capitalize,
       ),
       onTap: onTap,
-      subtitle: LabelMedium(text: model.address),
+      subtitle: LabelMedium(text: model.address.capitalize),
 
       leading: switch (model.category) {
         AddressCategory.friend => Icon(

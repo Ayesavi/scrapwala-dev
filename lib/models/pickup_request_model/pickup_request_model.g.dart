@@ -19,9 +19,17 @@ _$PickupRequestModelImpl _$$PickupRequestModelImplFromJson(
       pickedDateTime: json['pickedDateTime'] == null
           ? null
           : DateTime.parse(json['pickedDateTime'] as String),
+      address: _$recordConvertNullable(
+        json['address'],
+        ($jsonValue) => (
+          address: $jsonValue['address'] as String,
+          houseStreetNo: $jsonValue['houseStreetNo'] as String,
+          label: $jsonValue['label'] as String,
+        ),
+      ),
       qtyRange: json['qtyRange'] as String,
       status: $enumDecodeNullable(_$RequestStatusEnumMap, json['status']) ??
-          RequestStatus.pending,
+          RequestStatus.requested,
     );
 
 Map<String, dynamic> _$$PickupRequestModelImplToJson(
@@ -33,12 +41,28 @@ Map<String, dynamic> _$$PickupRequestModelImplToJson(
       'requestingUserId': instance.requestingUserId,
       'scheduleDateTime': instance.scheduleDateTime?.toIso8601String(),
       'pickedDateTime': instance.pickedDateTime?.toIso8601String(),
+      'address': instance.address == null
+          ? null
+          : {
+              'address': instance.address!.address,
+              'houseStreetNo': instance.address!.houseStreetNo,
+              'label': instance.address!.label,
+            },
       'qtyRange': instance.qtyRange,
       'status': _$RequestStatusEnumMap[instance.status]!,
     };
 
+$Rec? _$recordConvertNullable<$Rec>(
+  Object? value,
+  $Rec Function(Map) convert,
+) =>
+    value == null ? null : convert(value as Map<String, dynamic>);
+
 const _$RequestStatusEnumMap = {
   RequestStatus.picked: 'picked',
-  RequestStatus.pending: 'pending',
+  RequestStatus.requested: 'requested',
   RequestStatus.denied: 'denied',
+  RequestStatus.accepted: 'accepted',
+  RequestStatus.onTheWay: 'onTheWay',
+  RequestStatus.pending: 'pending',
 };

@@ -66,6 +66,7 @@ dependencies:
   dio: ^5.4.1
   flutter_native_splash: ^2.3.10
   url_launcher: ^6.2.5
+  timelines: ^0.1.0
 
 dev_dependencies:
 

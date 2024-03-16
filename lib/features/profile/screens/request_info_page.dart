@@ -32,8 +32,8 @@ class RequestInfoPage extends ConsumerWidget {
     final transaction = ref.watch(txnProvider(requestId));
     return Scaffold(
         appBar: AppBar(
-          title: TitleMedium(
-            text: "#$requestId",
+          title: const TitleMedium(
+            text: "Request Details",
             weight: FontWeight.bold,
           ),
           actions: [
