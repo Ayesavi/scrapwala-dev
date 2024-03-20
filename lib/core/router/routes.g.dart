@@ -170,11 +170,15 @@ extension $HomeRouteExtension on HomeRoute {
 }
 
 extension $SearchPageRouteExtension on SearchPageRoute {
-  static SearchPageRoute _fromState(GoRouterState state) =>
-      const SearchPageRoute();
+  static SearchPageRoute _fromState(GoRouterState state) => SearchPageRoute(
+        categoryId: state.uri.queryParameters['category-id'],
+      );
 
   String get location => GoRouteData.$location(
         '/home/search',
+        queryParams: {
+          if (categoryId != null) 'category-id': categoryId,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

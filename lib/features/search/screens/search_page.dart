@@ -15,7 +15,10 @@ import 'package:scrapwala_dev/widgets/search_text_field.dart';
 import 'package:uuid/uuid.dart';
 
 class SearchPage extends ConsumerWidget {
-  SearchPage({super.key});
+
+  final String? categoryId;
+
+  SearchPage({super.key,this.categoryId});
 
   final TextEditingController textController = TextEditingController();
 
@@ -24,7 +27,6 @@ class SearchPage extends ConsumerWidget {
     final searchResults = ref.watch(scrapSearchProvider);
     final controller = ref.watch(scrapSearchProvider.notifier);
     final cartController = ref.read(cartControllerProvider.notifier);
-
     return Scaffold(
       bottomNavigationBar: const CartBottomBar(),
       appBar: AppBar(
@@ -44,7 +46,7 @@ class SearchPage extends ConsumerWidget {
                   textController: textController,
                   triggerSearchOnChange: true,
                   onSearch: (searchKey) {
-                    controller.search(searchKey);
+                    controller.search(searchKey,categoryId: categoryId);
                   },
                 ),
                 const SizedBox(

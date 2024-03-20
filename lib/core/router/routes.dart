@@ -69,10 +69,13 @@ class OtpPageRoute extends GoRouteData {
 }
 
 class SearchPageRoute extends GoRouteData {
-  const SearchPageRoute();
+  final String? categoryId;
+  const SearchPageRoute({this.categoryId});
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => SearchPage();
+  Widget build(BuildContext context, GoRouterState state) => SearchPage(
+        categoryId: categoryId,
+      );
 }
 
 class CartPageRoute extends GoRouteData {

@@ -11,6 +11,7 @@ _$ScrapCategoryImpl _$$ScrapCategoryImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       id: json['id'] as String,
       photoUrl: json['photoUrl'] as String,
+      bannerUrl: json['bannerUrl'] as String?,
     );
 
 Map<String, dynamic> _$$ScrapCategoryImplToJson(_$ScrapCategoryImpl instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$ScrapCategoryImplToJson(_$ScrapCategoryImpl instance) =>
       'name': instance.name,
       'id': instance.id,
       'photoUrl': instance.photoUrl,
+      'bannerUrl': instance.bannerUrl,
     };

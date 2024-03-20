@@ -7,6 +7,7 @@ import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:scrapwala_dev/core/providers/location_provider/location_controller.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
+import 'package:scrapwala_dev/features/profile/providers/transaction_controller/transactions_conroller.dart';
 import 'package:scrapwala_dev/gen/assets.gen.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
@@ -458,6 +459,7 @@ class CartPage extends ConsumerWidget {
             addressId: addressId!,
             qtyRange: qtyNotifier.value);
         ref.invalidate(cartControllerProvider);
+        ref.invalidate(transactionsConrollerProvider);
         if (context.mounted) {
           showAnimatedCheckMarkPopup(context);
         }
