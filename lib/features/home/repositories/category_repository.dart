@@ -1,5 +1,6 @@
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/models/scrap_category/scrap_category_model.dart';
+import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class BaseCategoryRepository {
@@ -84,6 +85,17 @@ class SupabaseCategoryRepository implements BaseCategoryRepository {
     try {
       final data = await _supabaseClient.from('product_categories').select();
       return data.map((item) => ScrapCategoryModel.fromJson(item)).toList();
+    } catch (error) {
+      throw errorHandler(error);
+    }
+  }
+
+  
+  Future<List<ScrapModel>> getScraps(String id) async {
+    try {
+      final data =
+          await _supabaseClient.from('scraps').select().eq('category_id', id);
+      return data.map((item) => ScrapModel.fromJson(item)).toList();
     } catch (error) {
       throw errorHandler(error);
     }

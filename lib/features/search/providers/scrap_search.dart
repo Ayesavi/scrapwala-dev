@@ -16,9 +16,9 @@ class ScrapSearch extends _$ScrapSearch {
     return const _EmptySearch();
   }
 
-  void search(String key) async {
+  void search(String key,{String? categoryId}) async {
     state = const ScrapSearchState.loading();
-    final data = await _scrapRepo.searchScraps(key);
+    final data = await _scrapRepo.searchScraps(key,categoryId: categoryId);
     if (key.isEmpty) {
       state = const ScrapSearchState.emptySearch();
     } else {

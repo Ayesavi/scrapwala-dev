@@ -7,7 +7,7 @@ part of 'transactions_conroller.dart';
 // **************************************************************************
 
 String _$transactionsConrollerHash() =>
-    r'49ec3df902a54e5c87040fd5cab774cf4aa0e7c5';
+    r'8bc260363f84bfba99246b77e58e9b1d34a7b80d';
 
 /// See also [TransactionsConroller].
 @ProviderFor(TransactionsConroller)

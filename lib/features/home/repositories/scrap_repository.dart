@@ -1,4 +1,5 @@
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
+import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -73,14 +74,27 @@ class SupabaseScrapRepository implements BaseScrapRepository {
   }
 
   @override
-  Future<List<ScrapModel>> searchScraps(String key) async {
-    try {
-      final data = (await _supabaseClient
-          .rpc('search_scraps_with_key', params: {'key': key}));
-      final list = (data as List).map((e) => ScrapModel.fromJson(e)).toList();
-      return list;
-    } catch (error) {
-      throw SkException('Failed to fetch scraps: $error');
+  Future<List<ScrapModel>> searchScraps(String key,
+      {String? categoryId}) async {
+    if (categoryId.isNotNull) {
+      try {
+        final data = (await _supabaseClient.rpc(
+            'search_scraps_with_key_with_category_id',
+            params: {'key': key, 'category': categoryId}));
+        final list = (data as List).map((e) => ScrapModel.fromJson(e)).toList();
+        return list;
+      } catch (error) {
+        throw SkException('Failed to fetch scraps: $error');
+      }
+    } else {
+      try {
+        final data = (await _supabaseClient
+            .rpc('search_scraps_with_key', params: {'key': key}));
+        final list = (data as List).map((e) => ScrapModel.fromJson(e)).toList();
+        return list;
+      } catch (error) {
+        throw SkException('Failed to fetch scraps: $error');
+      }
     }
   }
 }
