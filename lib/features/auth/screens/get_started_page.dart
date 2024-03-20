@@ -13,99 +13,102 @@ class GetStartedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: Theme.of(context).colorScheme.surface,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: Lottie.asset(
-                    'assets/lottie/recycle.json',
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              color: Theme.of(context).colorScheme.surface,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(     
+                    child: Lottie.asset(
+                      'assets/lottie/recycle.json',
+                    ),
                   ),
-                ),
-                const ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: TitleLarge(
-                    text: 'ACCOUNT',
+                  const ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: TitleLarge(
+                      text: 'ACCOUNT',
+                    ),
+                    subtitle: LabelMedium(
+                        text: 'Login/Create Account to manage requests'),
                   ),
-                  subtitle: LabelMedium(
-                      text: 'Login/Create Account to manage requests'),
-                ),
-                AppFilledButton(
-                  label: "Login",
-                  onTap: () {
-                    const LoginRoute().go(context);
-                  },
-                ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: RichText(
-                        text: TextSpan(
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
-                                ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface
-                                        .withOpacity(.6)),
-                            children: [
-                          const TextSpan(
-                              text: PhoneNumberTextFieldConstants.accept),
-                          TextSpan(
-                            text: PhoneNumberTextFieldConstants.termsOfService,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSurface,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
+                  AppFilledButton(
+                    label: "Login",
+                    onTap: () {
+                      const LoginRoute().go(context);
+                    },
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: RichText(
+                          text: TextSpan(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
+                                  ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withOpacity(.6)),
+                              children: [
+                            const TextSpan(
+                                text: PhoneNumberTextFieldConstants.accept),
+                            TextSpan(
+                              text:
+                                  PhoneNumberTextFieldConstants.termsOfService,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()..onTap = () {},
                             ),
-                            recognizer: TapGestureRecognizer()..onTap = () {},
-                          ),
-                          const TextSpan(
-                            text: PhoneNumberTextFieldConstants.and,
-                          ),
-                          TextSpan(
-                            text: PhoneNumberTextFieldConstants.privacyPolicy,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSurface,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
+                            const TextSpan(
+                              text: PhoneNumberTextFieldConstants.and,
                             ),
-                            recognizer: TapGestureRecognizer()..onTap = () {},
-                          ),
-                        ]))),
-                const Divider(),
-                ListTile(
-                  onTap: () {
-                    _launchUrl();
-                  },
-                  contentPadding: EdgeInsets.zero,
-                  leading: Icon(
-                    Icons.mail_outline,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withOpacity(.6),
-                  ),
-                  title: const BodyLarge(
-                    weight: FontWeight.w300,
-                    text: 'See Scrap Rates',
-                  ),
-                  trailing: Icon(Icons.chevron_right_outlined,
+                            TextSpan(
+                              text: PhoneNumberTextFieldConstants.privacyPolicy,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()..onTap = () {},
+                            ),
+                          ]))),
+                  const Divider(),
+                  ListTile(
+                    onTap: () {
+                      _launchUrl();
+                    },
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(
+                      Icons.mail_outline,
                       color: Theme.of(context)
                           .colorScheme
                           .onBackground
-                          .withOpacity(.6)),
-                ),
-              ],
+                          .withOpacity(.6),
+                    ),
+                    title: const BodyLarge(
+                      weight: FontWeight.w300,
+                      text: 'See Scrap Rates',
+                    ),
+                    trailing: Icon(Icons.chevron_right_outlined,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onBackground
+                            .withOpacity(.6)),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
