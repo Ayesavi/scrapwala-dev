@@ -110,6 +110,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "607639301039-17qtae8q7l0t2tfehn90g0kmh294pvav.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swacchkabadi.swacchkabadi",
+            "certificate_hash": "3b73e0be2c86760c801cc64d05263237d93e8013"
+          }
+        },
+        {
+          "client_id": "607639301039-q6dcoqq1vrp4f0tvujlu97foraufa8tn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swacchkabadi.swacchkabadi",
+            "certificate_hash": "5db380ec06a18b78982c7415c8284455b5b8277a"
+          }
+        },
+        {
           "client_id": "607639301039-i5sjrh5t4g992uc7aoqbia379gmov649.apps.googleusercontent.com",
           "client_type": 3
         }

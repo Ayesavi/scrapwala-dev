@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '607639301039',
     projectId: 'swacch-kabadi',
     storageBucket: 'swacch-kabadi.appspot.com',
-    androidClientId: '607639301039-5no0llqpf6tub4j2nppcdugav4ihob78.apps.googleusercontent.com',
+    androidClientId: '607639301039-17qtae8q7l0t2tfehn90g0kmh294pvav.apps.googleusercontent.com',
     iosClientId: '607639301039-jqfggg5nuah48e8ror1c7ntihi0avb4i.apps.googleusercontent.com',
     iosBundleId: 'com.swacchkabadi.swacchkabadi',
   );
@@ -78,7 +78,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '607639301039',
     projectId: 'swacch-kabadi',
     storageBucket: 'swacch-kabadi.appspot.com',
-    androidClientId: '607639301039-5no0llqpf6tub4j2nppcdugav4ihob78.apps.googleusercontent.com',
+    androidClientId: '607639301039-17qtae8q7l0t2tfehn90g0kmh294pvav.apps.googleusercontent.com',
     iosClientId: '607639301039-bfnbr2udp8g4q3mv0i44upkucvoggu5v.apps.googleusercontent.com',
     iosBundleId: 'com.example.scrapwalaDev.RunnerTests',
   );
