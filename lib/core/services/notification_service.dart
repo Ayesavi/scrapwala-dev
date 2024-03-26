@@ -120,7 +120,7 @@ Future<void> _onBackgroundMessage(RemoteMessage message) async {
             : null;
         AwesomeNotifications().createNotification(
             content: NotificationContent(
-                id: id,
+                id: int.parse(id),
                 channelKey: channel,
                 title: title,
                 bigPicture: bigPicture,
@@ -197,7 +197,7 @@ void _showRequestNotification(RemoteMessage? message) {
           : null;
       AwesomeNotifications().createNotification(
           content: NotificationContent(
-              id: id,
+              id: int.parse(id),
               channelKey: channel,
               title: title,
               bigPicture: bigPicture,
