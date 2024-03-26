@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/app.dart';
+import 'package:scrapwala_dev/core/services/notification_service.dart';
 import 'package:scrapwala_dev/firebase_options.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -19,6 +20,8 @@ void main() async {
   await Supabase.initialize(
       url: const String.fromEnvironment("SUPABASE_URL"),
       anonKey: const String.fromEnvironment("SUPABASE_KEY"));
+
+  FirebaseNotificationService.instance.initialize();
   // Pass all uncaught "fatal" errors from the framework to Crashlytics
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
@@ -26,5 +29,6 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+
   runApp(const ProviderScope(child: ScrapWalaApp()));
 }

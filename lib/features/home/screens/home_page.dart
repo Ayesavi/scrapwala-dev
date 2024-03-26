@@ -66,6 +66,9 @@ class HomePage extends ConsumerWidget {
             onRefresh: () async {
               controller.loadData();
               cartController.getCartItems();
+              ref
+                  .read(transactionsConrollerProvider.notifier)
+                  .getTransactions();
             },
             child: CustomScrollView(slivers: [
               SliverAppBar(

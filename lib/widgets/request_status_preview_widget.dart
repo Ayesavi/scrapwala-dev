@@ -25,7 +25,6 @@ class _RequestStatusPreviewWidgetState
   @override
   void initState() {
     super.initState();
-    _processIndex = _processes.keys.toList().indexOf(widget.model.status);
   }
 
   Color getColor(BuildContext context, int index) {
@@ -40,6 +39,8 @@ class _RequestStatusPreviewWidgetState
 
   @override
   Widget build(BuildContext context) {
+    _processIndex = _processes.keys.toList().indexOf(widget.model.status);
+
     return SizedBox(
       width: double.infinity,
       height: 100,
