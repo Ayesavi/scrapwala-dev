@@ -26,7 +26,7 @@ class HomeAppBarTitle extends ConsumerWidget {
         return LocationTileOpenBottomsheet(
           model: model,
           onTap: () {
-            showBottomLocationSheet(context, isDismissable: false,
+            showBottomLocationSheet(context, isDismissable: true,
                 onTapAddress: (m) {
               locationController.setLocation(m);
               Navigator.pop(context);

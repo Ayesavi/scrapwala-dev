@@ -9,6 +9,7 @@ abstract class ScrapCategoryModel with _$ScrapCategoryModel {
     required String name,
     required String id,
     required String photoUrl,
+    required String? bannerUrl, 
   }) = _ScrapCategory;
 
   factory ScrapCategoryModel.fromJson(Map<String, dynamic> json) =>

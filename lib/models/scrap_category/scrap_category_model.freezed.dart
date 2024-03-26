@@ -23,6 +23,7 @@ mixin _$ScrapCategoryModel {
   String get name => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
+  String? get bannerUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,7 @@ abstract class $ScrapCategoryModelCopyWith<$Res> {
           ScrapCategoryModel value, $Res Function(ScrapCategoryModel) then) =
       _$ScrapCategoryModelCopyWithImpl<$Res, ScrapCategoryModel>;
   @useResult
-  $Res call({String name, String id, String photoUrl});
+  $Res call({String name, String id, String photoUrl, String? bannerUrl});
 }
 
 /// @nodoc
@@ -55,6 +56,7 @@ class _$ScrapCategoryModelCopyWithImpl<$Res, $Val extends ScrapCategoryModel>
     Object? name = null,
     Object? id = null,
     Object? photoUrl = null,
+    Object? bannerUrl = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -69,6 +71,10 @@ class _$ScrapCategoryModelCopyWithImpl<$Res, $Val extends ScrapCategoryModel>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      bannerUrl: freezed == bannerUrl
+          ? _value.bannerUrl
+          : bannerUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$ScrapCategoryImplCopyWith<$Res>
       __$$ScrapCategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String id, String photoUrl});
+  $Res call({String name, String id, String photoUrl, String? bannerUrl});
 }
 
 /// @nodoc
@@ -98,6 +104,7 @@ class __$$ScrapCategoryImplCopyWithImpl<$Res>
     Object? name = null,
     Object? id = null,
     Object? photoUrl = null,
+    Object? bannerUrl = freezed,
   }) {
     return _then(_$ScrapCategoryImpl(
       name: null == name
@@ -112,6 +119,10 @@ class __$$ScrapCategoryImplCopyWithImpl<$Res>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      bannerUrl: freezed == bannerUrl
+          ? _value.bannerUrl
+          : bannerUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -120,7 +131,10 @@ class __$$ScrapCategoryImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ScrapCategoryImpl implements _ScrapCategory {
   const _$ScrapCategoryImpl(
-      {required this.name, required this.id, required this.photoUrl});
+      {required this.name,
+      required this.id,
+      required this.photoUrl,
+      required this.bannerUrl});
 
   factory _$ScrapCategoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScrapCategoryImplFromJson(json);
@@ -131,10 +145,12 @@ class _$ScrapCategoryImpl implements _ScrapCategory {
   final String id;
   @override
   final String photoUrl;
+  @override
+  final String? bannerUrl;
 
   @override
   String toString() {
-    return 'ScrapCategoryModel(name: $name, id: $id, photoUrl: $photoUrl)';
+    return 'ScrapCategoryModel(name: $name, id: $id, photoUrl: $photoUrl, bannerUrl: $bannerUrl)';
   }
 
   @override
@@ -145,12 +161,14 @@ class _$ScrapCategoryImpl implements _ScrapCategory {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.photoUrl, photoUrl) ||
-                other.photoUrl == photoUrl));
+                other.photoUrl == photoUrl) &&
+            (identical(other.bannerUrl, bannerUrl) ||
+                other.bannerUrl == bannerUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, id, photoUrl);
+  int get hashCode => Object.hash(runtimeType, name, id, photoUrl, bannerUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -170,7 +188,8 @@ abstract class _ScrapCategory implements ScrapCategoryModel {
   const factory _ScrapCategory(
       {required final String name,
       required final String id,
-      required final String photoUrl}) = _$ScrapCategoryImpl;
+      required final String photoUrl,
+      required final String? bannerUrl}) = _$ScrapCategoryImpl;
 
   factory _ScrapCategory.fromJson(Map<String, dynamic> json) =
       _$ScrapCategoryImpl.fromJson;
@@ -181,6 +200,8 @@ abstract class _ScrapCategory implements ScrapCategoryModel {
   String get id;
   @override
   String get photoUrl;
+  @override
+  String? get bannerUrl;
   @override
   @JsonKey(ignore: true)
   _$$ScrapCategoryImplCopyWith<_$ScrapCategoryImpl> get copyWith =>

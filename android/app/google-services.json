@@ -7,108 +7,36 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:607639301039:android:8d591c53504357ada45d5a",
-        "android_client_info": {
-          "package_name": "com.swacchkabadi.scrapwala"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "607639301039-5no0llqpf6tub4j2nppcdugav4ihob78.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.swacchkabadi.scrapwala",
-            "certificate_hash": "5db380ec06a18b78982c7415c8284455b5b8277a"
-          }
-        },
-        {
-          "client_id": "607639301039-roa747sksvitcgdb6v7sed54f3ocgpgb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.swacchkabadi.scrapwala",
-            "certificate_hash": "3b73e0be2c86760c801cc64d05263237d93e8013"
-          }
-        },
-        {
-          "client_id": "607639301039-i5sjrh5t4g992uc7aoqbia379gmov649.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC5axotXXu_ja1hgX2rdIZIWfQcUFmSvak"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "607639301039-i5sjrh5t4g992uc7aoqbia379gmov649.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "607639301039-8hr0e35kj3tkajmmhpgdom5rm0pkmojd.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.skApp"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:607639301039:android:51730e75f85fafd8a45d5a",
-        "android_client_info": {
-          "package_name": "com.swacchkabadi.sk_app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "607639301039-tiljq091l0ureh0ino4qjrb26210f10j.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.swacchkabadi.sk_app",
-            "certificate_hash": "3b73e0be2c86760c801cc64d05263237d93e8013"
-          }
-        },
-        {
-          "client_id": "607639301039-i5sjrh5t4g992uc7aoqbia379gmov649.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC5axotXXu_ja1hgX2rdIZIWfQcUFmSvak"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "607639301039-i5sjrh5t4g992uc7aoqbia379gmov649.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "607639301039-8hr0e35kj3tkajmmhpgdom5rm0pkmojd.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.skApp"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:607639301039:android:782cdf7463bfa427a45d5a",
         "android_client_info": {
           "package_name": "com.swacchkabadi.swacchkabadi"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "607639301039-17qtae8q7l0t2tfehn90g0kmh294pvav.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swacchkabadi.swacchkabadi",
+            "certificate_hash": "3b73e0be2c86760c801cc64d05263237d93e8013"
+          }
+        },
+        {
+          "client_id": "607639301039-pqgafsacaplo8tiqfuuq58erc8rvge2c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swacchkabadi.swacchkabadi",
+            "certificate_hash": "90739c5d4af79a9ab810085d43b3eceda07b6eee"
+          }
+        },
+        {
+          "client_id": "607639301039-q6dcoqq1vrp4f0tvujlu97foraufa8tn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swacchkabadi.swacchkabadi",
+            "certificate_hash": "5db380ec06a18b78982c7415c8284455b5b8277a"
+          }
+        },
         {
           "client_id": "607639301039-i5sjrh5t4g992uc7aoqbia379gmov649.apps.googleusercontent.com",
           "client_type": 3

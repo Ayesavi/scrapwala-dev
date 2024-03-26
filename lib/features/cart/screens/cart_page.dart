@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:scrapwala_dev/core/providers/location_provider/location_controller.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
+import 'package:scrapwala_dev/features/profile/providers/transaction_controller/transactions_conroller.dart';
 import 'package:scrapwala_dev/gen/assets.gen.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
@@ -453,13 +455,19 @@ class CartPage extends ConsumerWidget {
   }) async {
     try {
       if (addressId.isNotNull && !isCartEmpty && dateNotifier.value.isNotNull) {
-        await controller.requestPickUp(
+        final model = await controller.requestPickUp(
             scheduleDateTime: dateNotifier.value,
             addressId: addressId!,
             qtyRange: qtyNotifier.value);
         ref.invalidate(cartControllerProvider);
+        ref.invalidate(transactionsConrollerProvider);
         if (context.mounted) {
           showAnimatedCheckMarkPopup(context);
+          FirebaseAnalytics.instance
+              .logEvent(name: 'pickup_request_created', parameters: {
+            'id': model.id,
+            'scheduled_date': model.scheduleDateTime?.toIso8601String() ?? ''
+          });
         }
       } else {
         if (isCartEmpty) {

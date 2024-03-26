@@ -17,7 +17,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
 
-version: 1.1.1
+version: 1.2.2
+
 
 
 
@@ -66,11 +67,13 @@ dependencies:
   rich_readmore: ^1.1.1
   google_maps_flutter: ^2.6.0
   dio: ^5.4.1
-  flutter_native_splash: ^2.3.10
+  flutter_native_splash: ^2.4.0
   url_launcher: ^6.2.5
   timelines: ^0.1.0
   firebase_messaging: ^14.7.20
   awesome_notifications: ^0.8.2
+  firebase_crashlytics: ^3.4.19
+  firebase_analytics: ^10.8.10
 
 dev_dependencies:
 
@@ -85,7 +88,7 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   build_runner: ^2.4.8
   json_serializable: ^6.7.1
-  custom_lint: ^0.6.2
+  custom_lint: ^0.6.4
   riverpod_lint: ^2.3.10
   flutter_gen_runner: ^5.4.0
   go_router_builder: ^2.4.1

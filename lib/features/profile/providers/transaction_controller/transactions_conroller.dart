@@ -9,7 +9,7 @@ part 'transactions_conroller_state.dart';
 
 @riverpod
 class TransactionsConroller extends _$TransactionsConroller {
-  final _repo = SupabaseTxnRepository();
+  final _repo = SupabaseTxnRepository ();
 
   @override
   TransactionsConrollerState build() {

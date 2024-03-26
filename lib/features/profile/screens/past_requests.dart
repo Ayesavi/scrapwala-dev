@@ -53,11 +53,11 @@ class PastRequestsPage extends ConsumerWidget {
                 return PickRequestTile(
                   model: requests[index],
                   onTap: (model) {
-                    if (model.status != RequestStatus.picked) {
+                    if (model.status == RequestStatus.picked) {
                       RequestInfoPageRoute(model.id).push(context);
                     } else {
                       showSnackBar(
-                          context, 'The PickUp Request has to be picked');
+                          context, 'The Pick up Request has to be picked');
                     }
                   },
                 );

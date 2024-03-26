@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scrapwala_dev/features/home/repositories/scrap_repository.dart';
@@ -16,14 +17,18 @@ class ScrapSearch extends _$ScrapSearch {
     return const _EmptySearch();
   }
 
-  void search(String key) async {
+  void search(String key, {String? categoryId}) async {
     state = const ScrapSearchState.loading();
-    final data = await _scrapRepo.searchScraps(key);
+
+    final data = await _scrapRepo.searchScraps(key, categoryId: categoryId);
     if (key.isEmpty) {
       state = const ScrapSearchState.emptySearch();
     } else {
       state = ScrapSearchState.results(models: data);
     }
+    FirebaseAnalytics.instance.logSearch(searchTerm: key, parameters: {
+      'category_id': categoryId ?? '',
+    });
     return;
   }
 }

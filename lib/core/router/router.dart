@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -5,9 +6,14 @@ import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
+  final GlobalKey<NavigatorState> rootNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: 'root');
+
   final router = RouterNotifier(ref);
   return GoRouter(
+      navigatorKey: rootNavigatorKey,
       debugLogDiagnostics: true,
+      observers: [AnalyticsRouteObserver()],
       refreshListenable: router,
       initialLocation: '/',
       redirect: router.redirectLogic,
@@ -56,4 +62,13 @@ class RouterNotifier extends ChangeNotifier {
   }
 
   List<RouteBase> get routes => $appRoutes;
+}
+
+class AnalyticsRouteObserver extends NavigatorObserver {
+  final analytics = FirebaseAnalytics.instance;
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    analytics.logScreenView(screenName: route.settings.name ?? 'unknown');
+  }
+
 }

@@ -1,9 +1,11 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
 import 'package:scrapwala_dev/features/cart/providers/cart_controller.dart';
 import 'package:scrapwala_dev/features/home/providers/home_page_controller.dart';
+import 'package:scrapwala_dev/features/home/screens/category_page.dart';
 import 'package:scrapwala_dev/features/home/widgets/home_appbar_title.dart';
 import 'package:scrapwala_dev/features/profile/providers/transaction_controller/transactions_conroller.dart';
 import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
@@ -44,6 +46,8 @@ class HomePage extends ConsumerWidget {
               return FloatingActionButton(
                 onPressed: () {
                   showStatusBottomSheet(context, models: list);
+                  FirebaseAnalytics.instance
+                      .logEvent(name: 'track_request_status');
                 },
                 backgroundColor:
                     Theme.of(context).colorScheme.tertiaryContainer,
@@ -195,6 +199,17 @@ class HomePage extends ConsumerWidget {
                             itemCount: categories.length,
                             itemBuilder: (context, index) => CategoryWidget(
                                   model: categories[index],
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return CategoryPage(
+                                            id: categories[index].id,
+                                            bannerUrl:
+                                                categories[index].bannerUrl,
+                                            title: categories[index].name);
+                                      },
+                                    ));
+                                  },
                                 )),
                       );
                     }, error: (e) {

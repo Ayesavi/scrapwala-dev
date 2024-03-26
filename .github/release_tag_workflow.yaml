@@ -1,0 +1,38 @@
+name: Update pubspec.yaml on release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  update_pubspec:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install jq
+        run: sudo apt-get install jq -y
+
+      - name: Get latest tag
+        id: get_tag
+        run: echo ::set-output name=TAG::$(git describe --tags --abbrev=0)
+
+      - name: Update pubspec.yaml
+        run: |
+          tag=${{ steps.get_tag.outputs.TAG }}
+          echo "Updating pubspec.yaml to version $tag"
+          jq --arg version "$tag" '.version = $version' pubspec.yaml > pubspec_temp.yaml && mv pubspec_temp.yaml pubspec.yaml
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add pubspec.yaml
+          git commit -m "Update pubspec.yaml to version ${{ steps.get_tag.outputs.TAG }}"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.7
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
