@@ -83,8 +83,12 @@ class RequestStatusCombinedWidget extends ConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: RequestStatusPreviewWidget(
-                  model: selectedModelNotifier.value),
+              child: ValueListenableBuilder(
+                valueListenable: selectedModelNotifier,
+                builder: (BuildContext context,  value, Widget? child) {
+                  return RequestStatusPreviewWidget(model: value);
+                },
+              ),
             ),
           ],
         ),

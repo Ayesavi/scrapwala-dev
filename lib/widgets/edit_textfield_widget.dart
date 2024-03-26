@@ -22,7 +22,8 @@ class EditTextFieldWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isActionVisibleNotifier = ValueNotifier(false);
+    final isActionVisibleNotifier =
+        ValueNotifier(textEditingController.text.isEmpty);
     final progressNotifier = ValueNotifier(false);
     final GlobalKey<FormState> formKey =
         GlobalKey<FormState>(); // Create GlobalKey here
@@ -38,7 +39,7 @@ class EditTextFieldWidget extends ConsumerWidget {
               return TextFormField(
                 controller: textEditingController,
                 keyboardType: type,
-                readOnly: textEditingController.text.isEmpty && !value,
+                readOnly: textEditingController.text.isNotEmpty && !value,
                 decoration: InputDecoration(
                   hintText: hintText,
                   labelText: labelText,
