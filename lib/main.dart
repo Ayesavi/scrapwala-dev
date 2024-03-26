@@ -17,8 +17,7 @@ void main() async {
       url: const String.fromEnvironment("SUPABASE_URL"),
       anonKey: const String.fromEnvironment("SUPABASE_KEY"));
 
-  await FirebaseNotificationService.instance.initialize();
-  await SupabaseNotificationWrapper.instance.initialize();
+  FirebaseNotificationService.instance.initialize();
 
   runApp(const ProviderScope(child: ScrapWalaApp()));
 }

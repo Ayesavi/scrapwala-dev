@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:scrapwala_dev/core/services/notification_service.dart';
 import 'package:scrapwala_dev/features/auth/repositories/auth_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -24,6 +25,7 @@ AuthController authController(AuthControllerRef ref) {
       return const AuthController(AppAuthState.unfulfilledProfile);
     }
 
+    SupabaseNotificationWrapper.instance.initialize();
     return const AuthController(AppAuthState.authenticated);
   } else {
     return const AuthController(AppAuthState.unauthenticated);

@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:scrapwala_dev/core/extensions/object_extension.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 enum NotificationKeys { requests, recommendations }
@@ -16,6 +18,8 @@ abstract class NotificationService {
   Stream<RemoteMessage?> get onMessageReceived;
 
   Stream<RemoteMessage?> get onMessageOpenedApp;
+
+  Future<AuthorizationStatus> requestPermission();
 }
 
 class FirebaseNotificationService implements NotificationService {
@@ -37,8 +41,7 @@ class FirebaseNotificationService implements NotificationService {
   @override
   Future<void> initialize() async {
     await AwesomeNotifications().initialize(
-        // Assets.images.icLauncher.path\
-        null,
+        'resource://drawable/ic_launcher_foreground',
         [
           NotificationChannel(
             channelKey: NotificationKeys.requests.name,
@@ -64,6 +67,7 @@ class FirebaseNotificationService implements NotificationService {
           )
         ],
         debug: true);
+
     FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
   }
 
@@ -77,23 +81,66 @@ class FirebaseNotificationService implements NotificationService {
   @override
   Stream<String> get onTokenRefresh =>
       FirebaseMessaging.instance.onTokenRefresh;
+
+  @override
+  Future<AuthorizationStatus> requestPermission() async {
+    final status = (await FirebaseMessaging.instance.requestPermission())
+        .authorizationStatus;
+    return status;
+  }
 }
 
 @pragma('vm:entry-point')
-Future<void> _onBackgroundMessage(RemoteMessage message) async {}
+Future<void> _onBackgroundMessage(RemoteMessage message) async {
+  if (message.isNotNull) {
+    if (message.isNotNull) {
+      if (message.notification != null) {
+        AwesomeNotifications().createNotification(
+            content: NotificationContent(
+                id: Random().nextInt(100000),
+                channelKey: message.notification!.android?.channelId ??
+                    NotificationKeys.recommendations.name,
+                title: message.notification!.title,
+                bigPicture: message.notification!.android?.imageUrl,
+                body: message.notification!.body));
+      } else if (message.data.isNotEmpty) {
+        final channel = message.data.containsKey('channel')
+            ? message.data['channel']
+            : null;
+        final title =
+            message.data.containsKey('title') ? message.data['title'] : null;
+        final body =
+            message.data.containsKey('body') ? message.data['body'] : null;
+        final bigPicture = message.data.containsKey('image_url')
+            ? message.data['image_url']
+            : null;
+        final id = message.data.containsKey('id') ? message.data['id'] : null;
+        final groupKey = message.data.containsKey('group_key')
+            ? message.data['group_key']
+            : null;
+        AwesomeNotifications().createNotification(
+            content: NotificationContent(
+                id: id,
+                channelKey: channel,
+                title: title,
+                bigPicture: bigPicture,
+                body: body,
+                groupKey: groupKey));
+      }
+    }
+  }
+}
 
 abstract class NotificationWrapper {}
 
 class SupabaseNotificationWrapper {
-
-   SupabaseNotificationWrapper._();
+  SupabaseNotificationWrapper._();
 
   static final SupabaseNotificationWrapper _instance =
       SupabaseNotificationWrapper._();
 
   // Static getter to get the singleton instance
   static SupabaseNotificationWrapper get instance => _instance;
-
 
   final _service = FirebaseNotificationService.instance;
 
@@ -103,33 +150,64 @@ class SupabaseNotificationWrapper {
 
   initialize() {
     _service.onTokenRefresh.listen(onTokenRefresh);
-    _service.onMessageReceived.listen(onMessageRecieved);
-    _service.onMessageOpenedApp.listen(onMessageOpenedRecieved);
+    _service.onMessageReceived.listen(_showRequestNotification);
+    _service.onMessageOpenedApp.listen(_showRequestNotification);
+    syncToken();
+    _service.requestPermission();
   }
 
   void onTokenRefresh(String token) async {
     await _supabaseClient.from('fcm_tokens').insert({'token': token});
   }
 
-  void syncToken(){
-    
-  }
-
-  void onMessageRecieved(RemoteMessage? message) async {}
-
-  onMessageOpenedRecieved(RemoteMessage? message) async {}
-
-  void _showRequestNotification(RemoteMessage message) {
-    print(message);
-    // final model = RequestNotificationModel.fromJson(message.data);
-    // _notifications.createNotification(
-    //     content: NotificationContent(
-    //         id: Random().nextInt(200),
-    //         channelKey: NotificationKeys.requests.name,
-    //         body: model.textMessage,
-    //         title: model.title));
+  void syncToken() async {
+    try {
+      _service.getToken().then((value) async =>
+          _supabaseClient.from('fcm_tokens').insert({'token': value}));
+    } catch (e) {
+      // ignore error if duplicate
+    }
   }
 }
+
+void _showRequestNotification(RemoteMessage? message) {
+  if (message.isNotNull) {
+    if (message!.notification != null) {
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              id: Random().nextInt(100000),
+              channelKey: message.notification!.android?.channelId ??
+                  NotificationKeys.recommendations.name,
+              title: message.notification!.title,
+              bigPicture: message.notification!.android?.imageUrl,
+              body: message.notification!.body));
+    } else if (message.data.isNotEmpty) {
+      final channel =
+          message.data.containsKey('channel') ? message.data['channel'] : null;
+      final title =
+          message.data.containsKey('title') ? message.data['title'] : null;
+      final body =
+          message.data.containsKey('body') ? message.data['body'] : null;
+      final bigPicture = message.data.containsKey('image_url')
+          ? message.data['image_url']
+          : null;
+      final id = message.data.containsKey('id') ? message.data['id'] : null;
+      final groupKey = message.data.containsKey('group_key')
+          ? message.data['group_key']
+          : null;
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              id: id,
+              channelKey: channel,
+              title: title,
+              bigPicture: bigPicture,
+              body: body,
+              groupKey: groupKey));
+    }
+  }
+}
+
+
 
 
 // Request Accepted
