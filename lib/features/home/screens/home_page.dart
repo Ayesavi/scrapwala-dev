@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
@@ -45,6 +46,8 @@ class HomePage extends ConsumerWidget {
               return FloatingActionButton(
                 onPressed: () {
                   showStatusBottomSheet(context, models: list);
+                  FirebaseAnalytics.instance
+                      .logEvent(name: 'track_request_status');
                 },
                 backgroundColor:
                     Theme.of(context).colorScheme.tertiaryContainer,

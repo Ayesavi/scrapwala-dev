@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
@@ -39,6 +40,7 @@ class LogoutPopup extends StatelessWidget {
             // Call the onConfirmLogout callback if provided
             if (onConfirmLogout != null) {
               onConfirmLogout!();
+              FirebaseAnalytics.instance.logEvent(name: 'logged_out');
             }
             Navigator.of(context).pop(); // Close the dialog
           },

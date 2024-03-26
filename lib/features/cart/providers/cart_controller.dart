@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scrapwala_dev/core/error_handler/error_handler.dart';
 import 'package:scrapwala_dev/features/cart/repositories/cart_repository.dart';
 import 'package:scrapwala_dev/models/cart_model/cart_model.dart';
+import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.dart';
 import 'package:scrapwala_dev/models/scrap_model/scrap_model.dart';
 
 part 'cart_controller.freezed.dart';
@@ -72,11 +73,11 @@ class CartController extends _$CartController {
     return false;
   }
 
-  Future<void> requestPickUp(
+  Future<PickupRequestModel> requestPickUp(
       {DateTime? scheduleDateTime,
       required String addressId,
       required String qtyRange}) async {
-    await _repo.requestPickup(
+   return await _repo.requestPickup(
         addressId: addressId,
         scheduleTime: scheduleDateTime ?? DateTime.now(),
         qtyRange: qtyRange);

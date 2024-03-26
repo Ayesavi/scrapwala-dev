@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scrapwala_dev/features/auth/repositories/auth_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -23,7 +24,9 @@ AuthController authController(AuthControllerRef ref) {
     if ([name].contains(null) || [name].contains('')) {
       return const AuthController(AppAuthState.unfulfilledProfile);
     }
-
+    FirebaseAnalytics.instance.setUserId(
+      id: sessionUser.id,
+    );
     return const AuthController(AppAuthState.authenticated);
   } else {
     return const AuthController(AppAuthState.unauthenticated);

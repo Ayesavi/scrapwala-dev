@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -12,6 +13,7 @@ class GetStartedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final analytics = FirebaseAnalytics.instance;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -38,8 +40,8 @@ class GetStartedPage extends StatelessWidget {
                 ),
                 AppFilledButton(
                   label: "Login",
-                  onTap: () {
-                    const LoginRoute().go(context);
+                  onTap: () async {
+                    const LoginRoute().push(context);
                   },
                 ),
                 Padding(
@@ -81,8 +83,10 @@ class GetStartedPage extends StatelessWidget {
                         ]))),
                 const Divider(),
                 ListTile(
-                  onTap: () {
+                  onTap: () async {
                     _launchUrl();
+                    await analytics
+                        .logEvent(name: 'see_scrap_rates', parameters: {});
                   },
                   contentPadding: EdgeInsets.zero,
                   leading: Icon(
