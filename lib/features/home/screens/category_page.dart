@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -27,8 +28,12 @@ class CategoryPage extends ConsumerWidget {
   final String title;
   final String? bannerUrl;
 
-  const CategoryPage(
-      {super.key, this.bannerUrl, required this.id, required this.title});
+  CategoryPage(
+      {super.key, this.bannerUrl, required this.id, required this.title}) {
+    FirebaseAnalytics.instance.logScreenView(
+      screenName: title,
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

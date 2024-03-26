@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rich_readmore/rich_readmore.dart';
@@ -20,6 +21,8 @@ class ScrapTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final analytics = FirebaseAnalytics.instance;
+
     return CustomListTile(
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,8 +54,33 @@ class ScrapTile extends ConsumerWidget {
         ),
       ),
       trailing: ScrapTileImageWidget(
-        onAdd: onAdd,
-        onRemove: onRemove,
+        onAdd: () async {
+          await onAdd();
+          analytics.logAddToCart(value: model.price, currency: 'INR', items: [
+            AnalyticsEventItem(
+              itemId: model.id,
+              itemName: model.name,
+              price: model.price,
+            ),
+          ], parameters: {
+            'name': model.name,
+            'id': model.id
+          });
+        },
+        onRemove: () async {
+          await onRemove();
+          analytics
+              .logRemoveFromCart(value: model.price, currency: 'INR', items: [
+            AnalyticsEventItem(
+              itemId: model.id,
+              itemName: model.name,
+              price: model.price,
+            ),
+          ], parameters: {
+            'name': model.name,
+            'id': model.id
+          });
+        },
         isAdded: isAdded,
         imageUrl: model.photoUrl,
       ),

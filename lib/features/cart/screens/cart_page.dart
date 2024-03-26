@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -454,7 +455,7 @@ class CartPage extends ConsumerWidget {
   }) async {
     try {
       if (addressId.isNotNull && !isCartEmpty && dateNotifier.value.isNotNull) {
-        await controller.requestPickUp(
+        final model = await controller.requestPickUp(
             scheduleDateTime: dateNotifier.value,
             addressId: addressId!,
             qtyRange: qtyNotifier.value);
@@ -462,6 +463,11 @@ class CartPage extends ConsumerWidget {
         ref.invalidate(transactionsConrollerProvider);
         if (context.mounted) {
           showAnimatedCheckMarkPopup(context);
+          FirebaseAnalytics.instance
+              .logEvent(name: 'pickup_request_created', parameters: {
+            'id': model.id,
+            'scheduled_date': model.scheduleDateTime?.toIso8601String() ?? ''
+          });
         }
       } else {
         if (isCartEmpty) {
