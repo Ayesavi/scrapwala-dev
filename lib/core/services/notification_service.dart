@@ -166,6 +166,7 @@ class SupabaseNotificationWrapper {
           _supabaseClient.from('fcm_tokens').insert({'token': value}));
     } catch (e) {
       // ignore error if duplicate
+      return;
     }
   }
 }
