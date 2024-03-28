@@ -6,6 +6,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract class BaseCartRepository {
   Future<List<CartModel>> getCartItems();
 
+  Future<List<CartModel>> getCartItemsByReqId(String id);
+
   Future<CartModel> addToCart(CartModel cartItem);
 
   Future<void> updateCartQty(String cartId, int newQty);
@@ -102,6 +104,19 @@ class SupabaseCartRepository implements BaseCartRepository {
         .neq('status', RequestStatus.denied.name);
     return response.map((e) => PickupRequestModel.fromJson(e)).toList();
   }
+
+  @override
+  Future<List<CartModel>> getCartItemsByReqId(id) async {
+    try {
+      final data = await _supabaseClient
+          .from('cart')
+          .select("*,scrap:scrap_id(*)")
+          .eq('request_id', id);
+      return data.map((item) => CartModel.fromJson(item)).toList();
+    } catch (error) {
+      throw SkException('Failed to fetch cart items: $error');
+    }
+  }
 }
 
 class FakeCartRepository implements BaseCartRepository {
@@ -135,13 +150,16 @@ class FakeCartRepository implements BaseCartRepository {
       {DateTime? scheduleTime,
       required String addressId,
       required String qtyRange}) {
-    // TODO: implement requestPickup
     throw UnimplementedError();
   }
 
   @override
   Future<List<PickupRequestModel>> getCurrentlyRequestedReqs() {
-    // TODO: implement getCurrentlyRequestedReqs
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<CartModel>> getCartItemsByReqId(id) {
     throw UnimplementedError();
   }
 }

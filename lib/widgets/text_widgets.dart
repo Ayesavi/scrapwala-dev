@@ -217,22 +217,33 @@ class BodyMedium extends StatelessWidget {
   }
 }
 
+
 class HeadlineSmall extends StatelessWidget {
   final String text;
+  final FontWeight weight;
   final TextOverflow overflow;
 
-  const HeadlineSmall(
-      {super.key, required this.text, this.overflow = TextOverflow.ellipsis});
+  const HeadlineSmall({
+    super.key,
+    required this.text,
+    this.weight = FontWeight.normal,
+    this.overflow = TextOverflow.ellipsis,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       overflow: overflow,
-      style: Theme.of(context).textTheme.headlineSmall,
+      style: TextStyle(
+        fontWeight: weight,
+        fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
+        // Add other style properties here if needed
+      ),
     );
   }
 }
+
 
 class TitleSmall extends StatelessWidget {
   final String text;
