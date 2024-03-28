@@ -7,7 +7,9 @@ import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.d
 import 'package:scrapwala_dev/shared/show_snackbar.dart';
 import 'package:scrapwala_dev/shimmering_widgets/pickup_request_tile.dart';
 import 'package:scrapwala_dev/widgets/past_pickup_request_tile.dart';
+import 'package:scrapwala_dev/widgets/request_items_bottomsheet.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'past_requests.g.dart';
 
@@ -34,7 +36,12 @@ class PastRequestsPage extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: ElevatedButton(
               child: const Text('Help'),
-              onPressed: () {},
+              onPressed: () async {
+                if (!await launchUrl(
+                    Uri.parse('https://www.swachhkabadi.com/help'))) {
+                  throw Exception('Could not launch url');
+                }
+              },
             ),
           )
         ],
@@ -48,6 +55,8 @@ class PastRequestsPage extends ConsumerWidget {
               }, childCount: 12),
             );
           }, data: (requests) {
+            requests
+                .sort((a, b) => b.requestDateTime.compareTo(a.requestDateTime));
             return SliverList(
               delegate: SliverChildBuilderDelegate((ctx, index) {
                 return PickRequestTile(
@@ -56,8 +65,8 @@ class PastRequestsPage extends ConsumerWidget {
                     if (model.status == RequestStatus.picked) {
                       RequestInfoPageRoute(model.id).push(context);
                     } else {
-                      showSnackBar(
-                          context, 'The Pick up Request has to be picked');
+                      showRequestContentsBottomSheet(context,
+                          requestModel: model);
                     }
                   },
                 );

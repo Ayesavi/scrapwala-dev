@@ -9,6 +9,7 @@ import 'package:scrapwala_dev/shimmering_widgets/profile_tile.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/logout_popup.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
@@ -40,7 +41,12 @@ class ProfilePage extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: ElevatedButton(
                 child: const Text('Help'),
-                onPressed: () {},
+                onPressed: () async {
+                  if (!await launchUrl(
+                      Uri.parse('https://www.swachhkabadi.com/help'))) {
+                    throw Exception('Could not launch url');
+                  }
+                },
               ),
             )
           ],
