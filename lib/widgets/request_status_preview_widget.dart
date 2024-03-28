@@ -83,12 +83,9 @@ class _RequestStatusPreviewWidgetState
             late Widget child;
             if (index == _processIndex) {
               color = Theme.of(context).colorScheme.primary;
-              child = const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(
-                  strokeWidth: 3.0,
-                  valueColor: AlwaysStoppedAnimation(Colors.white),
-                ),
+              child = const Icon(
+                Icons.check_circle_outline,
+                color: Colors.white,
               );
             } else if (index < _processIndex) {
               color = completeColor;

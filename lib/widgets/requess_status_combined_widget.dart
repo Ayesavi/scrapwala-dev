@@ -24,6 +24,7 @@ class RequestStatusCombinedWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    models.sort((a, b) => b.requestDateTime.compareTo(a.requestDateTime));
     if (models.length == 1) {
       return Card(
         child: Column(
@@ -56,27 +57,43 @@ class RequestStatusCombinedWidget extends ConsumerWidget {
               child: ValueListenableBuilder<PickupRequestModel?>(
                 valueListenable: selectedModelNotifier,
                 builder: (context, selectedModel, _) {
-                  return Row(
-                    children: [
-                      DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: selectedModel?.id,
-                          onChanged: (selectedId) {
-                            final newModel = models.firstWhere(
-                              (model) => model.id == selectedId,
-                            );
-                            selectedModelNotifier.value = newModel;
-                          },
-                          items: models.map((model) {
-                            return DropdownMenuItem<String>(
-                              value: model.id,
-                              child: Text(DateFormat('d MMMM h:mm a')
-                                  .format(model.requestDateTime.toLocal())),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ],
+                  return ValueListenableBuilder<PickupRequestModel?>(
+                    valueListenable: selectedModelNotifier,
+                    builder: (context, selectedModel, _) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const TitleMedium(
+                                  text: 'Select a request',
+                                  weight: FontWeight.bold,
+                                ),
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: models.map((model) {
+                                      return ListTile(
+                                        title: Text(DateFormat('d MMMM h:mm a')
+                                            .format(model.requestDateTime
+                                                .toLocal())),
+                                        onTap: () {
+                                          selectedModelNotifier.value = model;
+                                          Navigator.of(context).pop();
+                                        },
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Text(DateFormat('d MMMM h:mm a')
+                            .format(selectedModel!.requestDateTime.toLocal())),
+                      );
+                    },
                   );
                 },
               ),
@@ -85,7 +102,7 @@ class RequestStatusCombinedWidget extends ConsumerWidget {
               padding: const EdgeInsets.all(8.0),
               child: ValueListenableBuilder(
                 valueListenable: selectedModelNotifier,
-                builder: (BuildContext context,  value, Widget? child) {
+                builder: (BuildContext context, value, Widget? child) {
                   return RequestStatusPreviewWidget(model: value);
                 },
               ),

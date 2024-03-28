@@ -231,7 +231,7 @@ class CartPage extends ConsumerWidget {
                           Widget? child) {
                         if (value.isNotNull) {
                           return Text(
-                              DateFormat('d MMMM h:mm a').format(value!));
+                              '${DateFormat('d MMMM').format(value!)} 10 AM - 6 PM');
                         }
                         return const Text('Select Date & Time');
                       },
@@ -312,69 +312,28 @@ class CartPage extends ConsumerWidget {
       BuildContext context, ValueNotifier<DateTime?> dateNotifier) async {
     // Show date time picker and update the selected date-time
     final DateTime now = DateTime.now();
+    final bool isBeforeNoon = now.hour < 12;
+
+    DateTime initialDate;
+    if (isBeforeNoon) {
+      initialDate = now;
+    } else {
+      initialDate = now.add(const Duration(days: 1));
+    }
+
+    final DateTime firstDate =
+        isBeforeNoon ? now : now.add(const Duration(days: 1));
 
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: now,
-      firstDate: now,
+      initialDate: initialDate,
+      firstDate: firstDate,
       lastDate: DateTime(now.year + 1),
     );
 
-    if (context.mounted && pickedDate != null) {
-      final TimeOfDay? pickedTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-      );
-
-      if (pickedTime != null) {
-        DateTime selectedDateTime = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
-        final bool isSelectedDayToday = ((selectedDateTime.day == now.day) &&
-            (selectedDateTime.month == now.month) &&
-            (selectedDateTime.year == selectedDateTime.year));
-
-        if ((!isSelectedDayToday && isTimeInRange(selectedDateTime, 10, 17)) ||
-            (isSelectedDayToday &&
-                isTimeInRange(selectedDateTime, 10, 14) &&
-                selectedDateTime.isAfter(now))) {
-          dateNotifier.value = selectedDateTime;
-        } else {
-          // Inform the user
-          if (context.mounted) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Note'),
-                  content: Text(
-                      'Please select a time between 10 AM to 5 PM on the ${isSelectedDayToday ? 'next' : ""} day.'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        Navigator.of(context).pop();
-
-                        // Show a popup to select a time before 2 PM on the next day
-                      },
-                      child: const Text('OK'),
-                    ),
-                  ],
-                );
-              },
-            );
-          }
-        }
-      }
+    // Update the dateNotifier with the picked date
+    if (pickedDate != null) {
+      dateNotifier.value = pickedDate;
     }
   }
 
