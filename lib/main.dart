@@ -19,16 +19,13 @@ void main() async {
       url: const String.fromEnvironment("SUPABASE_URL"),
       anonKey: const String.fromEnvironment("SUPABASE_KEY"));
 
-  FirebaseNotificationService.instance.initialize();
   if (!kDebugMode) {
+    FirebaseNotificationService.instance.initialize();
     // Pass all uncaught "fatal" errors from the framework to Crashlytics
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
     // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
     PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(
-        error,
-        stack,
-      );
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
       return true;
     };
   }

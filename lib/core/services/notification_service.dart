@@ -146,8 +146,6 @@ class SupabaseNotificationWrapper {
 
   final _service = FirebaseNotificationService.instance;
 
-  final _notifications = AwesomeNotifications();
-
   final _supabaseClient = Supabase.instance.client;
 
   initialize() {
@@ -175,16 +173,18 @@ class SupabaseNotificationWrapper {
 
 void _showRequestNotification(RemoteMessage? message) {
   if (message.isNotNull) {
-    if (message!.notification != null) {
-      AwesomeNotifications().createNotification(
-          content: NotificationContent(
-              id: Random().nextInt(100000),
-              channelKey: message.notification!.android?.channelId ??
-                  NotificationKeys.recommendations.name,
-              title: message.notification!.title,
-              bigPicture: message.notification!.android?.imageUrl,
-              body: message.notification!.body));
-    } else if (message.data.isNotEmpty) {
+    // if (message!.notification != null) {
+    //   AwesomeNotifications().createNotification(
+    //       content: NotificationContent(
+    //           id: Random().nextInt(100000),
+    //           channelKey: message.notification!.android?.channelId ??
+    //               NotificationKeys.recommendations.name,
+    //           title: message.notification!.title,
+    //           bigPicture: message.notification!.android?.imageUrl,
+    //           body: message.notification!.body));
+    // } else
+
+    if (message!.data.isNotEmpty) {
       final channel =
           message.data.containsKey('channel') ? message.data['channel'] : null;
       final title =
