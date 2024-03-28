@@ -94,16 +94,18 @@ class FirebaseNotificationService implements NotificationService {
 Future<void> _onBackgroundMessage(RemoteMessage message) async {
   if (message.isNotNull) {
     if (message.isNotNull) {
-      if (message.notification != null) {
-        AwesomeNotifications().createNotification(
-            content: NotificationContent(
-                id: Random().nextInt(100000),
-                channelKey: message.notification!.android?.channelId ??
-                    NotificationKeys.recommendations.name,
-                title: message.notification!.title,
-                bigPicture: message.notification!.android?.imageUrl,
-                body: message.notification!.body));
-      } else if (message.data.isNotEmpty) {
+      // if (message.notification != null) {
+
+      // AwesomeNotifications().createNotification(
+      //     content: NotificationContent(
+      //         id: Random().nextInt(100000),
+      //         channelKey: message.notification!.android?.channelId ??
+      //             NotificationKeys.recommendations.name,
+      //         title: message.notification!.title,
+      //         bigPicture: message.notification!.android?.imageUrl,
+      //         body: message.notification!.body));
+      // }
+      if (message.data.isNotEmpty) {
         final channel = message.data.containsKey('channel')
             ? message.data['channel']
             : null;
