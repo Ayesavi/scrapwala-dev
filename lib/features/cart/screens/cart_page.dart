@@ -181,7 +181,7 @@ class CartPage extends ConsumerWidget {
                             isCartEmpty = data.isEmpty;
                             return Column(
                               children: [
-                                ...List.generate(
+                                ...List.generate( 
                                     data.length,
                                     (index) => CartItemTile(
                                         onCounterChange: (newQty) {

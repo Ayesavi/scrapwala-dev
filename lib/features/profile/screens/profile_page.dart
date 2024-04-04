@@ -187,6 +187,22 @@ class ProfilePage extends ConsumerWidget {
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Divider(),
                       ),
+                      ListTile(
+                        onTap: () {
+                          const DeletePageRoute().push(context);
+                        },
+                        title: const TitleMedium(text: 'Delete Account'),
+                        subtitle: const Padding(
+                          padding: EdgeInsets.all(2.0),
+                          child: LabelMedium(
+                              text: "Deletes account from the databsase"),
+                        ),
+                        trailing: const Icon(Icons.chevron_right),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Divider(),
+                      ),
 
                       // Container(
                       //   width: double.infinity,

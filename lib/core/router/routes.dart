@@ -6,6 +6,7 @@ import 'package:scrapwala_dev/features/auth/screens/get_started_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/verify_page.dart';
 import 'package:scrapwala_dev/features/cart/screens/cart_page.dart';
+import 'package:scrapwala_dev/features/delete/screens/delete_page.dart';
 import 'package:scrapwala_dev/features/home/screens/home_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/addresses_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/edit_profile.dart';
@@ -84,6 +85,15 @@ class CartPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => const CartPage();
 }
+
+
+class DeletePageRoute extends GoRouteData {
+  const DeletePageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const DeletePage();
+}
+
 
 class ProfilePageRoute extends GoRouteData {
   const ProfilePageRoute();

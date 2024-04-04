@@ -1,10 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/features/address/providers/addresses_page_controller.dart';
 import 'package:scrapwala_dev/features/address/screens/select_address_page.dart';
+import 'package:scrapwala_dev/shared/show_snackbar.dart';
 import 'package:scrapwala_dev/shimmering_widgets/shimmering_address_tile.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/edit_address_tile.dart';
+import 'package:scrapwala_dev/widgets/logout_popup.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
 class AddressesPage extends ConsumerWidget {
@@ -56,20 +59,27 @@ class AddressesPage extends ConsumerWidget {
                           itemBuilder: (context, index) {
                             return EditAddressTile(
                                 onDelete: () {
-                                  controller.deleteAddress(
-                                      context, models[index].id);
+                                  showPopup(context, onConfirm: () {
+                                    controller.deleteAddress(
+                                        context, models[index].id);
+                                  });
                                 },
                                 onEdit: () {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return SelectAddressPage(
-                                          model: models[index],
-                                          onAddressSelected: (model) async {
-                                            controller.updateAddress(
-                                                context, model);
-                                          });
-                                    },
-                                  ));
+                                  if (!kIsWeb) {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return SelectAddressPage(
+                                            model: models[index],
+                                            onAddressSelected: (model) async {
+                                              controller.updateAddress(
+                                                  context, model);
+                                            });
+                                      },
+                                    ));
+                                  } else {
+                                    showSnackBar(context,
+                                        'To edit share, add addresses user our mobile app');
+                                  }
                                 },
                                 model: models[index]);
                           },

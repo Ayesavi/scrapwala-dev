@@ -145,6 +145,11 @@ RouteBase get $homeRoute => GoRouteData.$route(
           ],
         ),
         GoRouteData.$route(
+          path: 'deleteUser',
+          name: 'deleteUser',
+          factory: $DeletePageRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
           path: 'requestInfoPage/:requestId',
           name: 'requestInfoPage',
           factory: $RequestInfoPageRouteExtension._fromState,
@@ -268,6 +273,24 @@ extension $AddressPageRouteExtension on AddressPageRoute {
 
   String get location => GoRouteData.$location(
         '/home/profile/addressesPage',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $DeletePageRouteExtension on DeletePageRoute {
+  static DeletePageRoute _fromState(GoRouterState state) =>
+      const DeletePageRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/deleteUser',
       );
 
   void go(BuildContext context) => context.go(location);

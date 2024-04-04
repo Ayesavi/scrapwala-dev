@@ -10,6 +10,7 @@ class RouteConstants {
     TypedGoRoute<SearchPageRoute>(path: 'search', name: "search"),
     TypedGoRoute<CartPageRoute>(path: 'cartPage', name: "cartPage"),
     profileRoute,
+     TypedGoRoute<DeletePageRoute>(path: 'deleteUser', name: "deleteUser"),
     TypedGoRoute<RequestInfoPageRoute>(
         path: 'requestInfoPage/:requestId', name: "requestInfoPage"),
   ]);

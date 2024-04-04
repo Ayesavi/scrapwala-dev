@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -47,7 +48,13 @@ class _AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<User?> signInWithGoogle() async {
-    if (Platform.isAndroid) {
+    if (kIsWeb) {
+      await _supabase.auth.signInWithOAuth(
+        OAuthProvider.google,
+        // redirectTo: 'http://localhost:50454/#/home',
+      );
+    }
+    if (!kIsWeb && Platform.isAndroid) {
       final googleUser = await _googleSignIn.signIn();
       final googleAuth = await googleUser?.authentication;
       final accessToken = googleAuth?.accessToken;
@@ -64,7 +71,9 @@ class _AuthRepositoryImpl implements AuthRepository {
         throw UnAuthenticatedUserException();
       }
     }
-    throw UnAuthenticatedUserException();
+    return null;
+
+    // throw UnAuthenticatedUserException();
   }
 
   @override
@@ -73,8 +82,8 @@ class _AuthRepositoryImpl implements AuthRepository {
       String? phoneNumber,
       String? email,
       required OtpType otpType}) async {
-    final response = (await _supabase.auth
-            .verifyOTP(token: t, type: otpType, phone: phoneNumber,email: email))
+    final response = (await _supabase.auth.verifyOTP(
+            token: t, type: otpType, phone: phoneNumber, email: email))
         .user;
     if (response != null) {
       return (response);

@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "ScrapWala Android dev",
+            "name": "ScrapWala dev",
             "request": "launch",
             "type": "dart",
             "toolArgs": [
@@ -10,7 +10,7 @@
             ]
         },
         {
-            "name": "ScrapWala Android Production",
+            "name": "ScrapWala Production",
             "request": "launch",
             "type": "dart",
             "toolArgs": [
