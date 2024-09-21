@@ -10,8 +10,6 @@ import 'package:scrapwala_dev/shared/show_snackbar.dart';
 
 final showProgress = StateProvider((ref) => false);
 
-
-
 class LoginScreen extends ConsumerWidget {
   LoginScreen({super.key});
 
@@ -88,4 +86,13 @@ class LoginScreen extends ConsumerWidget {
 
 class LoginScreenConstants {
   static const enterMobileNumberText = "Enter your mobile number to get OTP";
+  static const String logInTitle = 'Log In';
+  static const String phoneNumberPrompt =
+      'Enter phone number to send one time Password';
+  static const String continueButtonLabel = 'Continue';
+  static const String continueWithGoogleButtonLabel = 'Continue With Google';
+  static const String byClicking = 'By clicking, I accept the ';
+  static const String termsOfService = 'terms of service';
+  static const String and = ' and ';
+  static const String privacyPolicy = 'Privacy Policy';
 }

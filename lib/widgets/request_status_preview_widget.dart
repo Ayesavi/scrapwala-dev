@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:scrapwala_dev/models/pickup_request_model/pickup_request_model.dart';
-import 'package:timelines/timelines.dart';
+// import 'package:timelines/timelines.dart';
 
 class RequestStatusPreviewWidget extends StatefulWidget {
   final PickupRequestModel model;
@@ -44,129 +44,129 @@ class _RequestStatusPreviewWidgetState
     return SizedBox(
       width: double.infinity,
       height: 100,
-      child: Timeline.tileBuilder(
-        theme: TimelineThemeData(
-          direction: Axis.horizontal,
-          connectorTheme: const ConnectorThemeData(
-            space: 30.0,
-            thickness: 5.0,
-          ),
-        ),
-        builder: TimelineTileBuilder.connected(
-          connectionDirection: ConnectionDirection.before,
-          itemExtentBuilder: (_, __) =>
-              MediaQuery.of(context).size.width / _processes.length,
-          oppositeContentsBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 15.0),
-              child: Icon(
-                  _processIndex == index
-                      ? _processes.keys.toList()[index].icon
-                      : _processes.keys.toList()[index].outlinedIcon,
-                  color: getColor(context, index)),
-            );
-          },
-          contentsBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 15.0),
-              child: Text(
-                (_processes.values.toList())[index],
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: getColor(context, index),
-                ),
-              ),
-            );
-          },
-          indicatorBuilder: (_, index) {
-            Color color;
-            late Widget child;
-            if (index == _processIndex) {
-              color = Theme.of(context).colorScheme.primary;
-              child = const Icon(
-                Icons.check_circle_outline,
-                color: Colors.white,
-              );
-            } else if (index < _processIndex) {
-              color = completeColor;
-              child = const Icon(
-                Icons.check,
-                color: Colors.white,
-                size: 15.0,
-              );
-            } else {
-              color = completeColor;
-            }
+      // child: Timeline.tileBuilder(
+      //   theme: TimelineThemeData(
+      //     direction: Axis.horizontal,
+      //     connectorTheme: const ConnectorThemeData(
+      //       space: 30.0,
+      //       thickness: 5.0,
+      //     ),
+      //   ),
+      //   builder: TimelineTileBuilder.connected(
+      //     connectionDirection: ConnectionDirection.before,
+      //     itemExtentBuilder: (_, __) =>
+      //         MediaQuery.of(context).size.width / _processes.length,
+      //     oppositeContentsBuilder: (context, index) {
+      //       return Padding(
+      //         padding: const EdgeInsets.only(bottom: 15.0),
+      //         child: Icon(
+      //             _processIndex == index
+      //                 ? _processes.keys.toList()[index].icon
+      //                 : _processes.keys.toList()[index].outlinedIcon,
+      //             color: getColor(context, index)),
+      //       );
+      //     },
+      //     contentsBuilder: (context, index) {
+      //       return Padding(
+      //         padding: const EdgeInsets.only(top: 15.0),
+      //         child: Text(
+      //           (_processes.values.toList())[index],
+      //           style: TextStyle(
+      //             fontWeight: FontWeight.bold,
+      //             color: getColor(context, index),
+      //           ),
+      //         ),
+      //       );
+      //     },
+      //     indicatorBuilder: (_, index) {
+      //       Color color;
+      //       late Widget child;
+      //       if (index == _processIndex) {
+      //         color = Theme.of(context).colorScheme.primary;
+      //         child = const Icon(
+      //           Icons.check_circle_outline,
+      //           color: Colors.white,
+      //         );
+      //       } else if (index < _processIndex) {
+      //         color = completeColor;
+      //         child = const Icon(
+      //           Icons.check,
+      //           color: Colors.white,
+      //           size: 15.0,
+      //         );
+      //       } else {
+      //         color = completeColor;
+      //       }
 
-            if (index <= _processIndex) {
-              return Stack(
-                children: [
-                  CustomPaint(
-                    size: const Size(30.0, 30.0),
-                    painter: _BezierPainter(
-                      color: color,
-                      drawStart: index > 0,
-                      drawEnd: index < _processIndex,
-                    ),
-                  ),
-                  DotIndicator(
-                    size: 30.0,
-                    color: color,
-                    child: child,
-                  ),
-                ],
-              );
-            } else {
-              return Stack(
-                children: [
-                  CustomPaint(
-                    size: const Size(15.0, 15.0),
-                    painter: _BezierPainter(
-                      color: color,
-                      drawEnd: index < _processes.length - 1,
-                    ),
-                  ),
-                  OutlinedDotIndicator(
-                    borderWidth: 4.0,
-                    color: color,
-                  ),
-                ],
-              );
-            }
-          },
-          connectorBuilder: (_, index, type) {
-            if (index > 0) {
-              if (index == _processIndex) {
-                final prevColor = getColor(context, index - 1);
-                final color = getColor(context, index);
-                List<Color> gradientColors;
-                if (type == ConnectorType.start) {
-                  gradientColors = [Color.lerp(prevColor, color, 0.5)!, color];
-                } else {
-                  gradientColors = [
-                    prevColor,
-                    Color.lerp(prevColor, color, 0.5)!
-                  ];
-                }
-                return DecoratedLineConnector(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: gradientColors,
-                    ),
-                  ),
-                );
-              } else {
-                return SolidLineConnector(
-                  color: getColor(context, index),
-                );
-              }
-            } else {
-              return null;
-            }
-          },
-          itemCount: _processes.length,
-        ),
-      ),
+      //       if (index <= _processIndex) {
+      //         return Stack(
+      //           children: [
+      //             CustomPaint(
+      //               size: const Size(30.0, 30.0),
+      //               painter: _BezierPainter(
+      //                 color: color,
+      //                 drawStart: index > 0,
+      //                 drawEnd: index < _processIndex,
+      //               ),
+      //             ),
+      //             DotIndicator(
+      //               size: 30.0,
+      //               color: color,
+      //               child: child,
+      //             ),
+      //           ],
+      //         );
+      //       } else {
+      //         return Stack(
+      //           children: [
+      //             CustomPaint(
+      //               size: const Size(15.0, 15.0),
+      //               painter: _BezierPainter(
+      //                 color: color,
+      //                 drawEnd: index < _processes.length - 1,
+      //               ),
+      //             ),
+      //             OutlinedDotIndicator(
+      //               borderWidth: 4.0,
+      //               color: color,
+      //             ),
+      //           ],
+      //         );
+      //       }
+      //     },
+      //     connectorBuilder: (_, index, type) {
+      //       if (index > 0) {
+      //         if (index == _processIndex) {
+      //           final prevColor = getColor(context, index - 1);
+      //           final color = getColor(context, index);
+      //           List<Color> gradientColors;
+      //           if (type == ConnectorType.start) {
+      //             gradientColors = [Color.lerp(prevColor, color, 0.5)!, color];
+      //           } else {
+      //             gradientColors = [
+      //               prevColor,
+      //               Color.lerp(prevColor, color, 0.5)!
+      //             ];
+      //           }
+      //           return DecoratedLineConnector(
+      //             decoration: BoxDecoration(
+      //               gradient: LinearGradient(
+      //                 colors: gradientColors,
+      //               ),
+      //             ),
+      //           );
+      //         } else {
+      //           return SolidLineConnector(
+      //             color: getColor(context, index),
+      //           );
+      //         }
+      //       } else {
+      //         return null;
+      //       }
+      //     },
+      //     itemCount: _processes.length,
+      //   ),
+      // ),
     );
   }
 }

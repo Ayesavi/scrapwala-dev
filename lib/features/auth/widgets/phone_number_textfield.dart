@@ -2,10 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:scrapwala_dev/features/auth/screens/get_started_page.dart';
+import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/widgets/label_text.dart';
 import 'package:scrapwala_dev/features/auth/widgets/line_painter.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PhoneNumberTextField extends StatefulWidget {
   const PhoneNumberTextField(
@@ -30,6 +33,12 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
       setState(() {
         _isButtonEnabled = true;
       });
+    }
+  }
+
+  _launchUrl(String uri) async {
+    if (!await launchUrl(Uri.parse(uri))) {
+      throw Exception('Could not launch url');
     }
   }
 
@@ -170,37 +179,69 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
             const SizedBox(
               height: 20,
             ),
-            RichText(
-                text: TextSpan(
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withOpacity(.6)),
-                    children: [
-                  const TextSpan(text: PhoneNumberTextFieldConstants.accept),
-                  TextSpan(
-                    text: PhoneNumberTextFieldConstants.termsOfService,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text.rich(
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: LoginScreenConstants.byClicking,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.outline,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                        height: 1.2,
+                        letterSpacing: 0.10,
+                      ),
                     ),
-                    recognizer: TapGestureRecognizer()..onTap = () {},
-                  ),
-                  const TextSpan(
-                    text: PhoneNumberTextFieldConstants.and,
-                  ),
-                  TextSpan(
-                    text: PhoneNumberTextFieldConstants.privacyPolicy,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
+                    WidgetSpan(
+                      child: GestureDetector(
+                        onTap: () => _launchUrl(
+                            'https://www.swachhkabadi.com/terms-of-service'),
+                        child: Text(
+                          LoginScreenConstants.termsOfService,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
                     ),
-                    recognizer: TapGestureRecognizer()..onTap = () {},
-                  ),
-                ]))
+                    TextSpan(
+                      text: LoginScreenConstants.and,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.outline,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    WidgetSpan(
+                      child: GestureDetector(
+                        onTap: () =>
+                            _launchUrl('https://www.swachhkabadi.com/privacy'),
+                        child: Text(
+                          LoginScreenConstants.privacyPolicy,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

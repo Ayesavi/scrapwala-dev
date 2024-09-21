@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
+import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/widgets/phone_number_textfield.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
@@ -11,108 +12,137 @@ import 'package:url_launcher/url_launcher.dart';
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
 
+  void _launchURL(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final analytics = FirebaseAnalytics.instance;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              color: Theme.of(context).colorScheme.surface,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                    child: Lottie.asset(
-                      'assets/lottie/recycle.json',
-                    ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+            color: Theme.of(context).colorScheme.surface,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: Lottie.asset(
+                    'assets/lottie/recycle.json',
                   ),
-                  const ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: TitleLarge(
-                      text: 'ACCOUNT',
-                    ),
-                    subtitle: LabelMedium(
-                        text: 'Login/Create Account to manage requests'),
+                ),
+                const ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: TitleLarge(
+                    text: 'ACCOUNT',
                   ),
-                  AppFilledButton(
-                    label: "Login",
-                    onTap: () async {
-                      const LoginRoute().push(context);
-                    },
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: RichText(
-                          text: TextSpan(
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface
-                                          .withOpacity(.6)),
-                              children: [
-                            const TextSpan(
-                                text: PhoneNumberTextFieldConstants.accept),
-                            TextSpan(
-                              text:
-                                  PhoneNumberTextFieldConstants.termsOfService,
+                  subtitle: LabelMedium(
+                      text: 'Login/Create Account to manage requests'),
+                ),
+                AppFilledButton(
+                  label: "Login",
+                  onTap: () async {
+                    const LoginRoute().push(context);
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text.rich(
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: LoginScreenConstants.byClicking,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.outline,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                            height: 1.2,
+                            letterSpacing: 0.10,
+                          ),
+                        ),
+                        WidgetSpan(
+                          child: GestureDetector(
+                            onTap: () => _launchURL(
+                                'https://www.swachhkabadi.com/terms-of-service'),
+                            child: Text(
+                              LoginScreenConstants.termsOfService,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onSurface,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
                                 decoration: TextDecoration.underline,
                               ),
-                              recognizer: TapGestureRecognizer()..onTap = () {},
                             ),
-                            const TextSpan(
-                              text: PhoneNumberTextFieldConstants.and,
-                            ),
-                            TextSpan(
-                              text: PhoneNumberTextFieldConstants.privacyPolicy,
+                          ),
+                        ),
+                        TextSpan(
+                          text: LoginScreenConstants.and,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.outline,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        WidgetSpan(
+                          child: GestureDetector(
+                            onTap: () => _launchURL(
+                                'https://www.swachhkabadi.com/privacy'),
+                            child: Text(
+                              LoginScreenConstants.privacyPolicy,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onSurface,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
                                 decoration: TextDecoration.underline,
                               ),
-                              recognizer: TapGestureRecognizer()..onTap = () {},
                             ),
-                          ]))),
-                  const Divider(),
-                  ListTile(
-                    onTap: () async {
-                      _launchUrl();
-                      await analytics
-                          .logEvent(name: 'see_scrap_rates', parameters: {});
-                    },
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(
-                      Icons.mail_outline,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Divider(),
+                ListTile(
+                  onTap: () async {
+                    _launchUrl();
+                    await analytics
+                        .logEvent(name: 'see_scrap_rates', parameters: {});
+                  },
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(
+                    Icons.mail_outline,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(.6),
+                  ),
+                  title: const BodyLarge(
+                    weight: FontWeight.w300,
+                    text: 'See Scrap Rates',
+                  ),
+                  trailing: Icon(Icons.chevron_right_outlined,
                       color: Theme.of(context)
                           .colorScheme
                           .onBackground
-                          .withOpacity(.6),
-                    ),
-                    title: const BodyLarge(
-                      weight: FontWeight.w300,
-                      text: 'See Scrap Rates',
-                    ),
-                    trailing: Icon(Icons.chevron_right_outlined,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onBackground
-                            .withOpacity(.6)),
-                  ),
-                ],
-              ),
+                          .withOpacity(.6)),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

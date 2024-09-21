@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:scrapwala_dev/core/extensions/object_extension.dart';
-import 'package:scrapwala_dev/core/utils/debounder.dart';
+import 'package:scrapwala_dev/core/utils/debouncer.dart';
 
 class SearchTextField extends StatefulWidget {
   final List<String> hintTexts;
