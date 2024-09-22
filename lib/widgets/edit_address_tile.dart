@@ -33,9 +33,7 @@ class EditAddressTile extends ConsumerWidget {
           const SizedBox(
             height: 10,
           ),
-          LabelMedium(
-              text:
-                  '${model.houseStreetNo.capitalize}, ${model.apartmentRoadAreadLandmark?.capitalize}'),
+          LabelMedium(text: '${model.houseStreetNo.capitalize}'),
           const SizedBox(
             height: 10,
           ),
@@ -54,7 +52,7 @@ class EditAddressTile extends ConsumerWidget {
             children: [
               ElevatedButton(
                 style: ButtonStyle(
-                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                  shape: WidgetStatePropertyAll<OutlinedBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

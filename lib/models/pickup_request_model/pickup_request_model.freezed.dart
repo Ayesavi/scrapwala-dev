@@ -31,8 +31,12 @@ mixin _$PickupRequestModel {
   String get qtyRange => throw _privateConstructorUsedError;
   RequestStatus get status => throw _privateConstructorUsedError;
 
+  /// Serializes this PickupRequestModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PickupRequestModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PickupRequestModelCopyWith<PickupRequestModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -65,6 +69,8 @@ class _$PickupRequestModelCopyWithImpl<$Res, $Val extends PickupRequestModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PickupRequestModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -147,6 +153,8 @@ class __$$PickupRequestModelImplCopyWithImpl<$Res>
       $Res Function(_$PickupRequestModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PickupRequestModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -265,7 +273,7 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
             (identical(other.status, status) || other.status == status));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -279,7 +287,9 @@ class _$PickupRequestModelImpl implements _PickupRequestModel {
       qtyRange,
       status);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PickupRequestModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PickupRequestModelImplCopyWith<_$PickupRequestModelImpl> get copyWith =>
@@ -327,8 +337,11 @@ abstract class _PickupRequestModel implements PickupRequestModel {
   String get qtyRange;
   @override
   RequestStatus get status;
+
+  /// Create a copy of PickupRequestModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PickupRequestModelImplCopyWith<_$PickupRequestModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

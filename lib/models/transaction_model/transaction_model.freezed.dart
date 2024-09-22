@@ -29,8 +29,12 @@ mixin _$TransactionModel {
   dynamic get paymentMode => throw _privateConstructorUsedError;
   int get totalAmountPaid => throw _privateConstructorUsedError;
 
+  /// Serializes this TransactionModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TransactionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TransactionModelCopyWith<TransactionModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -64,6 +68,8 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TransactionModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -112,6 +118,8 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
     ) as $Val);
   }
 
+  /// Create a copy of TransactionModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AddressModelCopyWith<$Res> get pickupLocation {
@@ -151,6 +159,8 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
       $Res Function(_$TransactionModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TransactionModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -265,7 +275,7 @@ class _$TransactionModelImpl implements _TransactionModel {
                 other.totalAmountPaid == totalAmountPaid));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -278,7 +288,9 @@ class _$TransactionModelImpl implements _TransactionModel {
       const DeepCollectionEquality().hash(paymentMode),
       totalAmountPaid);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TransactionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransactionModelImplCopyWith<_$TransactionModelImpl> get copyWith =>
@@ -323,8 +335,11 @@ abstract class _TransactionModel implements TransactionModel {
   dynamic get paymentMode;
   @override
   int get totalAmountPaid;
+
+  /// Create a copy of TransactionModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransactionModelImplCopyWith<_$TransactionModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -341,8 +356,12 @@ mixin _$OrderQuantity {
   int get quantity => throw _privateConstructorUsedError;
   int get price => throw _privateConstructorUsedError;
 
+  /// Serializes this OrderQuantity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of OrderQuantity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OrderQuantityCopyWith<OrderQuantity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -371,6 +390,8 @@ class _$OrderQuantityCopyWithImpl<$Res, $Val extends OrderQuantity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of OrderQuantity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -429,6 +450,8 @@ class __$$OrderQuantityImplCopyWithImpl<$Res>
       _$OrderQuantityImpl _value, $Res Function(_$OrderQuantityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of OrderQuantity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -506,12 +529,14 @@ class _$OrderQuantityImpl implements _OrderQuantity {
             (identical(other.price, price) || other.price == price));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, name, measurement, quantity, price);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of OrderQuantity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OrderQuantityImplCopyWith<_$OrderQuantityImpl> get copyWith =>
@@ -546,8 +571,11 @@ abstract class _OrderQuantity implements OrderQuantity {
   int get quantity;
   @override
   int get price;
+
+  /// Create a copy of OrderQuantity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OrderQuantityImplCopyWith<_$OrderQuantityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

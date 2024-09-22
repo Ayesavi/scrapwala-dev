@@ -1,262 +1,228 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:scrapwala_dev/core/constants/theme_constants.dart';
 import 'package:scrapwala_dev/models/address_model/address_model.dart';
-import 'package:scrapwala_dev/widgets/address_category_chip.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
+import 'package:uuid/uuid.dart';
 
-void showLocationFormBottomSheet(BuildContext context,
-    {required PickResult pickResult,
-    AddressModel? addressModel,
-    Future<void> Function(AddressModel model)? onSaveAndProceed}) {
-  showModalBottomSheet(
-    context: context,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-    isScrollControlled: true,
-    builder: (BuildContext context) {
-      return _LocationFormBottomSheetContent(
-        pickResult: pickResult,
-        addressModel: addressModel,
-        onSaveAndProceed: onSaveAndProceed,
-      );
-    },
-  );
-}
-
-class _LocationFormBottomSheetContent extends ConsumerStatefulWidget {
-  final Future<void> Function(AddressModel model)? onSaveAndProceed;
-  final PickResult pickResult;
+class _LocationFormBottomSheet extends StatefulWidget {
+  final String? label;
+  final String? address;
+  final String? houseBlockNumber;
+  final ({double lat, double lng}) latLng;
+  final String? title;
   final AddressModel? addressModel;
+  final Future<void> Function(AddressModel model)? onContinue;
 
-  const _LocationFormBottomSheetContent({
-    required this.pickResult,
+  const _LocationFormBottomSheet({
+    // ignore: unused_element
+    super.key,
+    this.title,
+    this.label,
     this.addressModel,
-    this.onSaveAndProceed,
+    required this.address,
+    this.houseBlockNumber,
+    this.onContinue,
+    required this.latLng,
   });
 
   @override
-  _LocationFormBottomSheetContentState createState() =>
-      _LocationFormBottomSheetContentState();
+  _FormBottomSheetState createState() => _FormBottomSheetState();
 }
 
-class _LocationFormBottomSheetContentState
-    extends ConsumerState<_LocationFormBottomSheetContent> {
+class _FormBottomSheetState extends State<_LocationFormBottomSheet> {
   final _formKey = GlobalKey<FormState>();
-  final houseNumberController = TextEditingController();
-  final apartmentController = TextEditingController();
-  final directionsController = TextEditingController();
-  final labelController = TextEditingController();
-  late final ValueNotifier<AddressCategory> saveAsNotifier;
+  late TextEditingController _addressController;
+  late TextEditingController _houseBlockController;
+  late TextEditingController _labelController;
+  late final bool isEdit;
+
+  AddressModel? getAddressModel() {
+    if (_formKey.currentState?.validate() ?? false) {
+      return AddressModel(
+          id: widget.addressModel?.id ?? const Uuid().v4(),
+          address: _addressController.text,
+          houseStreetNo: _houseBlockController.text,
+          label: _labelController.text,
+          latlng: widget.latLng,
+          createdAt: DateTime.now(),
+          category: AddressCategory.friend);
+    }
+    return null;
+  }
 
   @override
   void initState() {
     super.initState();
-
-    // Initialize text field controllers with addressModel.label if it exists
-    labelController.text = widget.addressModel?.label ?? "";
-    houseNumberController.text = widget.addressModel?.houseStreetNo ?? "";
-    apartmentController.text =
-        widget.addressModel?.apartmentRoadAreadLandmark ?? "";
-    saveAsNotifier = ValueNotifier<AddressCategory>(
-        widget.addressModel?.category ?? AddressCategory.house);
+    isEdit = widget.addressModel != null;
+    _addressController = TextEditingController(
+        text: widget.address ?? widget.addressModel?.address);
+    _houseBlockController = TextEditingController(
+        text: widget.addressModel?.houseStreetNo ??
+            widget.houseBlockNumber ??
+            '');
+    _labelController = TextEditingController(
+        text: widget.addressModel?.label ?? widget.label ?? '');
   }
 
-  AddressModel _formModel() {
-    return AddressModel(
-      houseStreetNo: houseNumberController.text,
-      apartmentRoadAreadLandmark: apartmentController.text,
-      address: '${widget.pickResult.formattedAddress}',
-      latlng: (
-        lat: widget.pickResult.geometry!.location.lat,
-        lng: widget.pickResult.geometry!.location.lng,
-      ),
-      createdAt: DateTime.now(),
-      id: widget.addressModel?.id ?? "",
-      category: saveAsNotifier.value,
-      label: labelController.text,
-    );
+  @override
+  void dispose() {
+    _addressController.dispose();
+    _houseBlockController.dispose();
+    _labelController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-        top: 10,
-      ),
+    return Form(
+      key: _formKey,
       child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListTile(
-                title: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.location_on_outlined),
-                    const SizedBox(width: 10),
-                    TitleLarge(
-                      text: widget.pickResult.name ?? "",
-                      weight: FontWeight.bold,
-                    ),
-                  ],
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: LabelMedium(
-                    maxLines: 2,
-                    text: widget.pickResult.formattedAddress ?? "",
-                  ),
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading:
+                  Icon(CupertinoIcons.location_fill, color: Colors.redAccent),
+              title: TitleMedium(
+                text: widget.title ?? 'Address',
+                weight: FontWeight.bold,
+              ),
+              subtitle:
+                  Text(widget.address ?? widget.addressModel?.address ?? ''),
+            ),
+            kWidgetVerticalGap,
+            BodyMedium(
+              text: ' Enter a label *',
+              color: Theme.of(context).colorScheme.primary,
+              maxLines: 2,
+            ),
+            kWidgetMinVerticalGap,
+            TextFormField(
+              controller: _labelController,
+              decoration: InputDecoration(
+                hintText: 'Label',
+                fillColor: Theme.of(context).colorScheme.onInverseSurface,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.only(bottom: 16.0, left: 16, right: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .tertiary
-                            .withOpacity(0.2),
-                      ),
-                      child: const Text(
-                          'A detailed address will help our delivery partner to reach you accurately.'),
-                    ),
-                    TextFormField(
-                      controller: labelController,
-                      decoration: const InputDecoration(
-                        hintText: 'Example - Home, Office, Shop',
-                        border: InputBorder.none,
-                        suffixIcon: Icon(Icons.label_outline_rounded),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Label cannot be empty';
-                        }
-                        return null;
-                      },
-                    ),
-                    const Divider(),
-                    TextFormField(
-                      controller: houseNumberController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter house number',
-                        border: InputBorder.none,
-                        suffixIcon: Icon(Icons.home_outlined),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'House number cannot be empty';
-                        }
-                        return null;
-                      },
-                    ),
-                    const Divider(),
-                    TextFormField(
-                      controller: apartmentController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter apartment/road/area',
-                        border: InputBorder.none,
-                        suffixIcon: Icon(Icons.location_city_outlined),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Landmark cannot be empty';
-                        }
-                        return null;
-                      },
-                    ),
-                    const Divider(),
-                    TextFormField(
-                      controller: directionsController,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Directions to reach (max 100 chars)',
-                      ),
-                      maxLines: 3,
-                      maxLength: 100,
-                    ),
-                    const Divider(),
-                    const TitleMedium(text: 'Save As'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ValueListenableBuilder(
-                      valueListenable: saveAsNotifier,
-                      builder: (context, saveAs, _) {
-                        return Wrap(
-                          spacing: 8,
-                          children: [
-                            ChipWidget(
-                              label: 'Home',
-                              isSelected: saveAs == AddressCategory.house,
-                              icon: Icons.home,
-                              onTap: () {
-                                saveAsNotifier.value = AddressCategory.house;
-                              },
-                            ),
-                            ChipWidget(
-                              label: 'Work',
-                              isSelected: saveAs == AddressCategory.office,
-                              icon: Icons.work,
-                              onTap: () {
-                                saveAsNotifier.value = AddressCategory.office;
-                              },
-                            ),
-                            ChipWidget(
-                              label: 'Friend & Family',
-                              isSelected: saveAs == AddressCategory.friend,
-                              icon: Icons.person,
-                              onTap: () {
-                                saveAsNotifier.value = AddressCategory.friend;
-                              },
-                            ),
-                            ChipWidget(
-                              label: 'Others',
-                              isSelected: saveAs == AddressCategory.others,
-                              icon: Icons.category,
-                              onTap: () {
-                                saveAsNotifier.value = AddressCategory.others;
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    AppFilledButton(
-                      label: 'Save And Proceed',
-                      asyncTap: () async {
-                        if (_formKey.currentState!.validate()) {
-                          await widget.onSaveAndProceed
-                              ?.call(_formModel())
-                              .then(
-                            (value) {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            },
-                          ).catchError((e) {});
-                        }
-                      },
-                    ),
-                  ],
+              validator: (value) {
+                if (value?.trim().isEmpty ?? true) {
+                  return 'Please enter a label';
+                }
+                return null;
+              },
+            ),
+            kWidgetVerticalGap,
+            BodyMedium(
+              text: ' Enter the address *',
+              color: Theme.of(context).colorScheme.primary,
+              maxLines: 2,
+            ),
+            kWidgetMinVerticalGap,
+            TextFormField(
+              controller: _addressController,
+              decoration: InputDecoration(
+                hintText: 'Address',
+                fillColor: Theme.of(context).colorScheme.onInverseSurface,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
               ),
-            ],
-          ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your address';
+                }
+                return null;
+              },
+            ),
+            kWidgetVerticalGap,
+            BodyMedium(
+              text: ' Enter the house/block number *',
+              color: Theme.of(context).colorScheme.primary,
+              maxLines: 2,
+            ),
+            kWidgetMinVerticalGap,
+            TextFormField(
+              controller: _houseBlockController,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Theme.of(context).colorScheme.onInverseSurface,
+                hintText: 'House/Block Number',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+              validator: (value) {
+                if (value?.trim().isEmpty ?? false) {
+                  return 'Please enter House / Block number';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16.0),
+            AppFilledButton(
+              asyncTap: () async {
+                final model = getAddressModel();
+                if (model != null) {
+                  await widget.onContinue?.call(model);
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
+                }
+              },
+              label: ('Submit'),
+            ),
+          ],
         ),
       ),
     );
   }
+}
+
+void showLocationFormBottomSheet({
+  required BuildContext context,
+  String? label,
+  String? address,
+  String? houseBlockNumber,
+  String? title,
+  AddressModel? addressModel,
+  required latLng,
+  Future<void> Function(AddressModel model)? onContinue,
+}) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    showDragHandle: true,
+    builder: (context) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          top: 10,
+        ),
+        child: _LocationFormBottomSheet(
+          label: label, // Optional
+          address: address,
+          addressModel: addressModel,
+          onContinue: onContinue,
+          title: title,
+          houseBlockNumber: houseBlockNumber, // Optional
+          latLng: latLng,
+        ),
+      );
+    },
+  );
 }

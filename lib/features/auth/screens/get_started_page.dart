@@ -1,8 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:scrapwala_dev/core/remote_config/remote_config_service.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
+import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/widgets/phone_number_textfield.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
@@ -45,10 +48,24 @@ class GetStartedPage extends StatelessWidget {
                   subtitle: LabelMedium(
                       text: 'Login/Create Account to manage requests'),
                 ),
-                AppFilledButton(
-                  label: "Login",
-                  onTap: () async {
-                    const LoginRoute().push(context);
+                Consumer(
+                  builder: (context, ref, child) {
+                    final isPhoneAuthEnabled =
+                        RemoteConfigKeys.enablePhoneAuth.value<bool>();
+
+                    RemoteConfigKeys.enablePhoneAuth.subscribeWithinWidget(ref);
+
+                    return AppFilledButton(
+                      label:
+                          isPhoneAuthEnabled ? "Login" : "Continue with google",
+                      onTap: () async {
+                        if (isPhoneAuthEnabled) {
+                          const LoginRoute().push(context);
+                        } else {
+                          ref.read(authControllerProvider).signInWithGoogle();
+                        }
+                      },
+                    );
                   },
                 ),
                 Padding(

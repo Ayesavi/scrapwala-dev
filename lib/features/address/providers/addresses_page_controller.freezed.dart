@@ -81,6 +81,9 @@ class _$AddressesPageControllerStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AddressesPageControllerState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -97,6 +100,9 @@ class __$$LoadingImplCopyWithImpl<$Res>
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AddressesPageControllerState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -207,6 +213,8 @@ class __$$DataImplCopyWithImpl<$Res>
   __$$DataImplCopyWithImpl(_$DataImpl _value, $Res Function(_$DataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AddressesPageControllerState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -251,7 +259,9 @@ class _$DataImpl implements _Data {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_models));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddressesPageControllerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
@@ -330,7 +340,10 @@ abstract class _Data implements AddressesPageControllerState {
   const factory _Data(final List<AddressModel> models) = _$DataImpl;
 
   List<AddressModel> get models;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AddressesPageControllerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -352,6 +365,8 @@ class __$$ErrorImplCopyWithImpl<$Res>
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AddressesPageControllerState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -388,7 +403,9 @@ class _$ErrorImpl implements _Error {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(e));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddressesPageControllerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
@@ -467,7 +484,10 @@ abstract class _Error implements AddressesPageControllerState {
   const factory _Error(final Object e) = _$ErrorImpl;
 
   Object get e;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AddressesPageControllerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

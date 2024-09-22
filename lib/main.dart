@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/app.dart';
 import 'package:scrapwala_dev/core/foundation/log.dart';
+import 'package:scrapwala_dev/core/remote_config/remote_config_service.dart';
 import 'package:scrapwala_dev/core/services/notification_service.dart';
 import 'package:scrapwala_dev/firebase_options.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,6 +22,7 @@ void main() async {
       url: const String.fromEnvironment("SUPABASE_URL"),
       anonKey: const String.fromEnvironment("SUPABASE_KEY"));
   FirebaseNotificationService.instance.initialize();
+  RemoteConfigService.initialize();
 
   runZonedGuarded(() {
     // Pass all uncaught "fatal" errors from the framework to Crashlytics

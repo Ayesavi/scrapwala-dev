@@ -18,7 +18,7 @@ class HomeAppBarTitle extends ConsumerWidget {
       },
       empty: () {
         return const TitleLarge(
-          text: "ScrapWala Dev",
+          text: "Swachh Kabadi",
           weight: FontWeight.bold,
         );
       },

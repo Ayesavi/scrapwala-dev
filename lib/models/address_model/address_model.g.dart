@@ -31,7 +31,7 @@ Map<String, dynamic> _$$AddressModelImplToJson(_$AddressModelImpl instance) =>
       'address': instance.address,
       'houseStreetNo': instance.houseStreetNo,
       'apartmentRoadAreadLandmark': instance.apartmentRoadAreadLandmark,
-      'latlng': {
+      'latlng': <String, dynamic>{
         'lat': instance.latlng.lat,
         'lng': instance.latlng.lng,
       },

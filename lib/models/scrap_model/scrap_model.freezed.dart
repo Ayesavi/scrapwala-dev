@@ -28,8 +28,12 @@ mixin _$ScrapModel {
   ScrapMeasurement get measure => throw _privateConstructorUsedError;
   bool get isNegotiable => throw _privateConstructorUsedError;
 
+  /// Serializes this ScrapModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ScrapModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ScrapModelCopyWith<ScrapModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -60,6 +64,8 @@ class _$ScrapModelCopyWithImpl<$Res, $Val extends ScrapModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ScrapModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -130,6 +136,8 @@ class __$$ScrapModelImplCopyWithImpl<$Res>
       _$ScrapModelImpl _value, $Res Function(_$ScrapModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ScrapModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -228,12 +236,14 @@ class _$ScrapModelImpl implements _ScrapModel {
                 other.isNegotiable == isNegotiable));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, photoUrl, description,
       price, measure, isNegotiable);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ScrapModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ScrapModelImplCopyWith<_$ScrapModelImpl> get copyWith =>
@@ -274,8 +284,11 @@ abstract class _ScrapModel implements ScrapModel {
   ScrapMeasurement get measure;
   @override
   bool get isNegotiable;
+
+  /// Create a copy of ScrapModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ScrapModelImplCopyWith<_$ScrapModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

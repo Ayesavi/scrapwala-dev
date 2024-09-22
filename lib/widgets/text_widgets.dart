@@ -71,7 +71,7 @@ class LabelMedium extends StatelessWidget {
       text,
       maxLines: maxLines,
       overflow: overflow,
-      textAlign:align ,
+      textAlign: align,
       style: Theme.of(context).textTheme.labelMedium?.copyWith(
           color: color ??
               Theme.of(context).colorScheme.onBackground.withOpacity(.6),
@@ -144,10 +144,14 @@ class BodyLarge extends StatelessWidget {
   final TextOverflow overflow;
   final Color? color;
   final FontWeight? weight;
+  final int? maxLines;
+  final TextAlign? align;
 
   const BodyLarge(
       {super.key,
       required this.text,
+      this.align,
+      this.maxLines,
       this.color,
       this.weight,
       this.overflow = TextOverflow.ellipsis});
@@ -157,6 +161,8 @@ class BodyLarge extends StatelessWidget {
     return Text(
       text,
       overflow: overflow,
+      maxLines: maxLines,
+      textAlign: align,
       style: Theme.of(context)
           .textTheme
           .bodyLarge
@@ -201,8 +207,10 @@ class BodyMedium extends StatelessWidget {
   final String text;
   final TextOverflow overflow;
   final Color? color;
+  final int? maxLines;
   const BodyMedium(
       {super.key,
+      this.maxLines,
       this.color,
       required this.text,
       this.overflow = TextOverflow.ellipsis});
@@ -210,13 +218,14 @@ class BodyMedium extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
+
       text,
+      maxLines: maxLines,
       overflow: overflow,
       style: Theme.of(context).textTheme.bodyMedium,
     );
   }
 }
-
 
 class HeadlineSmall extends StatelessWidget {
   final String text;
@@ -243,7 +252,6 @@ class HeadlineSmall extends StatelessWidget {
     );
   }
 }
-
 
 class TitleSmall extends StatelessWidget {
   final String text;

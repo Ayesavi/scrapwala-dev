@@ -15,6 +15,7 @@ import 'package:scrapwala_dev/shimmering_widgets/shimmering_scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/scrap_tile.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:ui'; // Import for BackdropFilter and ImageFilter
 
 part 'category_page.g.dart';
 
@@ -38,6 +39,7 @@ class CategoryPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(getScrapsProvider(id));
+
     return Scaffold(
         bottomNavigationBar: const CartBottomBar(),
         body: RefreshIndicator(
@@ -50,7 +52,6 @@ class CategoryPage extends ConsumerWidget {
                 expandedHeight: 100,
                 floating: false,
                 pinned: true,
-
                 actions: [
                   IconButton(
                       onPressed: () {
@@ -58,15 +59,26 @@ class CategoryPage extends ConsumerWidget {
                       },
                       icon: const Icon(Icons.search, size: 25))
                 ],
-                // title: TitleLarge(text: title),
                 flexibleSpace: FlexibleSpaceBar(
                   title: TitleLarge(text: title),
-                  background: bannerUrl.isNotNull
-                      ? Image.network(
+                  background: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      if (bannerUrl.isNotNull)
+                        Image.network(
                           bannerUrl!,
                           fit: BoxFit.cover,
-                        )
-                      : null,
+                        ),
+                      BackdropFilter(
+                        filter: ImageFilter.blur(
+                            sigmaX: 10, sigmaY: 10), // Blur effect
+                        child: Container(
+                          color: Colors.black
+                              .withOpacity(0), // Transparent overlay
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               state.when(data: (data) {

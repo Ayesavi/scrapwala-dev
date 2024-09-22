@@ -20,8 +20,40 @@ class ScrapWalaApp extends ConsumerWidget {
           primary: Colors.green,
         ),
         useMaterial3: true,
+        filledButtonTheme: FilledButtonThemeData(
+            style: ButtonStyle(
+          shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+          minimumSize: const WidgetStatePropertyAll(
+            Size(double.infinity, 45),
+          ),
+        )),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+            style: ButtonStyle(
+          shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+          minimumSize: const WidgetStatePropertyAll(
+            Size(double.infinity, 45),
+          ),
+        )),
       ),
       darkTheme: ThemeData(
+        outlinedButtonTheme: OutlinedButtonThemeData(
+            style: ButtonStyle(
+          shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+          minimumSize: const WidgetStatePropertyAll(
+            Size(double.infinity, 45),
+          ),
+        )),
+        filledButtonTheme: FilledButtonThemeData(
+            style: ButtonStyle(
+          shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+          minimumSize: const WidgetStatePropertyAll(
+            Size(double.infinity, 45),
+          ),
+        )),
         textTheme: GoogleFonts.poppinsTextTheme(TextThemes.textTheme),
         colorScheme: ColorScheme.fromSeed(
             primary: Colors.green,

@@ -69,7 +69,7 @@ class AddressesPage extends ConsumerWidget {
                                     Navigator.push(context, MaterialPageRoute(
                                       builder: (context) {
                                         return SelectAddressPage(
-                                            model: models[index],
+                                            addressModel: models[index],
                                             onAddressSelected: (model) async {
                                               controller.updateAddress(
                                                   context, model);

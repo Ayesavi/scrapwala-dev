@@ -1,6 +1,8 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:scrapwala_dev/core/remote_config/remote_config_service.dart';
 import 'package:scrapwala_dev/core/services/notification_service.dart';
+import 'package:scrapwala_dev/core/utils/utils.dart';
 import 'package:scrapwala_dev/features/auth/repositories/auth_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -15,17 +17,20 @@ AuthController authController(AuthControllerRef ref) {
   if (authStates.value?.session != null) {
     final sessionUser = authStates.value!.session!.user;
     final userMetadata = sessionUser.userMetadata;
-    // final email = sessionUser.email;
-    // final phone = sessionUser.phone;
+    final phone = sessionUser.phone;
     final name = userMetadata?.containsKey("full_name") ?? false
         ? userMetadata!['full_name']
         : null;
 
+    final isPhoneAuthEnabled = RemoteConfigKeys.enablePhoneAuth.value<bool>();
+
     // TODO: add the email and phone in the fields below in prod mode
-    if ([name].contains(null) || [name].contains('')) {
+    if (checkNullOrEmpty([
+      name,
+      ...(isPhoneAuthEnabled ? [phone] : [])
+    ])) {
       return const AuthController(AppAuthState.unfulfilledProfile);
     }
-
 
     SupabaseNotificationWrapper.instance.initialize();
 

@@ -9,7 +9,9 @@ part of 'routes.dart';
 List<RouteBase> get $appRoutes => [
       $splashRoute,
       $authRoute,
+      $forceUpdatePageRoute,
       $homeRoute,
+      $maintenancePageRoute,
       $editProfileBaseRoute,
     ];
 
@@ -95,6 +97,30 @@ extension $OtpPageRouteExtension on OtpPageRoute {
 
   String get location => GoRouteData.$location(
         '/auth/otp/${Uri.encodeComponent(phone)}',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $forceUpdatePageRoute => GoRouteData.$route(
+      path: '/appRequiresUpdate',
+      name: 'appRequiresUpdate',
+      factory: $ForceUpdatePageRouteExtension._fromState,
+    );
+
+extension $ForceUpdatePageRouteExtension on ForceUpdatePageRoute {
+  static ForceUpdatePageRoute _fromState(GoRouterState state) =>
+      const ForceUpdatePageRoute();
+
+  String get location => GoRouteData.$location(
+        '/appRequiresUpdate',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -311,6 +337,30 @@ extension $RequestInfoPageRouteExtension on RequestInfoPageRoute {
 
   String get location => GoRouteData.$location(
         '/home/requestInfoPage/${Uri.encodeComponent(requestId)}',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $maintenancePageRoute => GoRouteData.$route(
+      path: '/maintenance',
+      name: 'maintenance',
+      factory: $MaintenancePageRouteExtension._fromState,
+    );
+
+extension $MaintenancePageRouteExtension on MaintenancePageRoute {
+  static MaintenancePageRoute _fromState(GoRouterState state) =>
+      const MaintenancePageRoute();
+
+  String get location => GoRouteData.$location(
+        '/maintenance',
       );
 
   void go(BuildContext context) => context.go(location);

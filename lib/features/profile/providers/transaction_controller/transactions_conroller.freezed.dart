@@ -74,6 +74,9 @@ class _$TransactionsConrollerStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of TransactionsConrollerState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -90,6 +93,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of TransactionsConrollerState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -194,6 +200,8 @@ class __$$DataImplCopyWithImpl<$Res>
   __$$DataImplCopyWithImpl(_$DataImpl _value, $Res Function(_$DataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TransactionsConrollerState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -238,7 +246,9 @@ class _$DataImpl implements _Data {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_txns));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TransactionsConrollerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
@@ -311,7 +321,10 @@ abstract class _Data implements TransactionsConrollerState {
   const factory _Data(final List<PickupRequestModel> txns) = _$DataImpl;
 
   List<PickupRequestModel> get txns;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TransactionsConrollerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

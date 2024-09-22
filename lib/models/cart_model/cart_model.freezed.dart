@@ -24,8 +24,12 @@ mixin _$CartModel {
   ScrapModel get scrap => throw _privateConstructorUsedError;
   int get qty => throw _privateConstructorUsedError;
 
+  /// Serializes this CartModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CartModelCopyWith<CartModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$CartModelCopyWithImpl<$Res, $Val extends CartModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -73,6 +79,8 @@ class _$CartModelCopyWithImpl<$Res, $Val extends CartModel>
     ) as $Val);
   }
 
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ScrapModelCopyWith<$Res> get scrap {
@@ -104,6 +112,8 @@ class __$$CartModelImplCopyWithImpl<$Res>
       _$CartModelImpl _value, $Res Function(_$CartModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -159,11 +169,13 @@ class _$CartModelImpl implements _CartModel {
             (identical(other.qty, qty) || other.qty == qty));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, scrap, qty);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CartModelImplCopyWith<_$CartModelImpl> get copyWith =>
@@ -192,8 +204,11 @@ abstract class _CartModel implements CartModel {
   ScrapModel get scrap;
   @override
   int get qty;
+
+  /// Create a copy of CartModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CartModelImplCopyWith<_$CartModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

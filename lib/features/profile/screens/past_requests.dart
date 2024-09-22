@@ -57,21 +57,29 @@ class PastRequestsPage extends ConsumerWidget {
           }, data: (requests) {
             requests
                 .sort((a, b) => b.requestDateTime.compareTo(a.requestDateTime));
-            return SliverList(
-              delegate: SliverChildBuilderDelegate((ctx, index) {
-                return PickRequestTile(
-                  model: requests[index],
-                  onTap: (model) {
-                    if (model.status == RequestStatus.picked) {
-                      RequestInfoPageRoute(model.id).push(context);
-                    } else {
-                      showRequestContentsBottomSheet(context,
-                          requestModel: model);
-                    }
-                  },
-                );
-              }, childCount: requests.length),
-            );
+            if (requests.isNotEmpty) {
+              return SliverList(
+                delegate: SliverChildBuilderDelegate((ctx, index) {
+                  return PickRequestTile(
+                    model: requests[index],
+                    onTap: (model) {
+                      if (model.status == RequestStatus.picked) {
+                        RequestInfoPageRoute(model.id).push(context);
+                      } else {
+                        showRequestContentsBottomSheet(context,
+                            requestModel: model);
+                      }
+                    },
+                  );
+                }, childCount: requests.length),
+              );
+            } else {
+              return const SliverFillRemaining(
+                child: Center(
+                  child: BodyLarge(text: "No past requests to display"),
+                ),
+              );
+            }
           }, error: (e, s) {
             Future.delayed(const Duration(seconds: 1), () {
               showSnackBar(context, 'Looks like an error occurred');

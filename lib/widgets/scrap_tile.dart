@@ -34,7 +34,7 @@ class ScrapTile extends ConsumerWidget {
           const SizedBox(
             height: 10,
           ),
-          Text('$kRupeeSymbol ${model.price}')
+          Text('$kRupeeSymbol ${model.price}/${model.measure.name}')
         ],
       ),
       subtitle: RichReadMoreText.fromString(

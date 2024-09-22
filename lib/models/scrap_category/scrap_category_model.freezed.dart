@@ -25,8 +25,12 @@ mixin _$ScrapCategoryModel {
   String get photoUrl => throw _privateConstructorUsedError;
   String? get bannerUrl => throw _privateConstructorUsedError;
 
+  /// Serializes this ScrapCategoryModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ScrapCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ScrapCategoryModelCopyWith<ScrapCategoryModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$ScrapCategoryModelCopyWithImpl<$Res, $Val extends ScrapCategoryModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ScrapCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -98,6 +104,8 @@ class __$$ScrapCategoryImplCopyWithImpl<$Res>
       _$ScrapCategoryImpl _value, $Res Function(_$ScrapCategoryImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ScrapCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -166,11 +174,13 @@ class _$ScrapCategoryImpl implements _ScrapCategory {
                 other.bannerUrl == bannerUrl));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, id, photoUrl, bannerUrl);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ScrapCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ScrapCategoryImplCopyWith<_$ScrapCategoryImpl> get copyWith =>
@@ -202,8 +212,11 @@ abstract class _ScrapCategory implements ScrapCategoryModel {
   String get photoUrl;
   @override
   String? get bannerUrl;
+
+  /// Create a copy of ScrapCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ScrapCategoryImplCopyWith<_$ScrapCategoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

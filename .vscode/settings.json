@@ -1,3 +1,4 @@
 {
-    "CodeGPT.apiKey": "Google AI Studio"
+    "CodeGPT.apiKey": "Google AI Studio",
+    "cmake.sourceDirectory": "/Users/electron/Documents/GitHub/scrapwala-dev/windows"
 }

@@ -43,7 +43,7 @@ Map<String, dynamic> _$$PickupRequestModelImplToJson(
       'pickedDateTime': instance.pickedDateTime?.toIso8601String(),
       'address': instance.address == null
           ? null
-          : {
+          : <String, dynamic>{
               'address': instance.address!.address,
               'houseStreetNo': instance.address!.houseStreetNo,
               'label': instance.address!.label,

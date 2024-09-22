@@ -66,17 +66,24 @@ showPopup(BuildContext context, {required VoidCallback onConfirm}) async {
 
 class Popup extends StatelessWidget {
   final Function()? onConfirmPopup;
+  final String? text;
+  final String? title;
 
-  const Popup({super.key, this.onConfirmPopup});
+  const Popup({
+    super.key,
+    this.onConfirmPopup,
+    this.text,
+    this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const TitleLarge(
-        text: 'Delete Address',
+      title: TitleLarge(
+        text: title ?? 'Delete Address',
         weight: FontWeight.bold,
       ),
-      content: const Text('Are you sure you want to delete adddress?'),
+      content: Text(text ?? 'Are you sure you want to delete adddress?'),
       actions: <Widget>[
         TextButton(
           onPressed: () {

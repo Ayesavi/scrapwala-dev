@@ -78,6 +78,9 @@ class _$ScrapSearchStateCopyWithImpl<$Res, $Val extends ScrapSearchState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of ScrapSearchState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -94,6 +97,9 @@ class __$$LoadingImplCopyWithImpl<$Res>
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of ScrapSearchState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -202,6 +208,9 @@ class __$$EmptySearchImplCopyWithImpl<$Res>
   __$$EmptySearchImplCopyWithImpl(
       _$EmptySearchImpl _value, $Res Function(_$EmptySearchImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of ScrapSearchState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -313,6 +322,8 @@ class __$$SearchWithResultsImplCopyWithImpl<$Res>
       $Res Function(_$SearchWithResultsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ScrapSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -358,7 +369,9 @@ class _$SearchWithResultsImpl implements _SearchWithResults {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_models));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ScrapSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SearchWithResultsImplCopyWith<_$SearchWithResultsImpl> get copyWith =>
@@ -439,7 +452,10 @@ abstract class _SearchWithResults implements ScrapSearchState {
       _$SearchWithResultsImpl;
 
   List<ScrapModel> get models;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ScrapSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SearchWithResultsImplCopyWith<_$SearchWithResultsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

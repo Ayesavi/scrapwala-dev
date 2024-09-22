@@ -2,7 +2,9 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:scrapwala_dev/core/remote_config/remote_config_service.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
+import 'package:scrapwala_dev/core/services/app_update_service.dart';
 import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -21,7 +23,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 });
 
 class RouterNotifier extends ChangeNotifier {
-  final Ref _ref;
+  final ProviderRef _ref;
 
   RouterNotifier(this._ref) {
     _ref.listen(
@@ -33,7 +35,16 @@ class RouterNotifier extends ChangeNotifier {
   String? redirectLogic(ctx, GoRouterState state) {
     final controller = _ref.watch(authControllerProvider);
     final appState = controller.state;
+    final isOfMinVersion = AppUpdateService.instance.isUpdateMandatory();
 
+    RemoteConfigKeys.isAppOutage.subsribeWithinProvider(_ref);
+
+    if (RemoteConfigKeys.isAppOutage.value<bool>()) {
+      return '/maintenance';
+    }
+    if (isOfMinVersion) {
+      return '/appRequiresUpdate';
+    }
     if (appState == AppAuthState.loading) {
       return '/';
     } else if (appState == AppAuthState.authenticated) {
@@ -70,5 +81,4 @@ class AnalyticsRouteObserver extends NavigatorObserver {
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     analytics.logScreenView(screenName: route.settings.name ?? 'unknown');
   }
-
 }

@@ -44,7 +44,7 @@ class AddressesPageController extends _$AddressesPageController {
     }
   }
 
-  void updateAddress(BuildContext context, AddressModel updatedAddress) async {
+  Future<void> updateAddress(BuildContext context, AddressModel updatedAddress) async {
     try {
       await _repo.updateAddress(updatedAddress);
       final index =
@@ -61,7 +61,7 @@ class AddressesPageController extends _$AddressesPageController {
     }
   }
 
-  void addAddress(BuildContext context, AddressModel newAddress) async {
+  Future<void> addAddress(BuildContext context, AddressModel newAddress) async {
     try {
       await _repo.addAddress(newAddress);
       _addresses.add(newAddress);

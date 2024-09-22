@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:scrapwala_dev/features/app_requires_update/screens/app_requires_update_screen.dart';
 import 'package:scrapwala_dev/features/auth/screens/get_started_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/login_page.dart';
 import 'package:scrapwala_dev/features/auth/screens/verify_page.dart';
 import 'package:scrapwala_dev/features/cart/screens/cart_page.dart';
 import 'package:scrapwala_dev/features/delete/screens/delete_page.dart';
 import 'package:scrapwala_dev/features/home/screens/home_page.dart';
+import 'package:scrapwala_dev/features/maintenence/screens/maintenance_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/addresses_page.dart';
 import 'package:scrapwala_dev/features/profile/screens/edit_profile.dart';
 import 'package:scrapwala_dev/features/profile/screens/past_requests.dart';
@@ -38,6 +40,15 @@ class AuthRoute extends GoRouteData {
       const GetStartedPage();
 }
 
+@RouteConstants.appRequiresUpdate
+class ForceUpdatePageRoute extends GoRouteData {
+  const ForceUpdatePageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const AppRequiresUpdatePage();
+}
+
 @RouteConstants.homeRoute
 class HomeRoute extends GoRouteData {
   const HomeRoute();
@@ -49,6 +60,15 @@ class HomeRoute extends GoRouteData {
   FutureOr<String?> redirect(BuildContext context, GoRouterState state) {
     return null;
   }
+}
+
+@RouteConstants.maintenancePage
+class MaintenancePageRoute extends GoRouteData {
+  const MaintenancePageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const MaintenancePage();
 }
 
 class LoginRoute extends GoRouteData {
@@ -86,14 +106,12 @@ class CartPageRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => const CartPage();
 }
 
-
 class DeletePageRoute extends GoRouteData {
   const DeletePageRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const DeletePage();
 }
-
 
 class ProfilePageRoute extends GoRouteData {
   const ProfilePageRoute();

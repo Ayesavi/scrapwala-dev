@@ -16,15 +16,40 @@ class $AssetsImagesGen {
   AssetGenImage get icLauncher =>
       const AssetGenImage('assets/images/ic_launcher.png');
 
+  /// File path: assets/images/ic_launcher_background.png
+  AssetGenImage get icLauncherBackground =>
+      const AssetGenImage('assets/images/ic_launcher_background.png');
+
+  /// File path: assets/images/ic_launcher_foreground.png
+  AssetGenImage get icLauncherForeground =>
+      const AssetGenImage('assets/images/ic_launcher_foreground.png');
+
+  /// File path: assets/images/ic_launcher_monochrome.png
+  AssetGenImage get icLauncherMonochrome =>
+      const AssetGenImage('assets/images/ic_launcher_monochrome.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [icLauncher, logo];
+  List<AssetGenImage> get values => [
+        icLauncher,
+        icLauncherBackground,
+        icLauncherForeground,
+        icLauncherMonochrome,
+        logo
+      ];
 }
 
 class $AssetsLottieGen {
   const $AssetsLottieGen();
+
+  /// File path: assets/lottie/app_requires_update.json
+  String get appRequiresUpdate => 'assets/lottie/app_requires_update.json';
+
+  /// File path: assets/lottie/app_under_maintainence.json
+  String get appUnderMaintainence =>
+      'assets/lottie/app_under_maintainence.json';
 
   /// File path: assets/lottie/check_mark.json
   String get checkMark => 'assets/lottie/check_mark.json';
@@ -32,8 +57,12 @@ class $AssetsLottieGen {
   /// File path: assets/lottie/recycle.json
   String get recycle => 'assets/lottie/recycle.json';
 
+  /// File path: assets/lottie/sorry.json
+  String get sorry => 'assets/lottie/sorry.json';
+
   /// List of all assets
-  List<String> get values => [checkMark, recycle];
+  List<String> get values =>
+      [appRequiresUpdate, appUnderMaintainence, checkMark, recycle, sorry];
 }
 
 class Assets {
@@ -44,9 +73,16 @@ class Assets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(this._assetName);
+  const AssetGenImage(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+  });
 
   final String _assetName;
+
+  final Size? size;
+  final Set<String> flavors;
 
   Image image({
     Key? key,

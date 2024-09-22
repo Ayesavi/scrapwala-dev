@@ -10,11 +10,16 @@ class RouteConstants {
     TypedGoRoute<SearchPageRoute>(path: 'search', name: "search"),
     TypedGoRoute<CartPageRoute>(path: 'cartPage', name: "cartPage"),
     profileRoute,
-     TypedGoRoute<DeletePageRoute>(path: 'deleteUser', name: "deleteUser"),
+    TypedGoRoute<DeletePageRoute>(path: 'deleteUser', name: "deleteUser"),
     TypedGoRoute<RequestInfoPageRoute>(
         path: 'requestInfoPage/:requestId', name: "requestInfoPage"),
   ]);
 
+  static const appRequiresUpdate = TypedGoRoute<ForceUpdatePageRoute>(
+      path: '/appRequiresUpdate', name: 'appRequiresUpdate');
+
+  static const maintenancePage = TypedGoRoute<MaintenancePageRoute>(
+      path: '/maintenance', name: 'maintenance');
   static const authRoute =
       TypedGoRoute<AuthRoute>(path: '/auth', name: 'auth', routes: [
     TypedGoRoute<LoginRoute>(path: 'login', name: "login"),

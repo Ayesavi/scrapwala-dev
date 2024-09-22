@@ -243,7 +243,8 @@ class ProfilePage extends ConsumerWidget {
               padding: EdgeInsets.all(16.0),
               child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: LabelMedium(text: 'A Y E S A V I')),
+                  child: LabelMedium(
+                      text: 'H O S T E D  W I T H ❤️  F R O M  A Y E S A V I')),
             )
           ],
         ));

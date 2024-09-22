@@ -10,7 +10,7 @@ _$CartModelImpl _$$CartModelImplFromJson(Map<String, dynamic> json) =>
     _$CartModelImpl(
       id: json['id'] as String,
       scrap: ScrapModel.fromJson(json['scrap'] as Map<String, dynamic>),
-      qty: json['qty'] as int,
+      qty: (json['qty'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$CartModelImplToJson(_$CartModelImpl instance) =>

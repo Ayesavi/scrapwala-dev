@@ -19,7 +19,7 @@ _$TransactionModelImpl _$$TransactionModelImplFromJson(
           .toList(),
       photograph: json['photograph'] as String?,
       paymentMode: json['paymentMode'] ?? PaymentMode.cash,
-      totalAmountPaid: json['totalAmountPaid'] as int,
+      totalAmountPaid: (json['totalAmountPaid'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$TransactionModelImplToJson(
@@ -40,8 +40,8 @@ _$OrderQuantityImpl _$$OrderQuantityImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       name: json['name'] as String,
       measurement: $enumDecode(_$ScrapMeasurementEnumMap, json['measurement']),
-      quantity: json['quantity'] as int,
-      price: json['price'] as int,
+      quantity: (json['quantity'] as num).toInt(),
+      price: (json['price'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$OrderQuantityImplToJson(_$OrderQuantityImpl instance) =>
