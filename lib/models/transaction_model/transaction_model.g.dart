@@ -9,14 +9,12 @@ part of 'transaction_model.dart';
 _$TransactionModelImpl _$$TransactionModelImplFromJson(
         Map<String, dynamic> json) =>
     _$TransactionModelImpl(
-      transactionId: json['transactionId'] as String,
+      transactionId: (json['id'] as num).toInt(),
       requestId: json['requestId'] as String,
       pickupLocation:
           AddressModel.fromJson(json['pickupLocation'] as Map<String, dynamic>),
       pickupTime: DateTime.parse(json['pickupTime'] as String),
-      orders: (json['orders'] as List<dynamic>)
-          .map((e) => OrderQuantity.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      orderQuantity: json['orderQuantity'] as Map<String, dynamic>,
       photograph: json['photograph'] as String?,
       paymentMode: json['paymentMode'] ?? PaymentMode.cash,
       totalAmountPaid: (json['totalAmountPaid'] as num).toInt(),
@@ -25,11 +23,11 @@ _$TransactionModelImpl _$$TransactionModelImplFromJson(
 Map<String, dynamic> _$$TransactionModelImplToJson(
         _$TransactionModelImpl instance) =>
     <String, dynamic>{
-      'transactionId': instance.transactionId,
+      'id': instance.transactionId,
       'requestId': instance.requestId,
       'pickupLocation': instance.pickupLocation,
       'pickupTime': instance.pickupTime.toIso8601String(),
-      'orders': instance.orders,
+      'orderQuantity': instance.orderQuantity,
       'photograph': instance.photograph,
       'paymentMode': instance.paymentMode,
       'totalAmountPaid': instance.totalAmountPaid,

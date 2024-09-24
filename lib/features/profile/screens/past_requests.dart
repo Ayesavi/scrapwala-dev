@@ -38,7 +38,7 @@ class PastRequestsPage extends ConsumerWidget {
               child: const Text('Help'),
               onPressed: () async {
                 if (!await launchUrl(
-                    Uri.parse('https://www.swachhkabadi.com/help'))) {
+                    Uri.parse('https://www.swachhkabadi.com/help-center'))) {
                   throw Exception('Could not launch url');
                 }
               },

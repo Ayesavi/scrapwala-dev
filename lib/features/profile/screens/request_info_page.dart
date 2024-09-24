@@ -19,7 +19,7 @@ part 'request_info_page.g.dart';
 
 @riverpod
 Future<TransactionModel> txn(TxnRef ref, String id) async {
-  return await FakeTxnRepository().getTransactionById(id);
+  return await SupabaseTxnRepository().getTransactionById(id);
 }
 
 class RequestInfoPage extends ConsumerWidget {
@@ -36,15 +36,6 @@ class RequestInfoPage extends ConsumerWidget {
             text: "Request Details",
             weight: FontWeight.bold,
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: ElevatedButton(
-                child: const Text('Help'),
-                onPressed: () {},
-              ),
-            )
-          ],
         ),
         body: transaction.when(data: (data) {
           return Column(
@@ -60,15 +51,9 @@ class RequestInfoPage extends ConsumerWidget {
                 ),
                 title: LabelMedium(
                     text:
-                        'Scrap picked on ${DateFormat('d MMMM h:mm a').format(data.pickupTime)}'),
+                        'Scrap picked on ${DateFormat('d MMMM h:mm a').format(data.pickupTime.toLocal())}'),
               ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                color: Theme.of(context).colorScheme.onInverseSurface,
-                child: const Text('Scrap Details'),
-              ),
-              Flexible(child: MapTableWidget(data: data.orders)),
+              Flexible(child: MapTableWidget(data: data.orderQuantity)),
               const SizedBox(
                 height: 20,
               ),

@@ -20,7 +20,9 @@ class SupabaseProfileRepository implements ProfileRepository {
       return UserModel(
           id: sessionUser.user!.id,
           email: sessionUser.user!.email,
-          phoneNumber: sessionUser.user?.phone,
+          phoneNumber: metadata?.containsKey("phone") ?? false
+              ? metadata!['phone']
+              : null,
           name: metadata?.containsKey("full_name") ?? false
               ? metadata!['full_name']
               : null);
@@ -37,7 +39,8 @@ class SupabaseProfileRepository implements ProfileRepository {
     } else if (email.isNotNull) {
       await _supabaseClient.auth.updateUser(UserAttributes(email: email));
     } else if (phone.isNotNull) {
-      await _supabaseClient.auth.updateUser(UserAttributes(phone: phone));
+      await _supabaseClient.auth
+          .updateUser(UserAttributes(data: {'phone': phone}));
     }
   }
 }

@@ -31,35 +31,6 @@ class HomePage extends ConsumerWidget {
     final cartController = ref.read(cartControllerProvider.notifier);
     return Scaffold(
       bottomNavigationBar: const CartBottomBar(),
-      floatingActionButton: Builder(
-        builder: (context) {
-          final txnState = ref.watch(transactionsConrollerProvider);
-          return txnState.when(loading: () {
-            return const SizedBox();
-          }, data: (d) {
-            final list = d
-                .where((element) =>
-                    element.status != RequestStatus.picked ||
-                    element.status != RequestStatus.picked)
-                .toList();
-            if (list.isNotEmpty) {
-              return FloatingActionButton(
-                onPressed: () {
-                  showStatusBottomSheet(context, models: list);
-                  FirebaseAnalytics.instance
-                      .logEvent(name: 'track_request_status');
-                },
-                backgroundColor:
-                    Theme.of(context).colorScheme.tertiaryContainer,
-                child: Icon(Icons.track_changes,
-                    color: Theme.of(context).colorScheme.onTertiaryContainer),
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
-          });
-        },
-      ),
       body: Stack(
         children: [
           RefreshIndicator(

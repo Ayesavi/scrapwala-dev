@@ -5,61 +5,6 @@ import 'package:scrapwala_dev/models/transaction_model/transaction_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final List<TransactionModel> randomTransactionModels = [
-  TransactionModel(
-    transactionId: '1',
-    requestId: 'REQ1',
-    pickupLocation: AddressModel(
-      address: '123 Main St',
-      houseStreetNo: 'Apt 2B',
-      latlng: (lat: 40.7128, lng: -74.006),
-      createdAt: DateTime.now(),
-      id: '1',
-      category: AddressCategory.house,
-      label: 'Home',
-    ),
-    pickupTime: DateTime.now(),
-    orders: [
-      OrderQuantity(
-        id: '1',
-        name: 'Aluminum Cans',
-        measurement: ScrapMeasurement.kg,
-        quantity: 5,
-        price: 20,
-      ),
-      OrderQuantity(
-        id: '2',
-        name: 'Copper Wire',
-        measurement: ScrapMeasurement.qntl,
-        quantity: 1,
-        price: 50,
-      ),
-    ],
-    totalAmountPaid: 150,
-  ),
-  TransactionModel(
-    transactionId: '2',
-    requestId: 'REQ2',
-    pickupLocation: AddressModel(
-      address: '456 Elm St',
-      houseStreetNo: 'Suite 3C',
-      latlng: (lat: 40.7282, lng: -73.7949),
-      createdAt: DateTime.now(),
-      id: '2',
-      category: AddressCategory.office,
-      label: 'Work',
-    ),
-    pickupTime: DateTime.now(),
-    orders: [
-      OrderQuantity(
-        id: '3',
-        name: 'Steel Scrap',
-        measurement: ScrapMeasurement.kg,
-        quantity: 10,
-        price: 15,
-      ),
-    ],
-    totalAmountPaid: 150,
-  ),
   // Add more transactions as needed...
 ];
 final List<PickupRequestModel> randomPickupRequests = [
@@ -145,6 +90,12 @@ class SupabaseTxnRepository implements BaseTransactionRepository {
 
   @override
   Future<TransactionModel> getTransactionById(String id) async {
-    throw 'error';
+    final data = await _supabaseClient
+        .from('transactions')
+        .select('*,pickupLocation:pickupLocationId(*)')
+        .eq("requestId", id)
+        .single();
+    data['pickupLocation']['latlng'] = {"lat": 0.00, "lng": 0.00};
+    return TransactionModel.fromJson(data);
   }
 }

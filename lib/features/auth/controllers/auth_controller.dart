@@ -17,18 +17,17 @@ AuthController authController(AuthControllerRef ref) {
   if (authStates.value?.session != null) {
     final sessionUser = authStates.value!.session!.user;
     final userMetadata = sessionUser.userMetadata;
-    final phone = sessionUser.phone;
+    final phone = userMetadata?.containsKey("phone") ?? false
+        ? userMetadata!['phone']
+        : null;
     final name = userMetadata?.containsKey("full_name") ?? false
         ? userMetadata!['full_name']
         : null;
 
-    final isPhoneAuthEnabled = RemoteConfigKeys.enablePhoneAuth.value<bool>();
+    // final isPhoneAuthEnabled = RemoteConfigKeys.enablePhoneAuth.value<bool>();
 
     // TODO: add the email and phone in the fields below in prod mode
-    if (checkNullOrEmpty([
-      name,
-      ...(isPhoneAuthEnabled ? [phone] : [])
-    ])) {
+    if (checkNullOrEmpty([name, phone])) {
       return const AuthController(AppAuthState.unfulfilledProfile);
     }
 

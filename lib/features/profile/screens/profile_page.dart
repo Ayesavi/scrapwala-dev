@@ -17,12 +17,12 @@ class ProfilePage extends ConsumerWidget {
   getProfileSubtitle(UserModel model) {
     if (model.phoneNumber.isNotNullAndNotEmpty &&
         (model.email.mayBeNullOrEmpty)) {
-      return '+91${model.phoneNumber!.substring(2)}';
+      return '+${model.phoneNumber!.substring(2)}';
     } else if (model.phoneNumber.mayBeNullOrEmpty &&
         model.email.isNotNullAndNotEmpty) {
       return '${model.email}';
     } else {
-      return '+91-${model.phoneNumber} | ${model.email}';
+      return '+${model.phoneNumber} | ${model.email}';
     }
   }
 

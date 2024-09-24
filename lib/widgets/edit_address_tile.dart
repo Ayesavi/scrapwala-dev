@@ -64,17 +64,17 @@ class EditAddressTile extends ConsumerWidget {
               const SizedBox(
                 width: 10,
               ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-                onPressed: onDelete,
-                child: const Text("Delete"),
-              )
+              // ElevatedButton(
+              //   style: ButtonStyle(
+              //     shape: MaterialStateProperty.all<OutlinedBorder>(
+              //       RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //     ),
+              //   ),
+              //   onPressed: onDelete,
+              //   child: const Text("Delete"),
+              // )
             ],
           )
         ],

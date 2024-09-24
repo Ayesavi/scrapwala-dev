@@ -20,11 +20,12 @@ TransactionModel _$TransactionModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TransactionModel {
-  String get transactionId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'id')
+  int get transactionId => throw _privateConstructorUsedError;
   String get requestId => throw _privateConstructorUsedError;
   AddressModel get pickupLocation => throw _privateConstructorUsedError;
   DateTime get pickupTime => throw _privateConstructorUsedError;
-  List<OrderQuantity> get orders => throw _privateConstructorUsedError;
+  Map<String, dynamic> get orderQuantity => throw _privateConstructorUsedError;
   String? get photograph => throw _privateConstructorUsedError;
   dynamic get paymentMode => throw _privateConstructorUsedError;
   int get totalAmountPaid => throw _privateConstructorUsedError;
@@ -46,11 +47,11 @@ abstract class $TransactionModelCopyWith<$Res> {
       _$TransactionModelCopyWithImpl<$Res, TransactionModel>;
   @useResult
   $Res call(
-      {String transactionId,
+      {@JsonKey(name: 'id') int transactionId,
       String requestId,
       AddressModel pickupLocation,
       DateTime pickupTime,
-      List<OrderQuantity> orders,
+      Map<String, dynamic> orderQuantity,
       String? photograph,
       dynamic paymentMode,
       int totalAmountPaid});
@@ -77,7 +78,7 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
     Object? requestId = null,
     Object? pickupLocation = null,
     Object? pickupTime = null,
-    Object? orders = null,
+    Object? orderQuantity = null,
     Object? photograph = freezed,
     Object? paymentMode = freezed,
     Object? totalAmountPaid = null,
@@ -86,7 +87,7 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
       transactionId: null == transactionId
           ? _value.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       requestId: null == requestId
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
@@ -99,10 +100,10 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
           ? _value.pickupTime
           : pickupTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      orders: null == orders
-          ? _value.orders
-          : orders // ignore: cast_nullable_to_non_nullable
-              as List<OrderQuantity>,
+      orderQuantity: null == orderQuantity
+          ? _value.orderQuantity
+          : orderQuantity // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
       photograph: freezed == photograph
           ? _value.photograph
           : photograph // ignore: cast_nullable_to_non_nullable
@@ -138,11 +139,11 @@ abstract class _$$TransactionModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String transactionId,
+      {@JsonKey(name: 'id') int transactionId,
       String requestId,
       AddressModel pickupLocation,
       DateTime pickupTime,
-      List<OrderQuantity> orders,
+      Map<String, dynamic> orderQuantity,
       String? photograph,
       dynamic paymentMode,
       int totalAmountPaid});
@@ -168,7 +169,7 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
     Object? requestId = null,
     Object? pickupLocation = null,
     Object? pickupTime = null,
-    Object? orders = null,
+    Object? orderQuantity = null,
     Object? photograph = freezed,
     Object? paymentMode = freezed,
     Object? totalAmountPaid = null,
@@ -177,7 +178,7 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
       transactionId: null == transactionId
           ? _value.transactionId
           : transactionId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       requestId: null == requestId
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
@@ -190,10 +191,10 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
           ? _value.pickupTime
           : pickupTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      orders: null == orders
-          ? _value._orders
-          : orders // ignore: cast_nullable_to_non_nullable
-              as List<OrderQuantity>,
+      orderQuantity: null == orderQuantity
+          ? _value._orderQuantity
+          : orderQuantity // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
       photograph: freezed == photograph
           ? _value.photograph
           : photograph // ignore: cast_nullable_to_non_nullable
@@ -211,33 +212,34 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TransactionModelImpl implements _TransactionModel {
   _$TransactionModelImpl(
-      {required this.transactionId,
+      {@JsonKey(name: 'id') required this.transactionId,
       required this.requestId,
       required this.pickupLocation,
       required this.pickupTime,
-      required final List<OrderQuantity> orders,
+      required final Map<String, dynamic> orderQuantity,
       this.photograph,
       this.paymentMode = PaymentMode.cash,
       required this.totalAmountPaid})
-      : _orders = orders;
+      : _orderQuantity = orderQuantity;
 
   factory _$TransactionModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TransactionModelImplFromJson(json);
 
   @override
-  final String transactionId;
+  @JsonKey(name: 'id')
+  final int transactionId;
   @override
   final String requestId;
   @override
   final AddressModel pickupLocation;
   @override
   final DateTime pickupTime;
-  final List<OrderQuantity> _orders;
+  final Map<String, dynamic> _orderQuantity;
   @override
-  List<OrderQuantity> get orders {
-    if (_orders is EqualUnmodifiableListView) return _orders;
+  Map<String, dynamic> get orderQuantity {
+    if (_orderQuantity is EqualUnmodifiableMapView) return _orderQuantity;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_orders);
+    return EqualUnmodifiableMapView(_orderQuantity);
   }
 
   @override
@@ -250,7 +252,7 @@ class _$TransactionModelImpl implements _TransactionModel {
 
   @override
   String toString() {
-    return 'TransactionModel(transactionId: $transactionId, requestId: $requestId, pickupLocation: $pickupLocation, pickupTime: $pickupTime, orders: $orders, photograph: $photograph, paymentMode: $paymentMode, totalAmountPaid: $totalAmountPaid)';
+    return 'TransactionModel(transactionId: $transactionId, requestId: $requestId, pickupLocation: $pickupLocation, pickupTime: $pickupTime, orderQuantity: $orderQuantity, photograph: $photograph, paymentMode: $paymentMode, totalAmountPaid: $totalAmountPaid)';
   }
 
   @override
@@ -266,7 +268,8 @@ class _$TransactionModelImpl implements _TransactionModel {
                 other.pickupLocation == pickupLocation) &&
             (identical(other.pickupTime, pickupTime) ||
                 other.pickupTime == pickupTime) &&
-            const DeepCollectionEquality().equals(other._orders, _orders) &&
+            const DeepCollectionEquality()
+                .equals(other._orderQuantity, _orderQuantity) &&
             (identical(other.photograph, photograph) ||
                 other.photograph == photograph) &&
             const DeepCollectionEquality()
@@ -283,7 +286,7 @@ class _$TransactionModelImpl implements _TransactionModel {
       requestId,
       pickupLocation,
       pickupTime,
-      const DeepCollectionEquality().hash(_orders),
+      const DeepCollectionEquality().hash(_orderQuantity),
       photograph,
       const DeepCollectionEquality().hash(paymentMode),
       totalAmountPaid);
@@ -307,11 +310,11 @@ class _$TransactionModelImpl implements _TransactionModel {
 
 abstract class _TransactionModel implements TransactionModel {
   factory _TransactionModel(
-      {required final String transactionId,
+      {@JsonKey(name: 'id') required final int transactionId,
       required final String requestId,
       required final AddressModel pickupLocation,
       required final DateTime pickupTime,
-      required final List<OrderQuantity> orders,
+      required final Map<String, dynamic> orderQuantity,
       final String? photograph,
       final dynamic paymentMode,
       required final int totalAmountPaid}) = _$TransactionModelImpl;
@@ -320,7 +323,8 @@ abstract class _TransactionModel implements TransactionModel {
       _$TransactionModelImpl.fromJson;
 
   @override
-  String get transactionId;
+  @JsonKey(name: 'id')
+  int get transactionId;
   @override
   String get requestId;
   @override
@@ -328,7 +332,7 @@ abstract class _TransactionModel implements TransactionModel {
   @override
   DateTime get pickupTime;
   @override
-  List<OrderQuantity> get orders;
+  Map<String, dynamic> get orderQuantity;
   @override
   String? get photograph;
   @override

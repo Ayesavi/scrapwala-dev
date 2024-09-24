@@ -112,35 +112,32 @@ class EditProfilePage extends ConsumerWidget {
                   validator: validateName,
                 ),
                 const SizedBox(height: 8),
-                if (RemoteConfigKeys.enablePhoneAuth.value<bool>()) ...[
-                  EditTextFieldWidget(
-                    hintText: "Enter your phone number",
-                    labelText: "Phone Number",
-                    type: TextInputType.phone,
-                    textEditingController: phoneNumberController,
-                    onSave: (phone) async {
-                      try {
-                        await controller.upateProfile(phone: '91$phone');
-                        if (context.mounted) {
-                          showSnackBar(context, "Otp Sent to +91$phone");
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return OtpVerifyPage(
-                                phoneNum: '91$phone',
-                                otpType: OtpType.phoneChange,
-                              );
-                            },
-                          ));
-                        }
-                      } catch (e) {
-                        if (context.mounted) {
-                          showSnackBar(context, errorHandler(e).message);
-                        }
+                EditTextFieldWidget(
+                  hintText: "Enter your phone number",
+                  labelText: "Phone Number",
+                  type: TextInputType.phone,
+                  textEditingController: phoneNumberController,
+                  onSave: (phone) async {
+                    try {
+                      await controller.upateProfile(phone: '91$phone');
+                      // if (context.mounted) {
+                      //   Navigator.push(context, MaterialPageRoute(
+                      //     builder: (context) {
+                      //       return OtpVerifyPage(
+                      //         phoneNum: '91$phone',
+                      //         otpType: OtpType.phoneChange,
+                      //       );
+                      //     },
+                      //   ));
+                      // }
+                    } catch (e) {
+                      if (context.mounted) {
+                        showSnackBar(context, errorHandler(e).message);
                       }
-                    },
-                    validator: validatePhoneNumber,
-                  ),
-                ],
+                    }
+                  },
+                  validator: validatePhoneNumber,
+                ),
                 EditTextFieldWidget(
                   hintText: "Enter your email address",
                   labelText: "Email Address",

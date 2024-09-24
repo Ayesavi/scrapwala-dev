@@ -3,7 +3,7 @@ import 'package:scrapwala_dev/core/constants/string_constants.dart';
 import 'package:scrapwala_dev/models/transaction_model/transaction_model.dart';
 
 class MapTableWidget extends StatelessWidget {
-  final List<OrderQuantity> data;
+  final Map<String, dynamic> data;
 
   const MapTableWidget({super.key, required this.data});
 
@@ -57,19 +57,20 @@ class MapTableWidget extends StatelessWidget {
               ),
             ],
           ),
-          for (var entry in data)
+          for (var entry in data.entries)
             TableRow(
               children: [
                 TableCell(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text(entry.name)),
+                    child: Center(child: Text(entry.key)),
                   ),
                 ),
                 TableCell(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(child: Text(entry.quantity.toString())),
+                    child:
+                        Center(child: Text(entry.value['quantity'].toString())),
                   ),
                 ),
                 TableCell(
@@ -77,7 +78,7 @@ class MapTableWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                         child: Text(
-                            '$kRupeeSymbol${entry.price.toString()} x ${entry.quantity.toString()}')),
+                            '$kRupeeSymbol${entry.value['amount'].toString()} x ${entry.value['quantity'].toString()}')),
                   ),
                 ),
               ],
