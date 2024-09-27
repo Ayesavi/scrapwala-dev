@@ -40,9 +40,11 @@ class RequestInfoPage extends ConsumerWidget {
         body: transaction.when(data: (data) {
           return Column(
             children: [
-              AddressTile(
-                model: data.pickupLocation,
-              ),
+              if (data.pickupLocation != null) ...[
+                AddressTile(
+                  model: data.pickupLocation!,
+                ),
+              ],
               const Divider(),
               ListTile(
                 leading: const Icon(

@@ -48,7 +48,7 @@ class DeletePage extends ConsumerWidget {
                   builder: (context) {
                     return Popup(
                       title: "Delete Account",
-                      text: "Are you sure you want to delete account?",
+                      content: "Are you sure you want to delete account?",
                       onConfirmPopup: () async {
                         await Supabase.instance.client.rpc('delete_user');
                         await ref.read(authControllerProvider).signOut();

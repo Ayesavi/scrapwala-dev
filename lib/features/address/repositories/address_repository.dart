@@ -61,7 +61,8 @@ class SupabaseAddressRepository implements BaseAddressRepository {
   @override
   Future<void> deleteAddress(String addressId) async {
     try {
-      await _supabaseClient.from('addresses').delete().eq('id', addressId);
+      await _supabaseClient
+          .rpc('delete_address', params: {"addr_id": addressId});
     } catch (error) {
       throw SkException('Failed to delete address: $error');
     }

@@ -1,4 +1,6 @@
+
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
 
@@ -51,13 +53,27 @@ class LogoutPopup extends StatelessWidget {
   }
 }
 
-showPopup(BuildContext context, {required VoidCallback onConfirm}) async {
+Future<void> showPopup(BuildContext context,
+    {required Future<void> Function() onConfirm,
+    required String content,
+    bool isDismissable = true,
+    String? confirmTitle,
+    VoidCallback? onCancel,
+    String? cancelTitle,
+    required String title}) async {
   return await showDialog(
     context: context,
+    barrierDismissible: isDismissable,
     builder: (BuildContext context) {
       return Popup(
-        onConfirmPopup: () {
-          onConfirm();
+        cancelTitle: cancelTitle,
+        confirmTitle: confirmTitle,
+        title: title,
+        onCancel: onCancel,
+        content: content,
+        onConfirmPopup: () async {
+          await onConfirm();
+          return;
         },
       );
     },
@@ -65,37 +81,84 @@ showPopup(BuildContext context, {required VoidCallback onConfirm}) async {
 }
 
 class Popup extends StatelessWidget {
-  final Function()? onConfirmPopup;
-  final String? text;
-  final String? title;
-
-  const Popup({
-    super.key,
-    this.onConfirmPopup,
-    this.text,
-    this.title,
-  });
+  final Future<void> Function()? onConfirmPopup;
+  final String? confirmTitle;
+  final String? cancelTitle;
+  final VoidCallback? onCancel;
+  final String content;
+  final String title;
+  const Popup(
+      {super.key,
+      this.onConfirmPopup,
+      this.confirmTitle,
+      this.onCancel,
+      this.cancelTitle,
+      required this.content,
+      required this.title});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: TitleLarge(
-        text: title ?? 'Delete Address',
+        text: title,
         weight: FontWeight.bold,
       ),
-      content: Text(text ?? 'Are you sure you want to delete adddress?'),
+      content: Text(content),
       actions: <Widget>[
         TextButton(
-          onPressed: () {
-            Navigator.of(context).pop(); // Close the dialog
-          },
-          child: const Text('Cancel'),
+          onPressed: onCancel ??
+              () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+          child: Text(cancelTitle ?? 'Cancel'),
         ),
-        TextButton(
-          onPressed: onConfirmPopup,
-          child: const Text('Confirm'),
-        ),
+        _PopupTextButton(
+            callback: onConfirmPopup, label: confirmTitle ?? 'Confirm')
       ],
+    );
+  }
+}
+
+class _PopupTextButton extends StatefulWidget {
+  final Future<void> Function()? callback;
+  final String label;
+
+  const _PopupTextButton({
+    // ignore: unused_element
+    super.key,
+    this.callback,
+    required this.label,
+  });
+
+  @override
+  State<_PopupTextButton> createState() => __PopupTextButtonState();
+}
+
+class __PopupTextButtonState extends State<_PopupTextButton> {
+  bool _isLoading = false;
+
+  Future<void> _onPressed() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await widget.callback?.call();
+
+    if (context.mounted) {
+      // Calling setState after a long process may cause
+      // Null check operator used on a null value
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    return;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: _isLoading ? null : _onPressed,
+      child:
+          _isLoading ? const CupertinoActivityIndicator() : Text(widget.label),
     );
   }
 }

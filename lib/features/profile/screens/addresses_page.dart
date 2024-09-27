@@ -59,9 +59,14 @@ class AddressesPage extends ConsumerWidget {
                           itemBuilder: (context, index) {
                             return EditAddressTile(
                                 onDelete: () {
-                                  showPopup(context, onConfirm: () {
-                                    controller.deleteAddress(
+                                  showPopup(context,
+                                      content:
+                                          'Are you sure you want to delete "${models[index].label}" address?',
+                                      title: "Delete Address",
+                                      onConfirm: () async {
+                                    await controller.deleteAddress(
                                         context, models[index].id);
+                                    Navigator.pop(context);
                                   });
                                 },
                                 onEdit: () {

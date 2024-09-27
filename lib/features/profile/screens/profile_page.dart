@@ -65,27 +65,7 @@ class ProfilePage extends ConsumerWidget {
                     children: [
                       state.when(
                           error: (e) {
-                            return Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const TitleMedium(
-                                      text:
-                                          'Looks like there is an error from our side'),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  AppFilledButton(
-                                    label: "Logout",
-                                    onTap: () {
-                                      ref
-                                          .read(authControllerProvider)
-                                          .signOut();
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
+                            return const ShimmeringProfileWidget();
                           },
                           loading: () => const ShimmeringProfileWidget(),
                           data: (userModel) {
@@ -138,10 +118,6 @@ class ProfilePage extends ConsumerWidget {
                         ),
                         trailing: const Icon(Icons.chevron_right),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Divider(),
-                      ),
 
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -169,7 +145,7 @@ class ProfilePage extends ConsumerWidget {
                             await ref
                                 .read(notificationServiceProvider)
                                 .handleLogOut();
-                            ref.read(authControllerProvider).signOut();
+                          ref.read(authControllerProvider).signOut();
                           });
                         },
                         title: const TitleMedium(text: 'Log Out'),
@@ -241,7 +217,8 @@ class ProfilePage extends ConsumerWidget {
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: LabelMedium(
-                      text: 'H O S T E D  W I T H ❤️  F R O M  A Y E S A V I')),
+                      text:
+                          'H O S T E D  W I T H  ❤️  F R O M  A Y E S A V I')),
             )
           ],
         ));

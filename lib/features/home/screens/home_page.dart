@@ -53,6 +53,7 @@ class HomePage extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16.0, vertical: 16),
                     child: SearchTextField(
+                      hintTexts: const ["Paper", "Bottle", "Plastic"],
                       readOnly: true,
                       onPressed: () {
                         const SearchPageRoute().go(context);
@@ -167,8 +168,8 @@ class HomePage extends ConsumerWidget {
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount:
                                   2, // You can change this value according to your requirement
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 0,
+                              mainAxisSpacing: 15,
                             ),
                             itemCount: categories.length,
                             itemBuilder: (context, index) => CategoryWidget(

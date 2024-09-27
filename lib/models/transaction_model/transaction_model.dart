@@ -11,7 +11,7 @@ abstract class TransactionModel with _$TransactionModel {
     @JsonKey(name: 'id')
     required int transactionId,
     required String requestId,
-    required AddressModel pickupLocation,
+     AddressModel? pickupLocation,
     required DateTime pickupTime,
     required Map<String,dynamic> orderQuantity,
     String? photograph,

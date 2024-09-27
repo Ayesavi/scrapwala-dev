@@ -11,8 +11,10 @@ _$TransactionModelImpl _$$TransactionModelImplFromJson(
     _$TransactionModelImpl(
       transactionId: (json['id'] as num).toInt(),
       requestId: json['requestId'] as String,
-      pickupLocation:
-          AddressModel.fromJson(json['pickupLocation'] as Map<String, dynamic>),
+      pickupLocation: json['pickupLocation'] == null
+          ? null
+          : AddressModel.fromJson(
+              json['pickupLocation'] as Map<String, dynamic>),
       pickupTime: DateTime.parse(json['pickupTime'] as String),
       orderQuantity: json['orderQuantity'] as Map<String, dynamic>,
       photograph: json['photograph'] as String?,

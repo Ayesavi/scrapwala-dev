@@ -89,8 +89,8 @@ class _FormBottomSheetState extends State<_LocationFormBottomSheet> {
           children: [
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading:
-                  Icon(CupertinoIcons.location_fill, color: Colors.redAccent),
+              leading: const Icon(CupertinoIcons.location_fill,
+                  color: Colors.redAccent),
               title: TitleMedium(
                 text: widget.title ?? 'Address',
                 weight: FontWeight.bold,
@@ -108,7 +108,7 @@ class _FormBottomSheetState extends State<_LocationFormBottomSheet> {
             TextFormField(
               controller: _labelController,
               decoration: InputDecoration(
-                hintText: 'Label',
+                hintText: 'eg. Home',
                 fillColor: Theme.of(context).colorScheme.onInverseSurface,
                 filled: true,
                 border: OutlineInputBorder(

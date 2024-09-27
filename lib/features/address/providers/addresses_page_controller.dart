@@ -31,11 +31,12 @@ class AddressesPageController extends _$AddressesPageController {
     }
   }
 
-  void deleteAddress(BuildContext context, String addressId) async {
+  Future<void> deleteAddress(BuildContext context, String addressId) async {
     try {
       await _repo.deleteAddress(addressId);
       _addresses.removeWhere((address) => address.id == addressId);
       state = _Data(_addresses);
+
       ref.invalidate(locationControllerProvider);
     } catch (e) {
       if (context.mounted) {
@@ -44,7 +45,8 @@ class AddressesPageController extends _$AddressesPageController {
     }
   }
 
-  Future<void> updateAddress(BuildContext context, AddressModel updatedAddress) async {
+  Future<void> updateAddress(
+      BuildContext context, AddressModel updatedAddress) async {
     try {
       await _repo.updateAddress(updatedAddress);
       final index =

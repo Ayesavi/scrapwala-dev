@@ -15,25 +15,30 @@ class CategoryWidget extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        InkWell(
-          onTap: onTap,
-          child: Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).colorScheme.onInverseSurface,
-                  blurRadius: 10,
-                  spreadRadius: 2,
+        Material(
+          shape: const CircleBorder(),
+          child: InkWell(
+            customBorder:
+                const CircleBorder(), // Ensure the ripple effect is circular
+            onTap: onTap,
+            child: Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).colorScheme.onInverseSurface,
+                    blurRadius: 10,
+                    spreadRadius: .1,
+                  ),
+                ],
+              ),
+              child: ClipOval(
+                child: Image.network(
+                  model.photoUrl,
+                  fit: BoxFit.cover,
                 ),
-              ],
-            ),
-            child: ClipOval(
-              child: Image.network(
-                model.photoUrl,
-                fit: BoxFit.cover,
               ),
             ),
           ),

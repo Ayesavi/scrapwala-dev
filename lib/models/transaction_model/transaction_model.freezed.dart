@@ -23,7 +23,7 @@ mixin _$TransactionModel {
   @JsonKey(name: 'id')
   int get transactionId => throw _privateConstructorUsedError;
   String get requestId => throw _privateConstructorUsedError;
-  AddressModel get pickupLocation => throw _privateConstructorUsedError;
+  AddressModel? get pickupLocation => throw _privateConstructorUsedError;
   DateTime get pickupTime => throw _privateConstructorUsedError;
   Map<String, dynamic> get orderQuantity => throw _privateConstructorUsedError;
   String? get photograph => throw _privateConstructorUsedError;
@@ -49,14 +49,14 @@ abstract class $TransactionModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id') int transactionId,
       String requestId,
-      AddressModel pickupLocation,
+      AddressModel? pickupLocation,
       DateTime pickupTime,
       Map<String, dynamic> orderQuantity,
       String? photograph,
       dynamic paymentMode,
       int totalAmountPaid});
 
-  $AddressModelCopyWith<$Res> get pickupLocation;
+  $AddressModelCopyWith<$Res>? get pickupLocation;
 }
 
 /// @nodoc
@@ -76,7 +76,7 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
   $Res call({
     Object? transactionId = null,
     Object? requestId = null,
-    Object? pickupLocation = null,
+    Object? pickupLocation = freezed,
     Object? pickupTime = null,
     Object? orderQuantity = null,
     Object? photograph = freezed,
@@ -92,10 +92,10 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
               as String,
-      pickupLocation: null == pickupLocation
+      pickupLocation: freezed == pickupLocation
           ? _value.pickupLocation
           : pickupLocation // ignore: cast_nullable_to_non_nullable
-              as AddressModel,
+              as AddressModel?,
       pickupTime: null == pickupTime
           ? _value.pickupTime
           : pickupTime // ignore: cast_nullable_to_non_nullable
@@ -123,8 +123,12 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AddressModelCopyWith<$Res> get pickupLocation {
-    return $AddressModelCopyWith<$Res>(_value.pickupLocation, (value) {
+  $AddressModelCopyWith<$Res>? get pickupLocation {
+    if (_value.pickupLocation == null) {
+      return null;
+    }
+
+    return $AddressModelCopyWith<$Res>(_value.pickupLocation!, (value) {
       return _then(_value.copyWith(pickupLocation: value) as $Val);
     });
   }
@@ -141,7 +145,7 @@ abstract class _$$TransactionModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'id') int transactionId,
       String requestId,
-      AddressModel pickupLocation,
+      AddressModel? pickupLocation,
       DateTime pickupTime,
       Map<String, dynamic> orderQuantity,
       String? photograph,
@@ -149,7 +153,7 @@ abstract class _$$TransactionModelImplCopyWith<$Res>
       int totalAmountPaid});
 
   @override
-  $AddressModelCopyWith<$Res> get pickupLocation;
+  $AddressModelCopyWith<$Res>? get pickupLocation;
 }
 
 /// @nodoc
@@ -167,7 +171,7 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
   $Res call({
     Object? transactionId = null,
     Object? requestId = null,
-    Object? pickupLocation = null,
+    Object? pickupLocation = freezed,
     Object? pickupTime = null,
     Object? orderQuantity = null,
     Object? photograph = freezed,
@@ -183,10 +187,10 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
               as String,
-      pickupLocation: null == pickupLocation
+      pickupLocation: freezed == pickupLocation
           ? _value.pickupLocation
           : pickupLocation // ignore: cast_nullable_to_non_nullable
-              as AddressModel,
+              as AddressModel?,
       pickupTime: null == pickupTime
           ? _value.pickupTime
           : pickupTime // ignore: cast_nullable_to_non_nullable
@@ -214,7 +218,7 @@ class _$TransactionModelImpl implements _TransactionModel {
   _$TransactionModelImpl(
       {@JsonKey(name: 'id') required this.transactionId,
       required this.requestId,
-      required this.pickupLocation,
+      this.pickupLocation,
       required this.pickupTime,
       required final Map<String, dynamic> orderQuantity,
       this.photograph,
@@ -231,7 +235,7 @@ class _$TransactionModelImpl implements _TransactionModel {
   @override
   final String requestId;
   @override
-  final AddressModel pickupLocation;
+  final AddressModel? pickupLocation;
   @override
   final DateTime pickupTime;
   final Map<String, dynamic> _orderQuantity;
@@ -312,7 +316,7 @@ abstract class _TransactionModel implements TransactionModel {
   factory _TransactionModel(
       {@JsonKey(name: 'id') required final int transactionId,
       required final String requestId,
-      required final AddressModel pickupLocation,
+      final AddressModel? pickupLocation,
       required final DateTime pickupTime,
       required final Map<String, dynamic> orderQuantity,
       final String? photograph,
@@ -328,7 +332,7 @@ abstract class _TransactionModel implements TransactionModel {
   @override
   String get requestId;
   @override
-  AddressModel get pickupLocation;
+  AddressModel? get pickupLocation;
   @override
   DateTime get pickupTime;
   @override

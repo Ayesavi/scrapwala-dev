@@ -95,7 +95,9 @@ class SupabaseTxnRepository implements BaseTransactionRepository {
         .select('*,pickupLocation:pickupLocationId(*)')
         .eq("requestId", id)
         .single();
-    data['pickupLocation']['latlng'] = {"lat": 0.00, "lng": 0.00};
+    if (data["pickupLocation"] != null) {
+      data['pickupLocation']['latlng'] = {"lat": 0.00, "lng": 0.00};
+    }
     return TransactionModel.fromJson(data);
   }
 }
