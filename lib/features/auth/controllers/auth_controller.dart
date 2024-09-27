@@ -24,14 +24,9 @@ AuthController authController(AuthControllerRef ref) {
         ? userMetadata!['full_name']
         : null;
 
-    // final isPhoneAuthEnabled = RemoteConfigKeys.enablePhoneAuth.value<bool>();
-
-    // TODO: add the email and phone in the fields below in prod mode
     if (checkNullOrEmpty([name, phone])) {
       return const AuthController(AppAuthState.unfulfilledProfile);
     }
-
-    SupabaseNotificationWrapper.instance.initialize();
 
     FirebaseAnalytics.instance.setUserId(
       id: sessionUser.id,

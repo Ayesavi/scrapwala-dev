@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrapwala_dev/core/extensions/string_extension.dart';
 import 'package:scrapwala_dev/core/router/routes.dart';
+import 'package:scrapwala_dev/core/services/notification_service.dart';
 import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
 import 'package:scrapwala_dev/features/profile/providers/profile_page_controller.dart';
 import 'package:scrapwala_dev/models/user_model/user_model.dart';
@@ -9,6 +10,7 @@ import 'package:scrapwala_dev/shimmering_widgets/profile_tile.dart';
 import 'package:scrapwala_dev/widgets/app_filled_button.dart';
 import 'package:scrapwala_dev/widgets/logout_popup.dart';
 import 'package:scrapwala_dev/widgets/text_widgets.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -140,19 +142,11 @@ class ProfilePage extends ConsumerWidget {
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Divider(),
                       ),
-                      // ListTile(
-                      //   onTap: () {},
-                      //   title: const TitleMedium(text: 'Transactions'),
-                      //   subtitle: const Padding(
-                      //     padding: EdgeInsets.all(2.0),
-                      //     child: LabelMedium(text: "Payments and Transactions"),
-                      //   ),
-                      //   trailing: const Icon(Icons.chevron_right),
-                      // ),
-                      // const Padding(
-                      //   padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      //   child: Divider(),
-                      // ),
+
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Divider(),
+                      ),
                       ListTile(
                         onTap: () {
                           const PastRequestsRoute().push(context);
@@ -171,7 +165,10 @@ class ProfilePage extends ConsumerWidget {
                       ),
                       ListTile(
                         onTap: () {
-                          showLogOutPopup(context, onConfirm: () {
+                          showLogOutPopup(context, onConfirm: () async {
+                            await ref
+                                .read(notificationServiceProvider)
+                                .handleLogOut();
                             ref.read(authControllerProvider).signOut();
                           });
                         },

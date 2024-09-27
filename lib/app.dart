@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scrapwala_dev/core/router/router.dart';
+import 'package:scrapwala_dev/core/services/notification_service.dart';
 import 'package:scrapwala_dev/features/auth/widgets/text_theme.dart';
 
 class ScrapWalaApp extends ConsumerWidget {
@@ -10,9 +11,9 @@ class ScrapWalaApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
-
+    ref.read(notificationServiceProvider);
     return MaterialApp.router(
-      title: 'ScrapWala-Dev',
+      title: 'Swachh Kabadi',
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(TextThemes.textTheme),
         colorScheme: ColorScheme.fromSeed(

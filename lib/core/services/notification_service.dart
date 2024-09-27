@@ -1,216 +1,109 @@
-import 'dart:async';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:scrapwala_dev/core/extensions/object_extension.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scrapwala_dev/core/constants/constants.dart';
+import 'package:scrapwala_dev/features/auth/controllers/auth_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 enum NotificationKeys { requests, recommendations }
 
-abstract class NotificationService {
-  Future<void> initialize();
+final notificationServiceProvider = Provider((ref) => NotificationService(ref));
 
-  Future<String?> getToken();
+class NotificationService {
+  NotificationService(this.ref) {
+    _init();
+  }
 
-  Stream<String> get onTokenRefresh;
+  final ProviderRef ref;
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  final SupabaseClient supabase = Supabase.instance.client;
+  final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+  final prefsFcmKey = "fcm_token";
+  String? _token;
+  String? userId;
+  String? _cachedToken;
 
-  Stream<RemoteMessage?> get onMessageReceived;
+  Future<void> _init() async {
+    _cachedToken = await getCachedToken();
+    _token = await getToken();
+    userId = supabase.auth.currentUser?.id;
+    final states = ref.watch(authStateChangesProvider);
+    states.whenData(_handleAuthStateChanges);
+  }
 
-  Stream<RemoteMessage?> get onMessageOpenedApp;
+  Future<void> handleLogOut() async {
+    await removeToken(_token!);
+    prefs.remove(prefsFcmKey);
+  }
 
-  Future<AuthorizationStatus> requestPermission();
-}
+  void _handleAuthStateChanges(AuthState state) {
+    if ([AuthChangeEvent.signedIn, AuthChangeEvent.userUpdated]
+        .contains(state.event)) {
+      syncToken();
+      logger.info("syncing token");
+    }
+  }
 
-class FirebaseNotificationService implements NotificationService {
-  FirebaseNotificationService._();
-
-  static final FirebaseNotificationService _instance =
-      FirebaseNotificationService._();
-
-  // Static getter to get the singleton instance
-  static NotificationService get instance => _instance;
-
-  FirebaseMessaging get messaging => FirebaseMessaging.instance;
-
-  @override
   Future<String?> getToken() async {
-    return messaging.getToken();
+    return await firebaseMessaging.getToken();
   }
 
-  @override
-  Future<void> initialize() async {
-    await AwesomeNotifications().initialize(
-        'resource://drawable/ic_launcher_foreground',
-        [
-          NotificationChannel(
-            channelKey: NotificationKeys.requests.name,
-            channelName: 'Request Notifications',
-            channelDescription:
-                'It delivers timely updates and alerts regarding pickup requests, ensuring seamless communication for all stakeholders involved.',
-            playSound: true,
-            onlyAlertOnce: true,
-            groupAlertBehavior: GroupAlertBehavior.Children,
-            importance: NotificationImportance.High,
-            defaultPrivacy: NotificationPrivacy.Private,
-          ),
-          NotificationChannel(
-            channelKey: NotificationKeys.recommendations.name,
-            channelName: 'Recommendations',
-            channelDescription:
-                'Delivers timely updates and alerts akin to recommendations for pickup requests, facilitating seamless communication among stakeholders.',
-            playSound: true,
-            onlyAlertOnce: true,
-            groupAlertBehavior: GroupAlertBehavior.Children,
-            importance: NotificationImportance.High,
-            defaultPrivacy: NotificationPrivacy.Private,
-          )
-        ],
-        debug: true);
-
-    FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
-  }
-
-  @override
-  Stream<RemoteMessage?> get onMessageOpenedApp =>
-      FirebaseMessaging.onMessageOpenedApp;
-
-  @override
-  Stream<RemoteMessage?> get onMessageReceived => FirebaseMessaging.onMessage;
-
-  @override
-  Stream<String> get onTokenRefresh =>
-      FirebaseMessaging.instance.onTokenRefresh;
-
-  @override
-  Future<AuthorizationStatus> requestPermission() async {
-    final status = (await FirebaseMessaging.instance.requestPermission())
-        .authorizationStatus;
-    return status;
-  }
-}
-
-@pragma('vm:entry-point')
-Future<void> _onBackgroundMessage(RemoteMessage message) async {
-  if (message.isNotNull) {
-    if (message.isNotNull) {
-      // if (message.notification != null) {
-
-      // AwesomeNotifications().createNotification(
-      //     content: NotificationContent(
-      //         id: Random().nextInt(100000),
-      //         channelKey: message.notification!.android?.channelId ??
-      //             NotificationKeys.recommendations.name,
-      //         title: message.notification!.title,
-      //         bigPicture: message.notification!.android?.imageUrl,
-      //         body: message.notification!.body));
-      // }
-      if (message.data.isNotEmpty) {
-        final channel = message.data.containsKey('channel')
-            ? message.data['channel']
-            : null;
-        final title =
-            message.data.containsKey('title') ? message.data['title'] : null;
-        final body =
-            message.data.containsKey('body') ? message.data['body'] : null;
-        final bigPicture = message.data.containsKey('image_url')
-            ? message.data['image_url']
-            : null;
-        final id = message.data.containsKey('id') ? message.data['id'] : null;
-        final groupKey = message.data.containsKey('group_key')
-            ? message.data['group_key']
-            : null;
-        AwesomeNotifications().createNotification(
-            content: NotificationContent(
-                id: int.parse(id),
-                channelKey: channel,
-                title: title,
-                bigPicture: bigPicture,
-                body: body,
-                groupKey: groupKey));
-      }
+  void syncToken() {
+    final exists = checkIfTokenExists();
+    if (!exists) {
+      uploadToken();
+    } else {
+      logger.info("Token exists");
     }
   }
-}
 
-abstract class NotificationWrapper {}
-
-class SupabaseNotificationWrapper {
-  SupabaseNotificationWrapper._();
-
-  static final SupabaseNotificationWrapper _instance =
-      SupabaseNotificationWrapper._();
-
-  // Static getter to get the singleton instance
-  static SupabaseNotificationWrapper get instance => _instance;
-
-  final _service = FirebaseNotificationService.instance;
-
-  final _supabaseClient = Supabase.instance.client;
-
-  initialize() {
-    _service.onTokenRefresh.listen(onTokenRefresh);
-    _service.onMessageReceived.listen(_showRequestNotification);
-    _service.onMessageOpenedApp.listen(_showRequestNotification);
-    syncToken();
-    _service.requestPermission();
+  Future<String?> getCachedToken() async {
+    return await prefs.getString(prefsFcmKey);
   }
 
-  void onTokenRefresh(String token) async {
-    await _supabaseClient.from('fcm_tokens').insert({'token': token});
+  void updateTokenInPrefs(String newToken) {
+    if (_cachedToken != null) {
+      /// token has been updated
+      removeToken(_cachedToken!);
+      prefs.setString(prefsFcmKey, newToken);
+    } else {
+      prefs.setString(prefsFcmKey, newToken);
+    }
   }
 
-  void syncToken() async {
+  Future<void> uploadToken() async {
     try {
-      _service.getToken().then((value) async =>
-          _supabaseClient.from('fcm_tokens').insert({'token': value}));
+      if (_token != null && userId != null) {
+        await supabase.from("fcm_tokens").insert({
+          "token": _token,
+        });
+        updateTokenInPrefs(_token!);
+        logger.log("Token uploaded to Supabase: $_token");
+      } else {
+        logger.log("user not logged in cant upload fcm token");
+      }
     } catch (e) {
-      // ignore error if duplicate
-      return;
+      logger.log("Error uploading FCM token: $e");
     }
   }
-}
 
-void _showRequestNotification(RemoteMessage? message) {
-  if (message.isNotNull) {
-    // if (message!.notification != null) {
-    //   AwesomeNotifications().createNotification(
-    //       content: NotificationContent(
-    //           id: Random().nextInt(100000),
-    //           channelKey: message.notification!.android?.channelId ??
-    //               NotificationKeys.recommendations.name,
-    //           title: message.notification!.title,
-    //           bigPicture: message.notification!.android?.imageUrl,
-    //           body: message.notification!.body));
-    // } else
+  Future<void> removeToken(String token) async {
+    try {
+      if (_token != null && userId != null) {
+        await supabase
+            .from("fcm_tokens")
+            .delete()
+            .eq("user_id", userId!)
+            .eq("token", token);
 
-    if (message!.data.isNotEmpty) {
-      final channel =
-          message.data.containsKey('channel') ? message.data['channel'] : null;
-      final title =
-          message.data.containsKey('title') ? message.data['title'] : null;
-      final body =
-          message.data.containsKey('body') ? message.data['body'] : null;
-      final bigPicture = message.data.containsKey('image_url')
-          ? message.data['image_url']
-          : null;
-      final id = message.data.containsKey('id') ? message.data['id'] : null;
-      final groupKey = message.data.containsKey('group_key')
-          ? message.data['group_key']
-          : null;
-      AwesomeNotifications().createNotification(
-          content: NotificationContent(
-              id: int.parse(id),
-              channelKey: channel,
-              title: title,
-              bigPicture: bigPicture,
-              body: body,
-              groupKey: groupKey));
+        logger.log("Token removed from Supabase: $_token");
+      }
+    } catch (e) {
+      logger.error("Error removing FCM token: $e");
     }
   }
+
+  bool checkIfTokenExists() {
+    return _cachedToken == _token;
+  }
 }
-
-
-
-
-// Request Accepted
-// Request Denied
-// Request Going to piced up
