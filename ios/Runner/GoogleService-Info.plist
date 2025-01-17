@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>607639301039-gdj8bql3ddp87g1fhe5vein9lgf69c30.apps.googleusercontent.com</string>
+	<string>607639301039-jqfggg5nuah48e8ror1c7ntihi0avb4i.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.607639301039-gdj8bql3ddp87g1fhe5vein9lgf69c30</string>
+	<string>com.googleusercontent.apps.607639301039-jqfggg5nuah48e8ror1c7ntihi0avb4i</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>607639301039-tiljq091l0ureh0ino4qjrb26210f10j.apps.googleusercontent.com</string>
+	<string>607639301039-0a0qspn4laq1pr3c2vl2dv71b9b29npi.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAPdckHJQXIhgF5JlJWJQKP9YP6PESyt0Q</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,11 +15,11 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.scrapwalaDev</string>
+	<string>com.swacchkabadi.swacchkabadi</string>
 	<key>PROJECT_ID</key>
 	<string>swacch-kabadi</string>
 	<key>STORAGE_BUCKET</key>
-	<string>swacch-kabadi.appspot.com</string>
+	<string>swacch-kabadi.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:607639301039:ios:5e54fe784e4dd2aba45d5a</string>
+	<string>1:607639301039:ios:c960585fb5807b88a45d5a</string>
 </dict>
 </plist>

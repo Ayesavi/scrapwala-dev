@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -49,16 +46,16 @@ class DefaultFirebaseOptions {
     messagingSenderId: '607639301039',
     projectId: 'swacch-kabadi',
     authDomain: 'swacch-kabadi.firebaseapp.com',
-    storageBucket: 'swacch-kabadi.appspot.com',
+    storageBucket: 'swacch-kabadi.firebasestorage.app',
     measurementId: 'G-L4HGZPWNPK',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC5axotXXu_ja1hgX2rdIZIWfQcUFmSvak',
-    appId: '1:607639301039:android:782cdf7463bfa427a45d5a',
+    appId: '1:607639301039:android:6e0dcdb464e264d5a45d5a',
     messagingSenderId: '607639301039',
     projectId: 'swacch-kabadi',
-    storageBucket: 'swacch-kabadi.appspot.com',
+    storageBucket: 'swacch-kabadi.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -66,20 +63,31 @@ class DefaultFirebaseOptions {
     appId: '1:607639301039:ios:c960585fb5807b88a45d5a',
     messagingSenderId: '607639301039',
     projectId: 'swacch-kabadi',
-    storageBucket: 'swacch-kabadi.appspot.com',
-    androidClientId: '607639301039-17qtae8q7l0t2tfehn90g0kmh294pvav.apps.googleusercontent.com',
+    storageBucket: 'swacch-kabadi.firebasestorage.app',
+    androidClientId: '607639301039-0a0qspn4laq1pr3c2vl2dv71b9b29npi.apps.googleusercontent.com',
     iosClientId: '607639301039-jqfggg5nuah48e8ror1c7ntihi0avb4i.apps.googleusercontent.com',
     iosBundleId: 'com.swacchkabadi.swacchkabadi',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAPdckHJQXIhgF5JlJWJQKP9YP6PESyt0Q',
-    appId: '1:607639301039:ios:4a8c82c43901f85aa45d5a',
+    appId: '1:607639301039:ios:5e54fe784e4dd2aba45d5a',
     messagingSenderId: '607639301039',
     projectId: 'swacch-kabadi',
-    storageBucket: 'swacch-kabadi.appspot.com',
-    androidClientId: '607639301039-17qtae8q7l0t2tfehn90g0kmh294pvav.apps.googleusercontent.com',
-    iosClientId: '607639301039-bfnbr2udp8g4q3mv0i44upkucvoggu5v.apps.googleusercontent.com',
-    iosBundleId: 'com.example.scrapwalaDev.RunnerTests',
+    storageBucket: 'swacch-kabadi.firebasestorage.app',
+    androidClientId: '607639301039-0a0qspn4laq1pr3c2vl2dv71b9b29npi.apps.googleusercontent.com',
+    iosClientId: '607639301039-gdj8bql3ddp87g1fhe5vein9lgf69c30.apps.googleusercontent.com',
+    iosBundleId: 'com.example.scrapwalaDev',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyArLwQnI87IPEo3BcjHtFofVJ0G8bMGGjw',
+    appId: '1:607639301039:web:faf3359ea0a41ff9a45d5a',
+    messagingSenderId: '607639301039',
+    projectId: 'swacch-kabadi',
+    authDomain: 'swacch-kabadi.firebaseapp.com',
+    storageBucket: 'swacch-kabadi.firebasestorage.app',
+    measurementId: 'G-RGZ7LPDYTY',
+  );
+
 }
